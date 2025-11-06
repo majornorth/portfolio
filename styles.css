@@ -177,6 +177,20 @@ body {
     min-height: 600px;
 }
 
+.screenshot-scroll-wrapper img[src="images/replay-demo.png"] {
+    width: 1104px;
+    height: 784.17px;
+}
+
+.screenshot-scroll-wrapper img[src="images/pull-request.png"] {
+    width: 1104px;
+    height: 784.17px;
+}
+
+.screenshot-scroll-wrapper img[src="images/adobe.png"] {
+    height: 784.17px;
+}
+
 .dropbox-replay .left-panel {
     flex: 1;
     background-color: #1a1a1a;
