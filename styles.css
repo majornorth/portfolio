@@ -112,6 +112,22 @@ body {
     max-width: 800px;
 }
 
+.project-tags {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.tag {
+    background-color: #2d2d2d;
+    color: #ffffff;
+    padding: 0.375rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    display: inline-block;
+}
+
 /* Screenshot Containers */
 .screenshot-container {
     margin-top: 2rem;
@@ -183,12 +199,21 @@ body {
 }
 
 .screenshot-scroll-wrapper img[src="images/pull-request.png"] {
-    width: 1104px;
-    height: 784.17px;
+    width: auto;
+    height: 804.17;
 }
 
 .screenshot-scroll-wrapper img[src="images/adobe.png"] {
     height: 784.17px;
+}
+
+.screenshot-scroll-wrapper img[src="images/figma-link.png"],
+.screenshot-scroll-wrapper a[href*="figma.com"] img[src="images/figma-link.png"] {
+    width: auto;
+    height: auto;
+    max-height: 667px;
+    max-width: 1061.2px; /* Maintains 1282:805 aspect ratio at max-height 667px */
+    object-fit: contain;
 }
 
 .dropbox-replay .left-panel {
