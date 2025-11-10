@@ -56,21 +56,12 @@ body {
     position: relative;
 }
 
-.profile-container {
-    position: absolute;
-    top: 37vh;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin-bottom: 0;
-}
-
 .profile-picture {
     width: 90px;
     height: 90px;
     border-radius: 0;
     object-fit: cover;
     display: block;
-    margin: 0 auto;
     will-change: transform, opacity;
     transition: opacity 0.3s ease;
 }
@@ -114,24 +105,6 @@ body {
     left: 0;
 }
 
-.triangle-photo-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90px;
-    height: 90px;
-    z-index: 10;
-    opacity: 0;
-}
-
-.triangle-photo {
-    width: 90px;
-    height: 90px;
-    border-radius: 0;
-    object-fit: cover;
-    display: block;
-}
 
 .triangle-label {
     position: absolute;
