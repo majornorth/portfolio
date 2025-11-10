@@ -35,6 +35,21 @@
             <h1 class="name">JASON MCCOY</h1>
         </section>
 
+        <section class="triangle-section">
+            <div class="triangle-container">
+                <div class="triangle-label triangle-label-top">Product</div>
+                <svg class="triangle" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+                    <polygon points="200,50 50,350 350,350" fill="none" stroke="rgba(207, 189, 255, 0.3)" stroke-width="1"/>
+                </svg>
+                <div class="triangle-photo-container">
+                    <img src="images/jason-mccoy.png" alt="Jason McCoy" class="triangle-photo">
+                </div>
+                <div class="triangle-label triangle-label-bottom-left">Design</div>
+                <div class="triangle-label triangle-label-bottom-right">Engineering</div>
+                <div class="triangle-label triangle-label-center">Principal Product Builder</div>
+            </div>
+        </section>
+
         <section class="project">
             <h2 class="project-title">Dropbox Replay</h2>
             <p class="project-description">
@@ -128,9 +143,16 @@
     <script>
         const hero = document.querySelector('.hero');
         const name = document.querySelector('.name');
+        const profilePicture = document.querySelector('.profile-picture');
+        const profileContainer = document.querySelector('.profile-container');
+        const triangleSection = document.querySelector('.triangle-section');
+        const triangleContainer = document.querySelector('.triangle-container');
         
         function handleScroll() {
             const heroRect = hero.getBoundingClientRect();
+            const profileContainerRect = profileContainer.getBoundingClientRect();
+            const triangleRect = triangleSection.getBoundingClientRect();
+            const triangleContainerRect = triangleContainer.getBoundingClientRect();
             const viewportHeight = window.innerHeight;
             
             // The name is positioned 140px from the bottom of the hero
@@ -179,6 +201,51 @@
                 name.style.transform = '';
                 name.style.zIndex = '';
             }
+            
+            // Profile picture sticky animation
+            // Get the profile picture's center position in viewport coordinates
+            const profilePictureCenterY = profileContainerRect.top + (profileContainerRect.height / 2);
+            
+            // Calculate triangle center position in viewport coordinates
+            const triangleCenterY = triangleContainerRect.top + (triangleContainerRect.height / 2);
+            
+            // Profile picture should become sticky when it reaches the middle of viewport
+            // It should stay at that fixed viewport position until triangle center reaches it
+            const stickyViewportY = viewportHeight * 0.5; // Middle of viewport
+            const shouldStartSticky = profilePictureCenterY <= stickyViewportY;
+            const triangleHasReachedStickyPosition = triangleCenterY <= stickyViewportY;
+            
+            if (shouldStartSticky && !triangleHasReachedStickyPosition) {
+                // Make profile picture sticky - keep it at fixed viewport position
+                profilePicture.style.position = 'fixed';
+                profilePicture.style.top = stickyViewportY + 'px';
+                profilePicture.style.left = '50%';
+                profilePicture.style.transform = 'translate(-50%, -50%)';
+                profilePicture.style.zIndex = '50';
+            } else if (triangleHasReachedStickyPosition) {
+                // Triangle center has reached the sticky position - stop being sticky and position in triangle
+                profilePicture.style.position = 'absolute';
+                profilePicture.style.top = '50%';
+                profilePicture.style.left = '50%';
+                profilePicture.style.transform = 'translate(-50%, -50%)';
+                profilePicture.style.zIndex = '10';
+                // Move it to triangle container if not already there
+                if (profilePicture.parentElement !== triangleContainer) {
+                    triangleContainer.appendChild(profilePicture);
+                }
+            } else {
+                // Reset to normal positioning in hero section
+                profilePicture.style.position = '';
+                profilePicture.style.top = '';
+                profilePicture.style.left = '';
+                profilePicture.style.transform = '';
+                profilePicture.style.zIndex = '';
+                // Move it back to profile container if not already there
+                if (profilePicture.parentElement !== profileContainer) {
+                    profileContainer.appendChild(profilePicture);
+                }
+            }
+            
         }
         
         window.addEventListener('scroll', handleScroll, { passive: true });
