@@ -10,6 +10,7 @@ body {
     color: #ffffff;
     line-height: 1.6;
     min-height: 100vh;
+    scroll-snap-type: y proximity;
 }
 
 /* Navigation */
@@ -54,6 +55,8 @@ body {
     align-items: center;
     padding-bottom: 140px;
     position: relative;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 .profile-picture {
@@ -85,6 +88,8 @@ body {
     justify-content: center;
     position: relative;
     padding: 4rem 3rem;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 .triangle-container {
@@ -147,10 +152,12 @@ body {
     justify-content: center;
     align-items: center;
     margin-bottom: 340px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 .bio-container {
-    width: 849px;
+    width: 1104px;
     padding: 150px;
     background-color: #362743;
 }
@@ -178,6 +185,8 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     padding-top: 2rem;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
 .project-title {
