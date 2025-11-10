@@ -35,6 +35,30 @@
             <h1 class="name">JASON MCCOY</h1>
         </section>
 
+        <section class="triangle-section">
+            <div class="triangle-container">
+                <div class="triangle-label triangle-label-top">Product</div>
+                <svg class="triangle" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+                    <polygon points="200,50 50,350 350,350" fill="none" stroke="rgba(207, 189, 255, 0.3)" stroke-width="1"/>
+                </svg>
+                <div class="triangle-photo-container">
+                    <img src="images/jason-mccoy.png" alt="Jason McCoy" class="triangle-photo">
+                </div>
+                <div class="triangle-label triangle-label-bottom-left">Design</div>
+                <div class="triangle-label triangle-label-bottom-right">Engineering</div>
+                <div class="triangle-label triangle-label-center">Principal Product Builder</div>
+            </div>
+        </section>
+
+        <section class="bio-section">
+            <div class="bio-container">
+                <p class="bio-text">I'm a multidisciplinary builder blending taste and craft with leadership in product, design, and engineering.</p>
+                <p class="bio-text">I leverage AI to improve user workflows and internal operations.</p>
+                <p class="bio-text">I thrive in complex and regulated domains for B2B SaaS. I shape product strategy from ambiguity and lead end-to-end initiatives.</p>
+                <p class="bio-text">I enjoy aligning and mentoring cross-functional teams, using prioritization frameworks for P&L impact, customer value, and shipping value at high velocity.</p>
+            </div>
+        </section>
+
         <section class="project">
             <h2 class="project-title">Dropbox Replay</h2>
             <p class="project-description">
@@ -128,9 +152,20 @@
     <script>
         const hero = document.querySelector('.hero');
         const name = document.querySelector('.name');
+        const profilePicture = document.querySelector('.profile-picture');
+        const profileContainer = document.querySelector('.profile-container');
+        const triangleSection = document.querySelector('.triangle-section');
+        const triangleContainer = document.querySelector('.triangle-container');
+        const triangleLabelProduct = document.querySelector('.triangle-label-top');
+        const triangleLabelDesign = document.querySelector('.triangle-label-bottom-left');
+        const triangleLabelEngineering = document.querySelector('.triangle-label-bottom-right');
+        const triangleLabelBuilder = document.querySelector('.triangle-label-center');
         
         function handleScroll() {
             const heroRect = hero.getBoundingClientRect();
+            const profileContainerRect = profileContainer.getBoundingClientRect();
+            const triangleRect = triangleSection.getBoundingClientRect();
+            const triangleContainerRect = triangleContainer.getBoundingClientRect();
             const viewportHeight = window.innerHeight;
             
             // The name is positioned 140px from the bottom of the hero
@@ -179,6 +214,81 @@
                 name.style.transform = '';
                 name.style.zIndex = '';
             }
+            
+            // Profile picture sticky animation
+            // Get the profile picture's center position in viewport coordinates
+            const profilePictureCenterY = profileContainerRect.top + (profileContainerRect.height / 2);
+            
+            // Calculate triangle positions in viewport coordinates
+            const triangleTop = triangleRect.top;
+            const triangleCenterY = triangleContainerRect.top + (triangleContainerRect.height / 2);
+            
+            // Profile picture should become sticky when it reaches the middle of viewport
+            // It should stay at that fixed viewport position until triangle center reaches it
+            const stickyViewportY = viewportHeight * 0.5; // Middle of viewport
+            const shouldStartSticky = profilePictureCenterY <= stickyViewportY;
+            const triangleHasReachedStickyPosition = triangleCenterY <= stickyViewportY;
+            
+            // Check if profile photo has entered the top of the triangle
+            // The photo enters when it's sticky AND the triangle top reaches or passes the sticky position
+            const photoHasEnteredTriangle = shouldStartSticky && triangleTop <= stickyViewportY;
+            
+            if (shouldStartSticky && !triangleHasReachedStickyPosition) {
+                // Make profile picture sticky - keep it at fixed viewport position
+                profilePicture.style.position = 'fixed';
+                profilePicture.style.top = stickyViewportY + 'px';
+                profilePicture.style.left = '50%';
+                profilePicture.style.transform = 'translate(-50%, -50%)';
+                profilePicture.style.zIndex = '50';
+                
+                // Show labels when photo enters triangle top
+                if (photoHasEnteredTriangle) {
+                    triangleLabelProduct.style.opacity = 1;
+                    triangleLabelDesign.style.opacity = 1;
+                    triangleLabelEngineering.style.opacity = 1;
+                    // Don't show "Principal Product Builder" yet - only when photo is fully inside triangle
+                    triangleLabelBuilder.style.opacity = 0;
+                } else {
+                    triangleLabelProduct.style.opacity = 0;
+                    triangleLabelDesign.style.opacity = 0;
+                    triangleLabelEngineering.style.opacity = 0;
+                    triangleLabelBuilder.style.opacity = 0;
+                }
+            } else if (triangleHasReachedStickyPosition) {
+                // Triangle center has reached the sticky position - stop being sticky and position in triangle
+                profilePicture.style.position = 'absolute';
+                profilePicture.style.top = '60%';
+                profilePicture.style.left = '50%';
+                profilePicture.style.transform = 'translate(-50%, -50%)';
+                profilePicture.style.zIndex = '10';
+                // Move it to triangle container if not already there
+                if (profilePicture.parentElement !== triangleContainer) {
+                    triangleContainer.appendChild(profilePicture);
+                }
+                // Keep labels visible (photo is now in triangle)
+                triangleLabelProduct.style.opacity = 1;
+                triangleLabelDesign.style.opacity = 1;
+                triangleLabelEngineering.style.opacity = 1;
+                // Show "Principal Product Builder" label (photo is inside triangle)
+                triangleLabelBuilder.style.opacity = 1;
+            } else {
+                // Reset to normal positioning in hero section
+                profilePicture.style.position = '';
+                profilePicture.style.top = '';
+                profilePicture.style.left = '';
+                profilePicture.style.transform = '';
+                profilePicture.style.zIndex = '';
+                // Move it back to profile container if not already there
+                if (profilePicture.parentElement !== profileContainer) {
+                    profileContainer.appendChild(profilePicture);
+                }
+                // Hide labels (photo hasn't entered triangle yet)
+                triangleLabelProduct.style.opacity = 0;
+                triangleLabelDesign.style.opacity = 0;
+                triangleLabelEngineering.style.opacity = 0;
+                triangleLabelBuilder.style.opacity = 0;
+            }
+            
         }
         
         window.addEventListener('scroll', handleScroll, { passive: true });
