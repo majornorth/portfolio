@@ -137,7 +137,7 @@ body {
     position: absolute;
     color: #ffffff;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 1rem;
+    font-size: 20px;
     font-weight: 400;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -164,7 +164,37 @@ body {
     top: 65%;
     left: 50%;
     transform: translate(-50%, 2rem);
-    font-size: 1.1rem;
+    font-size: .9rem;
+}
+
+/* Bio Section */
+.bio-section {
+    padding: 4rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 340px;
+}
+
+.bio-container {
+    width: 849px;
+    padding: 150px;
+    background-color: #362743;
+}
+
+.bio-text {
+    width: 433px;
+    margin: 0 auto;
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 38px;
+    color: #E0E0E0;
+    margin-bottom: 0;
+}
+
+.bio-text:not(:last-child) {
+    margin-bottom: 38px;
 }
 
 /* Project Sections */
