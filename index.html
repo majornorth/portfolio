@@ -147,6 +147,10 @@
         const profileContainer = document.querySelector('.profile-container');
         const triangleSection = document.querySelector('.triangle-section');
         const triangleContainer = document.querySelector('.triangle-container');
+        const triangleLabelProduct = document.querySelector('.triangle-label-top');
+        const triangleLabelDesign = document.querySelector('.triangle-label-bottom-left');
+        const triangleLabelEngineering = document.querySelector('.triangle-label-bottom-right');
+        const triangleLabelBuilder = document.querySelector('.triangle-label-center');
         
         function handleScroll() {
             const heroRect = hero.getBoundingClientRect();
@@ -206,7 +210,8 @@
             // Get the profile picture's center position in viewport coordinates
             const profilePictureCenterY = profileContainerRect.top + (profileContainerRect.height / 2);
             
-            // Calculate triangle center position in viewport coordinates
+            // Calculate triangle positions in viewport coordinates
+            const triangleTop = triangleRect.top;
             const triangleCenterY = triangleContainerRect.top + (triangleContainerRect.height / 2);
             
             // Profile picture should become sticky when it reaches the middle of viewport
@@ -215,6 +220,10 @@
             const shouldStartSticky = profilePictureCenterY <= stickyViewportY;
             const triangleHasReachedStickyPosition = triangleCenterY <= stickyViewportY;
             
+            // Check if profile photo has entered the top of the triangle
+            // The photo enters when it's sticky AND the triangle top reaches or passes the sticky position
+            const photoHasEnteredTriangle = shouldStartSticky && triangleTop <= stickyViewportY;
+            
             if (shouldStartSticky && !triangleHasReachedStickyPosition) {
                 // Make profile picture sticky - keep it at fixed viewport position
                 profilePicture.style.position = 'fixed';
@@ -222,10 +231,24 @@
                 profilePicture.style.left = '50%';
                 profilePicture.style.transform = 'translate(-50%, -50%)';
                 profilePicture.style.zIndex = '50';
+                
+                // Show labels when photo enters triangle top
+                if (photoHasEnteredTriangle) {
+                    triangleLabelProduct.style.opacity = 1;
+                    triangleLabelDesign.style.opacity = 1;
+                    triangleLabelEngineering.style.opacity = 1;
+                    // Don't show "Principal Product Builder" yet - only when photo is fully inside triangle
+                    triangleLabelBuilder.style.opacity = 0;
+                } else {
+                    triangleLabelProduct.style.opacity = 0;
+                    triangleLabelDesign.style.opacity = 0;
+                    triangleLabelEngineering.style.opacity = 0;
+                    triangleLabelBuilder.style.opacity = 0;
+                }
             } else if (triangleHasReachedStickyPosition) {
                 // Triangle center has reached the sticky position - stop being sticky and position in triangle
                 profilePicture.style.position = 'absolute';
-                profilePicture.style.top = '50%';
+                profilePicture.style.top = '60%';
                 profilePicture.style.left = '50%';
                 profilePicture.style.transform = 'translate(-50%, -50%)';
                 profilePicture.style.zIndex = '10';
@@ -233,6 +256,12 @@
                 if (profilePicture.parentElement !== triangleContainer) {
                     triangleContainer.appendChild(profilePicture);
                 }
+                // Keep labels visible (photo is now in triangle)
+                triangleLabelProduct.style.opacity = 1;
+                triangleLabelDesign.style.opacity = 1;
+                triangleLabelEngineering.style.opacity = 1;
+                // Show "Principal Product Builder" label (photo is inside triangle)
+                triangleLabelBuilder.style.opacity = 1;
             } else {
                 // Reset to normal positioning in hero section
                 profilePicture.style.position = '';
@@ -244,6 +273,11 @@
                 if (profilePicture.parentElement !== profileContainer) {
                     profileContainer.appendChild(profilePicture);
                 }
+                // Hide labels (photo hasn't entered triangle yet)
+                triangleLabelProduct.style.opacity = 0;
+                triangleLabelDesign.style.opacity = 0;
+                triangleLabelEngineering.style.opacity = 0;
+                triangleLabelBuilder.style.opacity = 0;
             }
             
         }
