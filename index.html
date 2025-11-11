@@ -255,30 +255,20 @@
                 name.style.transform = 'translate(-50%, -50%)';
                 name.style.fontSize = '24px'; // Already at final size
                 name.style.zIndex = '1001';
-            } else if (fontSizeProgress > 0) {
-                // Font size is animating, but position hasn't started yet
+            } else {
+                // Always use fixed positioning to prevent flicker
+                // Calculate position based on hero's current position
                 name.style.opacity = '1';
                 name.style.pointerEvents = 'auto';
                 nameNav.classList.remove('visible');
                 
-                // Keep name in its original position, just animate font size
+                // Keep name in fixed position matching its natural position
                 name.style.position = 'fixed';
                 name.style.top = nameYPosition + 'px';
                 name.style.left = (window.innerWidth / 2) + 'px';
                 name.style.transform = 'translate(-50%, -50%)';
-                name.style.fontSize = fontSize + 'px';
+                name.style.fontSize = fontSize + 'px'; // Animate font size from the start
                 name.style.zIndex = '1001';
-            } else {
-                // Before any animation starts - normal positioning
-                name.style.opacity = '1';
-                name.style.pointerEvents = 'auto';
-                nameNav.classList.remove('visible');
-                name.style.position = '';
-                name.style.top = '';
-                name.style.left = '';
-                name.style.transform = '';
-                name.style.fontSize = '';
-                name.style.zIndex = '';
             }
             
             // Profile picture animation - always in triangle container
