@@ -7,10 +7,17 @@
     <meta name="description" content="Jason McCoy is a Principal Product Designer and Product Manager who specializes in building B2B SaaS products with complex workflows, B2C consumer finance applications, and B2B enterprise software. He is a 5x founding designer and 1x founder with an exit. He excels in market analysis and identifying unspotted opportunities to deliver customer value and drive business growth.">
     <meta name="keywords" content="Jason McCoy, Product Designer, Portfolio, Principal Product Designer, Product Design, Product Development, Product Management, Product Strategy, Product Marketing, Product Analytics, Product Research, Product Strategy, Product Roadmap, Product Planning, Product Execution, Product Development, Product Management, Product Strategy, Product Marketing, Product Analytics, Product Research, Product Strategy, Product Roadmap, Product Planning, Product Execution">
     <meta name="author" content="Jason McCoy">
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, nocache">
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="slurp" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="duckduckbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="Baiduspider" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="YandexBot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
     <meta name="google" content="notranslate">
-    <meta name="google-site-verification" content="google-site-verification=google-site-verification">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <link rel="icon" type="image/png" href="./images/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,9 +26,12 @@
 </head>
 <body>
     <nav class="nav">
-        <div class="nav-links">
+        <div class="nav-left">
             <a href="https://www.loom.com/share/9db28bc632f442c6bb9a6cd6cd6ac8d6?sid=fba0a2a2-b744-4b97-a9a4-4a985e665ba6" class="nav-link" target="_blank" rel="noopener noreferrer">Intro video</a>
             <a href="https://www.figma.com/proto/K0YaaAOtqvCgeLE9Vulmtn/Jason-McCoy?page-id=49723%3A18804&node-id=51493-80988&viewport=6190%2C6768%2C0.06&t=VEoNbFbGLLtdqIRR-1&scaling=contain&content-scaling=fixed&starting-point-node-id=51493%3A80988&show-proto-sidebar=1" class="nav-link" target="_blank" rel="noopener noreferrer">Onsite deck</a>
+        </div>
+        <h1 class="name-nav">JASON MCCOY</h1>
+        <div class="nav-right">
             <a href="jason-mccoy-resume.pdf" class="nav-link" target="_blank" rel="noopener noreferrer">Résumé</a>
             <a href="https://www.linkedin.com/in/principal-product-designer/" class="nav-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
@@ -147,6 +157,8 @@
     <script>
         const hero = document.querySelector('.hero');
         const name = document.querySelector('.name');
+        const nameNav = document.querySelector('.name-nav');
+        const nav = document.querySelector('.nav');
         const profilePicture = document.querySelector('.profile-picture');
         const triangleSection = document.querySelector('.triangle-section');
         const triangleContainer = document.querySelector('.triangle-container');
@@ -157,54 +169,106 @@
         
         function handleScroll() {
             const heroRect = hero.getBoundingClientRect();
+            const navRect = nav.getBoundingClientRect();
             const triangleRect = triangleSection.getBoundingClientRect();
             const triangleContainerRect = triangleContainer.getBoundingClientRect();
             const viewportHeight = window.innerHeight;
             
-            // The name is positioned 140px from the bottom of the hero
-            // Calculate the position where the name text is (in viewport coordinates)
+            // Calculate the name's current position (140px from bottom of hero)
             const nameYPosition = heroRect.bottom - 140;
             
-            // Animation starts when hero bottom reaches viewport bottom
-            // Animation ends when name position reaches top of viewport (40px for padding)
-            const animationStart = viewportHeight; // Hero bottom at viewport bottom
-            const animationEnd = 40; // Name at top with 40px padding
+            // Nav center position (where name should end up)
+            const navCenterY = navRect.top + (navRect.height / 2);
+            const navCenterX = navRect.left + (navRect.width / 2);
             
-            // Calculate progress (0 = start, 1 = end)
-            let progress = 0;
-            let shouldBeSticky = false;
+            // Calculate distance from name to nav center
+            const distanceToNav = nameYPosition - navCenterY;
             
-            if (heroRect.bottom <= viewportHeight && nameYPosition > animationEnd) {
-                // During animation: interpolate between start and end
-                progress = 1 - ((nameYPosition - animationEnd) / (animationStart - animationEnd));
-            } else if (nameYPosition <= animationEnd) {
-                // Animation complete - name has reached sticky position
-                progress = 1;
-                shouldBeSticky = true;
+            // Font size animation: starts when hero bottom reaches viewport bottom
+            // Completes when name is still 200px away from nav (before snapping)
+            const fontSizeAnimationStart = viewportHeight; // Hero bottom at viewport bottom
+            const fontSizeAnimationEnd = navCenterY + 200; // 200px before nav
+            
+            let fontSizeProgress = 0;
+            if (heroRect.bottom <= viewportHeight && nameYPosition > fontSizeAnimationEnd) {
+                // During font size animation
+                fontSizeProgress = 1 - ((nameYPosition - fontSizeAnimationEnd) / (fontSizeAnimationStart - fontSizeAnimationEnd));
+            } else if (nameYPosition <= fontSizeAnimationEnd) {
+                // Font size animation complete
+                fontSizeProgress = 1;
+            }
+            fontSizeProgress = Math.max(0, Math.min(1, fontSizeProgress));
+            
+            // Position animation: starts when name is close to nav (100px away)
+            // Snaps into place when it reaches nav
+            const positionAnimationStartDistance = 100;
+            const positionAnimationEndDistance = 0;
+            
+            let positionProgress = 0;
+            let nameInNav = false;
+            
+            if (distanceToNav <= positionAnimationStartDistance && distanceToNav > positionAnimationEndDistance) {
+                // During position animation
+                positionProgress = 1 - ((distanceToNav - positionAnimationEndDistance) / (positionAnimationStartDistance - positionAnimationEndDistance));
+            } else if (distanceToNav <= positionAnimationEndDistance) {
+                // Position animation complete - name has reached nav
+                positionProgress = 1;
+                nameInNav = true;
             }
             
-            // Clamp progress between 0 and 1
-            progress = Math.max(0, Math.min(1, progress));
+            // Interpolate font size between 128px and 24px (based on fontSizeProgress only)
+            const fontSize = 128 - (fontSizeProgress * (128 - 24));
             
-            // Interpolate font size between 128px and 24px
-            const fontSize = 128 - (progress * (128 - 24));
-            
-            // Apply font size smoothly
-            name.style.fontSize = fontSize + 'px';
-            
-            // Make it sticky as soon as it reaches the sticky position (40px from top)
-            if (nameYPosition <= animationEnd) {
+            if (nameInNav) {
+                // Name is in nav - hide original, show nav version, snap into place
+                name.style.opacity = '0';
+                name.style.pointerEvents = 'none';
+                nameNav.classList.add('visible');
+                // Font size is already at 24px from fontSizeProgress
+            } else if (positionProgress > 0) {
+                // Snapping into nav - position animates, font size stays at 24px
+                name.style.opacity = '1';
+                name.style.pointerEvents = 'auto';
+                nameNav.classList.remove('visible');
+                
+                // Calculate current position (interpolate between current position and nav center)
+                const startY = nameYPosition;
+                const endY = navCenterY;
+                const currentY = startY - (positionProgress * (startY - endY));
+                
+                const startX = window.innerWidth / 2; // Original center position
+                const endX = navCenterX;
+                const currentX = startX + (positionProgress * (endX - startX));
+                
                 name.style.position = 'fixed';
-                name.style.top = '40px';
-                name.style.left = '50%';
-                name.style.transform = 'translateX(-50%)';
-                name.style.zIndex = '100';
+                name.style.top = currentY + 'px';
+                name.style.left = currentX + 'px';
+                name.style.transform = 'translate(-50%, -50%)';
+                name.style.fontSize = '24px'; // Already at final size
+                name.style.zIndex = '1001';
+            } else if (fontSizeProgress > 0) {
+                // Font size is animating, but position hasn't started yet
+                name.style.opacity = '1';
+                name.style.pointerEvents = 'auto';
+                nameNav.classList.remove('visible');
+                
+                // Keep name in its original position, just animate font size
+                name.style.position = 'fixed';
+                name.style.top = nameYPosition + 'px';
+                name.style.left = (window.innerWidth / 2) + 'px';
+                name.style.transform = 'translate(-50%, -50%)';
+                name.style.fontSize = fontSize + 'px';
+                name.style.zIndex = '1001';
             } else {
-                // Reset to normal positioning before reaching sticky position
+                // Before any animation starts - normal positioning
+                name.style.opacity = '1';
+                name.style.pointerEvents = 'auto';
+                nameNav.classList.remove('visible');
                 name.style.position = '';
                 name.style.top = '';
                 name.style.left = '';
                 name.style.transform = '';
+                name.style.fontSize = '';
                 name.style.zIndex = '';
             }
             
