@@ -15,14 +15,47 @@ body {
 
 /* Navigation */
 .nav {
-    padding: 80px 3rem 2rem 3rem;
+    position: sticky;
+    top: 0;
+    padding: 2rem 3rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1E0F2D;
+    z-index: 1000;
 }
 
-.nav-links {
+.nav-left,
+.nav-right {
     display: flex;
     gap: 120px;
+    flex: 1;
+}
+
+.nav-left {
+    justify-content: flex-start;
+}
+
+.nav-right {
+    justify-content: flex-end;
+}
+
+.name-nav {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -0.13em;
+    text-transform: uppercase;
+    color: #ffffff;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.name-nav.visible {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .nav-link {
@@ -77,7 +110,8 @@ body {
     text-transform: uppercase;
     color: #ffffff;
     white-space: nowrap;
-    will-change: font-size, transform;
+    will-change: font-size, transform, position;
+    transition: opacity 0.3s ease;
 }
 
 /* Triangle Section */
