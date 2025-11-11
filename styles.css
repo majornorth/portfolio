@@ -194,21 +194,62 @@ body {
     width: 1104px;
     padding: 150px;
     background-color: #362743;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.testimonial-text {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 3rem;
 }
 
 .bio-text {
-    width: 433px;
+    width: 100%;
     margin: 0 auto;
-    font-family: 'Lora', Georgia, serif;
-    font-weight: 500;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;
     font-size: 20px;
-    line-height: 38px;
+    line-height: 1.8;
     color: #E0E0E0;
     margin-bottom: 0;
+    text-align: left;
 }
 
 .bio-text:not(:last-child) {
-    margin-bottom: 38px;
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-attribution {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.testimonial-photo {
+    opacity: 0.5;
+}
+
+.testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.testimonial-name {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.testimonial-title,
+.testimonial-credentials {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #E0E0E0;
 }
 
 /* Project Sections */
