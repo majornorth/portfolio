@@ -497,8 +497,8 @@
             canvas.height = imageSize;
             ctx.drawImage(img, 0, 0, imageSize, imageSize);
             
-            // Sample image data - use a grid that matches the image
-            const sampleSize = 2; // Sample every 2 pixels for better detail
+            // Use a coarser grid for better performance (fewer dots)
+            const gridSize = 4; // Sample every 4 pixels
             const dots = [];
             
             try {
@@ -510,9 +510,9 @@
                 const startX = centerX - halfSize;
                 const startY = centerY - halfSize;
                 
-                // Sample pixels and create dot data
-                for (let y = 0; y < imageSize; y += sampleSize) {
-                    for (let x = 0; x < imageSize; x += sampleSize) {
+                // Sample pixels row by row (top to bottom, left to right)
+                for (let y = 0; y < imageSize; y += gridSize) {
+                    for (let x = 0; x < imageSize; x += gridSize) {
                         const idx = (y * imageSize + x) * 4;
                         const r = data[idx];
                         const g = data[idx + 1];
@@ -526,43 +526,51 @@
                         const gray = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
                         const brightness = gray / 255;
                         
-                        // Create dots for all pixels (removed contrast filter for better image representation)
+                        // Store row and column for animation ordering
+                        const row = Math.floor(y / gridSize);
+                        const col = Math.floor(x / gridSize);
+                        
                         dots.push({
-                            x: startX + x + sampleSize / 2, // Center dot in sampled area
-                            y: startY + y + sampleSize / 2,
+                            x: startX + x + gridSize / 2,
+                            y: startY + y + gridSize / 2,
                             brightness: brightness,
-                            size: 1.5 + brightness * 2.5 // Darker = smaller (1.5-2px), lighter = larger (up to 4px)
+                            size: 2 + brightness * 2, // 2-4px size range
+                            row: row,
+                            col: col
                         });
                     }
                 }
             } catch(e) {
                 // If we can't read image data (CORS issue), create a simple grid pattern
-                const gridSize = 6;
                 const halfSize = imageSize / 2;
                 const startX = centerX - halfSize;
                 const startY = centerY - halfSize;
                 
                 for (let y = 0; y < imageSize; y += gridSize) {
                     for (let x = 0; x < imageSize; x += gridSize) {
+                        const row = Math.floor(y / gridSize);
+                        const col = Math.floor(x / gridSize);
                         dots.push({
                             x: startX + x + gridSize / 2,
                             y: startY + y + gridSize / 2,
                             brightness: 0.5,
-                            size: 3
+                            size: 3,
+                            row: row,
+                            col: col
                         });
                     }
                 }
             }
             
-            // Edges for starting positions
-            const edges = ['top', 'bottom', 'left', 'right'];
+            // Calculate max columns per row for delay calculation
+            const maxCols = Math.max(...dots.map(d => d.col)) + 1;
+            const maxRows = Math.max(...dots.map(d => d.row)) + 1;
             
-            // Create dots
-            dots.forEach((dotData, index) => {
+            // Create dots and position them
+            dots.forEach((dotData) => {
                 const dot = document.createElement('div');
                 dot.className = 'dot';
                 
-                // Size based on brightness
                 const size = dotData.size;
                 dot.style.width = size + 'px';
                 dot.style.height = size + 'px';
@@ -571,98 +579,41 @@
                 const grayValue = Math.floor(dotData.brightness * 255);
                 dot.style.backgroundColor = `rgb(${grayValue}, ${grayValue}, ${grayValue})`;
                 
-                // Deterministic edge assignment - distribute dots evenly across edges
-                const edgeIndex = index % edges.length;
-                const edge = edges[edgeIndex];
-                
-                // Deterministic start position based on index
-                // Distribute dots evenly along each edge
-                const dotsPerEdge = Math.ceil(dots.length / edges.length);
-                const positionInEdge = Math.floor(index / edges.length);
-                const normalizedPosition = dotsPerEdge > 1 ? positionInEdge / (dotsPerEdge - 1) : 0;
-                
-                let startX, startY;
-                
-                // Calculate start position based on edge (deterministic)
-                switch(edge) {
-                    case 'top':
-                        // Top edge: y = 0, x = evenly distributed across width
-                        startX = normalizedPosition * viewportWidth;
-                        startY = 0;
-                        break;
-                    case 'bottom':
-                        // Bottom edge: y = viewportHeight, x = evenly distributed across width
-                        startX = normalizedPosition * viewportWidth;
-                        startY = viewportHeight;
-                        break;
-                    case 'left':
-                        // Left edge: x = 0, y = evenly distributed across height
-                        startX = 0;
-                        startY = normalizedPosition * viewportHeight;
-                        break;
-                    case 'right':
-                        // Right edge: x = viewportWidth, y = evenly distributed across height
-                        startX = viewportWidth;
-                        startY = normalizedPosition * viewportHeight;
-                        break;
-                }
-                
-                // End position (exact pixel position)
-                const endX = dotData.x;
-                const endY = dotData.y;
-                
-                // Set initial position (position dot center at start position)
-                const startPosX = startX - size / 2;
-                const startPosY = startY - size / 2;
-                dot.style.left = startPosX + 'px';
-                dot.style.top = startPosY + 'px';
+                // Position dot at final location (no movement needed)
+                dot.style.left = (dotData.x - size / 2) + 'px';
+                dot.style.top = (dotData.y - size / 2) + 'px';
                 dot.style.opacity = '0';
+                dot.style.transform = 'scale(0)';
+                dot.style.transition = 'opacity 0.2s ease-out, transform 0.2s ease-out';
                 
                 overlay.appendChild(dot);
                 
-                // Deterministic timing - fixed duration, evenly staggered delays
-                const delay = (index / dots.length) * 0.4; // Spread over 400ms
-                const duration = 2.0; // Fixed duration instead of random
+                // Calculate delay: row by row, left to right
+                // Each row starts after the previous row, dots within a row appear left to right
+                const rowDelay = dotData.row * 0.03; // 30ms per row
+                const colDelay = dotData.col * 0.01; // 10ms per column within row
+                const delay = (rowDelay + colDelay) * 1000; // Convert to milliseconds
                 
-                // Calculate final position (position dot center at end position)
-                const finalPosX = endX - size / 2;
-                const finalPosY = endY - size / 2;
-                
-                // Calculate translation needed
-                const translateX = finalPosX - startPosX;
-                const translateY = finalPosY - startPosY;
-                
-                // Use requestAnimationFrame with performance.now() for consistent timing
-                const startTime = performance.now();
-                const targetDelay = delay * 1000;
-                
-                function animateDot() {
-                    const elapsed = performance.now() - startTime;
-                    if (elapsed >= targetDelay) {
-                        dot.style.transition = `transform ${duration}s cubic-bezier(0.4, 0, 0.2, 1), opacity ${duration * 0.2}s ease-out`;
-                        dot.style.opacity = '1';
-                        
-                        requestAnimationFrame(() => {
-                            dot.style.transform = `translate(${translateX}px, ${translateY}px)`;
-                        });
-                    } else {
-                        requestAnimationFrame(animateDot);
-                    }
-                }
-                
-                animateDot();
+                // Animate dot appearing with simple scale + opacity
+                setTimeout(() => {
+                    dot.style.opacity = '1';
+                    dot.style.transform = 'scale(1)';
+                }, delay);
             });
             
-            // Calculate when animation completes (max delay + duration)
-            const maxDelay = 0.4;
-            const maxDuration = 2.0; // Updated to match fixed duration
-            const animationCompleteTime = (maxDelay + maxDuration) * 1000;
+            // Calculate when animation completes (last dot delay + animation duration)
+            const lastRow = maxRows - 1;
+            const lastCol = maxCols - 1;
+            const lastRowDelay = lastRow * 0.03;
+            const lastColDelay = lastCol * 0.01;
+            const maxDelay = (lastRowDelay + lastColDelay) * 1000;
+            const animationDuration = 200; // 200ms for scale/opacity animation
+            const animationCompleteTime = maxDelay + animationDuration + 100; // Add small buffer
             
-            // Show profile picture and remove dots immediately when animation completes
+            // Show profile picture and remove dots when animation completes
             setTimeout(() => {
-                // Remove all dots immediately
                 overlay.style.opacity = '0';
-                overlay.style.transition = 'opacity 0.1s ease-out';
+                overlay.style.transition = 'opacity 0.2s ease-out';
                 
                 // Show profile picture
                 profilePicture.style.visibility = 'visible';
@@ -673,7 +624,7 @@
                 // Remove overlay after fade
                 setTimeout(() => {
                     overlay.remove();
-                }, 100);
+                }, 200);
             }, animationCompleteTime);
         }
         
