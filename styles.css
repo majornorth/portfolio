@@ -616,6 +616,149 @@ body {
     object-fit: contain;
 }
 
+/* Star dust animation for Figma links */
+.figma-link,
+.figma-link-large {
+    position: relative;
+    display: inline-block;
+    overflow: visible;
+}
+
+.figma-link::before,
+.figma-link::after,
+.figma-link-large::before,
+.figma-link-large::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(207, 189, 255, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.figma-link:hover::before,
+.figma-link:hover::after,
+.figma-link-large:hover::before,
+.figma-link-large:hover::after {
+    opacity: 1;
+    animation: starDustSwirl 4s ease-in-out infinite;
+}
+
+/* Create multiple star particles spread across the entire element using box-shadow */
+.figma-link::before {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+        -80px -40px 0 0 rgba(207, 189, 255, 0.6),
+        60px -50px 0 0 rgba(207, 189, 255, 0.7),
+        -50px 70px 0 0 rgba(207, 189, 255, 0.5),
+        90px 30px 0 0 rgba(207, 189, 255, 0.6),
+        -30px -80px 0 0 rgba(207, 189, 255, 0.5),
+        40px 80px 0 0 rgba(207, 189, 255, 0.6),
+        -70px 20px 0 0 rgba(207, 189, 255, 0.5),
+        20px -60px 0 0 rgba(207, 189, 255, 0.6);
+    animation-delay: 0s;
+}
+
+.figma-link::after {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+        70px -30px 0 0 rgba(207, 189, 255, 0.6),
+        -60px -70px 0 0 rgba(207, 189, 255, 0.7),
+        50px 60px 0 0 rgba(207, 189, 255, 0.5),
+        -90px 40px 0 0 rgba(207, 189, 255, 0.6),
+        30px 90px 0 0 rgba(207, 189, 255, 0.5),
+        -40px -50px 0 0 rgba(207, 189, 255, 0.6),
+        80px 10px 0 0 rgba(207, 189, 255, 0.5),
+        -20px 70px 0 0 rgba(207, 189, 255, 0.6);
+    animation-delay: 0.5s;
+}
+
+.figma-link-large::before {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+        -120px -60px 0 0 rgba(207, 189, 255, 0.6),
+        90px -70px 0 0 rgba(207, 189, 255, 0.7),
+        -70px 100px 0 0 rgba(207, 189, 255, 0.5),
+        130px 50px 0 0 rgba(207, 189, 255, 0.6),
+        -50px -120px 0 0 rgba(207, 189, 255, 0.5),
+        60px 120px 0 0 rgba(207, 189, 255, 0.6),
+        -100px 30px 0 0 rgba(207, 189, 255, 0.5),
+        40px -90px 0 0 rgba(207, 189, 255, 0.6),
+        110px -20px 0 0 rgba(207, 189, 255, 0.5),
+        -30px 110px 0 0 rgba(207, 189, 255, 0.6);
+    animation-delay: 0s;
+}
+
+.figma-link-large::after {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+        100px -50px 0 0 rgba(207, 189, 255, 0.6),
+        -90px -100px 0 0 rgba(207, 189, 255, 0.7),
+        80px 90px 0 0 rgba(207, 189, 255, 0.5),
+        -130px 60px 0 0 rgba(207, 189, 255, 0.6),
+        50px 130px 0 0 rgba(207, 189, 255, 0.5),
+        -70px -80px 0 0 rgba(207, 189, 255, 0.6),
+        120px 20px 0 0 rgba(207, 189, 255, 0.5),
+        -40px 100px 0 0 rgba(207, 189, 255, 0.6),
+        95px -40px 0 0 rgba(207, 189, 255, 0.5),
+        -60px -110px 0 0 rgba(207, 189, 255, 0.6);
+    animation-delay: 0.5s;
+}
+
+@keyframes starDustSwirl {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    }
+    10% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+    }
+    100% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1) rotate(360deg);
+    }
+}
+
+@keyframes starDustSwirlAlt {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    }
+    10% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.2) rotate(-180deg);
+    }
+    100% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1) rotate(-360deg);
+    }
+}
+
+.figma-link::after,
+.figma-link-large::after {
+    animation-name: starDustSwirlAlt;
+}
+
 .dropbox-replay .left-panel {
     flex: 1;
     background-color: #1a1a1a;
