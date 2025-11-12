@@ -246,6 +246,54 @@
         const triangleLabelEngineering = document.querySelector('.triangle-label-bottom-right');
         const triangleLabelBuilder = document.querySelector('.triangle-label-center');
         
+        // Calculate initial font size based on viewport width
+        // At 2540px viewport width, font size should be 377px
+        const referenceViewportWidth = 2540;
+        const referenceFontSize = 377;
+        const minViewportWidth = 768; // Minimum viewport width for scaling
+        const minFontSize = 64; // Minimum font size (from responsive CSS)
+        
+        function calculateInitialFontSize() {
+            const viewportWidth = window.innerWidth;
+            if (viewportWidth >= referenceViewportWidth) {
+                return referenceFontSize;
+            } else if (viewportWidth <= minViewportWidth) {
+                return minFontSize;
+            } else {
+                // Linear interpolation between minFontSize and referenceFontSize
+                const ratio = (viewportWidth - minViewportWidth) / (referenceViewportWidth - minViewportWidth);
+                return minFontSize + (referenceFontSize - minFontSize) * ratio;
+            }
+        }
+        
+        // Calculate initial top position based on viewport width
+        // At 2540px viewport width, top should be 1262.39px
+        const referenceTopPosition = 1262.39;
+        
+        function calculateInitialTopPosition() {
+            const viewportWidth = window.innerWidth;
+            if (viewportWidth >= referenceViewportWidth) {
+                return referenceTopPosition;
+            } else {
+                // Scale proportionally based on viewport width
+                const ratio = viewportWidth / referenceViewportWidth;
+                return referenceTopPosition * ratio;
+            }
+        }
+        
+        // Set initial font size on page load
+        const initialFontSize = calculateInitialFontSize();
+        name.style.fontSize = initialFontSize + 'px';
+        
+        // Update font size on window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                handleScroll(); // Recalculate on resize
+            }, 100);
+        });
+        
         function handleScroll() {
             const heroRect = hero.getBoundingClientRect();
             const navRect = nav.getBoundingClientRect();
@@ -295,8 +343,9 @@
                 nameInNav = true;
             }
             
-            // Interpolate font size between 128px and 24px (based on fontSizeProgress only)
-            const fontSize = 128 - (fontSizeProgress * (128 - 24));
+            // Interpolate font size between initialFontSize and 24px (based on fontSizeProgress only)
+            const currentInitialFontSize = calculateInitialFontSize();
+            const fontSize = currentInitialFontSize - (fontSizeProgress * (currentInitialFontSize - 24));
             
             if (nameInNav) {
                 // Name is in nav - hide original, show nav version, snap into place
