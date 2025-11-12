@@ -74,6 +74,34 @@
         </section>
 
         <section class="project">
+            <h2 class="project-title">Nerdy</h2>
+            <p class="project-description">
+                Using AI to build a product quality prototype to get internal alignment and stakeholder feedback.
+            </p>
+            <div class="project-tags">
+                <span class="tag">2025</span>
+                <span class="tag">Marketplace</span>
+                <span class="tag">AI</span>
+                <span class="tag">Product Management</span>
+                <span class="tag">Discovery</span>
+                <span class="tag">Design Engineering</span>
+            </div>
+            <div class="video-container">
+                <img id="video-placeholder" src="images/nerdy-session-prep.png" alt="Nerdy Session Prep" class="video-placeholder-image">
+                <video id="nerdy-video" class="video-player-element" preload="none" controls style="display: none;">
+                    <source src="images/nerdy-tutors.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <button class="video-play-button" id="video-play-button" aria-label="Play video">
+                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="40" cy="40" r="40" fill="rgba(255, 255, 255, 0.9)"/>
+                        <path d="M32 24L32 56L56 40L32 24Z" fill="#1E0F2D"/>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <section class="project">
             <h2 class="project-title">Dropbox Replay</h2>
             <p class="project-description">
                 I joined a 10-person team to build a video review and feedback tool for creatives, leading design from alpha to general availability, reaching $2m ARR the first year after launch.
@@ -325,6 +353,33 @@
         
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll(); // Initial check
+        
+        // Video play button functionality
+        const video = document.getElementById('nerdy-video');
+        const playButton = document.getElementById('video-play-button');
+        const placeholder = document.getElementById('video-placeholder');
+        
+        if (video && playButton && placeholder) {
+            playButton.addEventListener('click', () => {
+                // Hide placeholder and show video
+                placeholder.style.display = 'none';
+                video.style.display = 'block';
+                video.play();
+                playButton.classList.add('hidden');
+            });
+            
+            video.addEventListener('play', () => {
+                playButton.classList.add('hidden');
+            });
+            
+            video.addEventListener('pause', () => {
+                playButton.classList.remove('hidden');
+            });
+            
+            video.addEventListener('ended', () => {
+                playButton.classList.remove('hidden');
+            });
+        }
     </script>
 </body>
 </html>
