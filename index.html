@@ -108,8 +108,13 @@
                             </button>
                             <div class="audio-time" id="audio-time">0:00/0:00</div>
                         </div>
-                        <div class="login-tooltip">
+                        <div class="login-tooltip" id="login-tooltip">
                             <div class="tooltip-content">
+                                <button class="tooltip-close" id="tooltip-close" aria-label="Close login credentials">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
                                 <div class="tooltip-title">Login Credentials</div>
                                 <div class="tooltip-credential">
                                     <span class="credential-label">Email:</span>
@@ -499,6 +504,16 @@
             // Update button state on play
             tuttleAudio.addEventListener('play', () => {
                 audioPlayButton.classList.add('playing');
+            });
+        }
+        
+        // Login tooltip close functionality
+        const loginTooltip = document.getElementById('login-tooltip');
+        const tooltipClose = document.getElementById('tooltip-close');
+        
+        if (loginTooltip && tooltipClose) {
+            tooltipClose.addEventListener('click', () => {
+                loginTooltip.classList.add('hidden');
             });
         }
         
