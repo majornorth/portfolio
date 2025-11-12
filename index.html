@@ -305,9 +305,13 @@
             const triangleTop = triangleRect.top;
             const triangleCenterY = triangleContainerRect.top + (triangleContainerRect.height / 2);
             
-            // Profile picture should be centered in viewport until triangle center reaches viewport center
-            const stickyViewportY = viewportHeight * 0.5; // Middle of viewport
-            const triangleHasReachedStickyPosition = triangleCenterY <= stickyViewportY;
+            // Profile picture should be centered in viewport on page load
+            const stickyViewportY = viewportHeight * 0.5; // Center of viewport for initial positioning
+            
+            // Snap threshold - triangle section snaps when it reaches this lower position
+            // This positions the triangle section closer to bottom when snapping occurs
+            const snapThresholdY = viewportHeight * 0.65; // Lower in viewport (closer to bottom)
+            const triangleHasReachedStickyPosition = triangleCenterY <= snapThresholdY;
             
             // Check if profile photo has entered the top of the triangle
             // The photo enters when triangle top reaches or passes the sticky position
