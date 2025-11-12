@@ -37,6 +37,8 @@
         </div>
     </nav>
 
+    <div class="dots-overlay" id="dots-overlay"></div>
+
     <main class="main">
         <section class="hero">
             <h1 class="name">JASON MCCOY</h1>
@@ -48,7 +50,7 @@
                 <svg class="triangle" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
                     <polygon points="200,50 50,350 350,350" fill="none" stroke="rgba(207, 189, 255, 0.3)" stroke-width="1"/>
                 </svg>
-                <img src="images/jason-mccoy.png" alt="Jason McCoy" class="profile-picture">
+                <img src="images/jason-mccoy.png" alt="Jason McCoy" class="profile-picture initial-load">
                 <div class="triangle-label triangle-label-bottom-left">Design</div>
                 <div class="triangle-label triangle-label-bottom-right">Engineering</div>
                 <div class="triangle-label triangle-label-center">Principal Product Builder</div>
@@ -396,6 +398,223 @@
         
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll(); // Initial check
+        
+        // Dots animation on page load
+        function createDotsAnimation() {
+            const overlay = document.getElementById('dots-overlay');
+            const profilePicture = document.querySelector('.profile-picture');
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            
+            // Get the actual position of the profile picture (it's positioned by handleScroll)
+            // Wait a couple frames to ensure positioning is complete and browser has rendered
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    const rect = profilePicture.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    const imageSize = rect.width; // Profile picture is 90px x 90px
+                    
+                    // Load image and sample it to create dots
+                    const img = new Image();
+                    // Try to set crossOrigin, but handle if it fails
+                    try {
+                        img.crossOrigin = 'anonymous';
+                    } catch(e) {
+                        // If crossOrigin fails, continue without it
+                    }
+                    
+                    img.onload = function() {
+                        createDotsFromImage(overlay, profilePicture, viewportWidth, viewportHeight, centerX, centerY, imageSize, img);
+                    };
+                    img.onerror = function() {
+                        // If image fails to load, try without crossOrigin
+                        const img2 = new Image();
+                        img2.onload = function() {
+                            createDotsFromImage(overlay, profilePicture, viewportWidth, viewportHeight, centerX, centerY, imageSize, img2);
+                        };
+                        img2.src = profilePicture.src;
+                    };
+                    img.src = profilePicture.src;
+                });
+            });
+        }
+        
+        function createDotsFromImage(overlay, profilePicture, viewportWidth, viewportHeight, centerX, centerY, imageSize, img) {
+            // Create canvas to sample image
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = imageSize;
+            canvas.height = imageSize;
+            ctx.drawImage(img, 0, 0, imageSize, imageSize);
+            
+            // Sample image data - use a grid that matches the image
+            const sampleSize = 2; // Sample every 2 pixels for better detail
+            const dots = [];
+            
+            try {
+                const imageData = ctx.getImageData(0, 0, imageSize, imageSize);
+                const data = imageData.data;
+                
+                // Calculate grid positions
+                const halfSize = imageSize / 2;
+                const startX = centerX - halfSize;
+                const startY = centerY - halfSize;
+                
+                // Sample pixels and create dot data
+                for (let y = 0; y < imageSize; y += sampleSize) {
+                    for (let x = 0; x < imageSize; x += sampleSize) {
+                        const idx = (y * imageSize + x) * 4;
+                        const r = data[idx];
+                        const g = data[idx + 1];
+                        const b = data[idx + 2];
+                        const a = data[idx + 3];
+                        
+                        // Skip transparent or very transparent pixels
+                        if (a < 30) continue;
+                        
+                        // Convert to grayscale
+                        const gray = Math.round(0.299 * r + 0.587 * g + 0.114 * b);
+                        const brightness = gray / 255;
+                        
+                        // Create dots for all pixels (removed contrast filter for better image representation)
+                        dots.push({
+                            x: startX + x + sampleSize / 2, // Center dot in sampled area
+                            y: startY + y + sampleSize / 2,
+                            brightness: brightness,
+                            size: 1.5 + brightness * 2.5 // Darker = smaller (1.5-2px), lighter = larger (up to 4px)
+                        });
+                    }
+                }
+            } catch(e) {
+                // If we can't read image data (CORS issue), create a simple grid pattern
+                const gridSize = 6;
+                const halfSize = imageSize / 2;
+                const startX = centerX - halfSize;
+                const startY = centerY - halfSize;
+                
+                for (let y = 0; y < imageSize; y += gridSize) {
+                    for (let x = 0; x < imageSize; x += gridSize) {
+                        dots.push({
+                            x: startX + x + gridSize / 2,
+                            y: startY + y + gridSize / 2,
+                            brightness: 0.5,
+                            size: 3
+                        });
+                    }
+                }
+            }
+            
+            // Edges for starting positions
+            const edges = ['top', 'bottom', 'left', 'right'];
+            
+            // Create dots
+            dots.forEach((dotData, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                
+                // Size based on brightness
+                const size = dotData.size;
+                dot.style.width = size + 'px';
+                dot.style.height = size + 'px';
+                
+                // Grayscale color based on brightness
+                const grayValue = Math.floor(dotData.brightness * 255);
+                dot.style.backgroundColor = `rgb(${grayValue}, ${grayValue}, ${grayValue})`;
+                
+                // Assign to a random edge
+                const edge = edges[Math.floor(Math.random() * edges.length)];
+                let startX, startY;
+                
+                // Calculate start position based on edge
+                switch(edge) {
+                    case 'top':
+                        // Top edge: y = 0, x = random across width
+                        startX = Math.random() * viewportWidth;
+                        startY = 0;
+                        break;
+                    case 'bottom':
+                        // Bottom edge: y = viewportHeight, x = random across width
+                        startX = Math.random() * viewportWidth;
+                        startY = viewportHeight;
+                        break;
+                    case 'left':
+                        // Left edge: x = 0, y = random across height
+                        startX = 0;
+                        startY = Math.random() * viewportHeight;
+                        break;
+                    case 'right':
+                        // Right edge: x = viewportWidth, y = random across height
+                        startX = viewportWidth;
+                        startY = Math.random() * viewportHeight;
+                        break;
+                }
+                
+                // End position (exact pixel position)
+                const endX = dotData.x;
+                const endY = dotData.y;
+                
+                // Set initial position (position dot center at start position)
+                const startPosX = startX - size / 2;
+                const startPosY = startY - size / 2;
+                dot.style.left = startPosX + 'px';
+                dot.style.top = startPosY + 'px';
+                dot.style.opacity = '0';
+                
+                overlay.appendChild(dot);
+                
+                // Animate dot - stagger timing for more natural effect
+                const delay = (index / dots.length) * 0.4; // Spread over 400ms
+                const duration = 1.8 + Math.random() * 0.4; // 1.8-2.2 seconds
+                
+                // Calculate final position (position dot center at end position)
+                const finalPosX = endX - size / 2;
+                const finalPosY = endY - size / 2;
+                
+                // Calculate translation needed
+                const translateX = finalPosX - startPosX;
+                const translateY = finalPosY - startPosY;
+                
+                setTimeout(() => {
+                    dot.style.transition = `transform ${duration}s cubic-bezier(0.4, 0, 0.2, 1), opacity ${duration * 0.2}s ease-out`;
+                    dot.style.opacity = '1';
+                    
+                    requestAnimationFrame(() => {
+                        dot.style.transform = `translate(${translateX}px, ${translateY}px)`;
+                    });
+                }, delay * 1000);
+            });
+            
+            // Calculate when animation completes (max delay + duration)
+            const maxDelay = 0.4;
+            const maxDuration = 2.2;
+            const animationCompleteTime = (maxDelay + maxDuration) * 1000;
+            
+            // Show profile picture and remove dots immediately when animation completes
+            setTimeout(() => {
+                // Remove all dots immediately
+                overlay.style.opacity = '0';
+                overlay.style.transition = 'opacity 0.1s ease-out';
+                
+                // Show profile picture
+                profilePicture.style.visibility = 'visible';
+                profilePicture.style.transition = 'opacity 0.3s ease-in';
+                profilePicture.style.opacity = '1';
+                profilePicture.classList.remove('initial-load');
+                
+                // Remove overlay after fade
+                setTimeout(() => {
+                    overlay.remove();
+                }, 100);
+            }, animationCompleteTime);
+        }
+        
+        // Start animation when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', createDotsAnimation);
+        } else {
+            createDotsAnimation();
+        }
         
         // Video play button functionality
         const video = document.getElementById('nerdy-video');
