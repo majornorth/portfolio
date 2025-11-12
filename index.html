@@ -571,31 +571,39 @@
                 const grayValue = Math.floor(dotData.brightness * 255);
                 dot.style.backgroundColor = `rgb(${grayValue}, ${grayValue}, ${grayValue})`;
                 
-                // Assign to a random edge
-                const edge = edges[Math.floor(Math.random() * edges.length)];
+                // Deterministic edge assignment - distribute dots evenly across edges
+                const edgeIndex = index % edges.length;
+                const edge = edges[edgeIndex];
+                
+                // Deterministic start position based on index
+                // Distribute dots evenly along each edge
+                const dotsPerEdge = Math.ceil(dots.length / edges.length);
+                const positionInEdge = Math.floor(index / edges.length);
+                const normalizedPosition = dotsPerEdge > 1 ? positionInEdge / (dotsPerEdge - 1) : 0;
+                
                 let startX, startY;
                 
-                // Calculate start position based on edge
+                // Calculate start position based on edge (deterministic)
                 switch(edge) {
                     case 'top':
-                        // Top edge: y = 0, x = random across width
-                        startX = Math.random() * viewportWidth;
+                        // Top edge: y = 0, x = evenly distributed across width
+                        startX = normalizedPosition * viewportWidth;
                         startY = 0;
                         break;
                     case 'bottom':
-                        // Bottom edge: y = viewportHeight, x = random across width
-                        startX = Math.random() * viewportWidth;
+                        // Bottom edge: y = viewportHeight, x = evenly distributed across width
+                        startX = normalizedPosition * viewportWidth;
                         startY = viewportHeight;
                         break;
                     case 'left':
-                        // Left edge: x = 0, y = random across height
+                        // Left edge: x = 0, y = evenly distributed across height
                         startX = 0;
-                        startY = Math.random() * viewportHeight;
+                        startY = normalizedPosition * viewportHeight;
                         break;
                     case 'right':
-                        // Right edge: x = viewportWidth, y = random across height
+                        // Right edge: x = viewportWidth, y = evenly distributed across height
                         startX = viewportWidth;
-                        startY = Math.random() * viewportHeight;
+                        startY = normalizedPosition * viewportHeight;
                         break;
                 }
                 
@@ -612,9 +620,9 @@
                 
                 overlay.appendChild(dot);
                 
-                // Animate dot - stagger timing for more natural effect
+                // Deterministic timing - fixed duration, evenly staggered delays
                 const delay = (index / dots.length) * 0.4; // Spread over 400ms
-                const duration = 1.8 + Math.random() * 0.4; // 1.8-2.2 seconds
+                const duration = 2.0; // Fixed duration instead of random
                 
                 // Calculate final position (position dot center at end position)
                 const finalPosX = endX - size / 2;
@@ -624,19 +632,30 @@
                 const translateX = finalPosX - startPosX;
                 const translateY = finalPosY - startPosY;
                 
-                setTimeout(() => {
-                    dot.style.transition = `transform ${duration}s cubic-bezier(0.4, 0, 0.2, 1), opacity ${duration * 0.2}s ease-out`;
-                    dot.style.opacity = '1';
-                    
-                    requestAnimationFrame(() => {
-                        dot.style.transform = `translate(${translateX}px, ${translateY}px)`;
-                    });
-                }, delay * 1000);
+                // Use requestAnimationFrame with performance.now() for consistent timing
+                const startTime = performance.now();
+                const targetDelay = delay * 1000;
+                
+                function animateDot() {
+                    const elapsed = performance.now() - startTime;
+                    if (elapsed >= targetDelay) {
+                        dot.style.transition = `transform ${duration}s cubic-bezier(0.4, 0, 0.2, 1), opacity ${duration * 0.2}s ease-out`;
+                        dot.style.opacity = '1';
+                        
+                        requestAnimationFrame(() => {
+                            dot.style.transform = `translate(${translateX}px, ${translateY}px)`;
+                        });
+                    } else {
+                        requestAnimationFrame(animateDot);
+                    }
+                }
+                
+                animateDot();
             });
             
             // Calculate when animation completes (max delay + duration)
             const maxDelay = 0.4;
-            const maxDuration = 2.2;
+            const maxDuration = 2.0; // Updated to match fixed duration
             const animationCompleteTime = (maxDelay + maxDuration) * 1000;
             
             // Show profile picture and remove dots immediately when animation completes
