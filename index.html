@@ -90,6 +90,21 @@
                 <div class="screenshot-scroll-wrapper">
                     <div class="iframe-wrapper">
                         <iframe id="tuttle-iframe" src="https://tuttle-discovery-prototype.netlify.app/login" width="1124" height="710" frameborder="0" style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); background-color: #000;"></iframe>
+                        <audio id="tuttle-audio" preload="metadata">
+                            <source src="images/tuttle-audio.m4a" type="audio/mp4">
+                        </audio>
+                        <div class="audio-player">
+                            <button class="audio-play-button" id="audio-play-button" aria-label="Play audio">
+                                <svg class="play-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 4L6 16L14 10L6 4Z" fill="currentColor"/>
+                                </svg>
+                                <svg class="pause-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                    <rect x="6" y="4" width="3" height="12" fill="currentColor"/>
+                                    <rect x="11" y="4" width="3" height="12" fill="currentColor"/>
+                                </svg>
+                            </button>
+                            <div class="audio-time" id="audio-time">0:00/0:00</div>
+                        </div>
                         <div class="login-tooltip">
                             <div class="tooltip-content">
                                 <div class="tooltip-title">Login Credentials</div>
@@ -398,6 +413,65 @@
             
             video.addEventListener('ended', () => {
                 playButton.classList.remove('hidden');
+            });
+        }
+        
+        // Audio player functionality
+        const tuttleAudio = document.getElementById('tuttle-audio');
+        const audioPlayButton = document.getElementById('audio-play-button');
+        const audioTimeDisplay = document.getElementById('audio-time');
+        
+        if (tuttleAudio && audioPlayButton && audioTimeDisplay) {
+            // Format time as MM:SS
+            function formatTime(seconds) {
+                if (isNaN(seconds) || !isFinite(seconds)) return '0:00';
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+            
+            // Update time display
+            function updateTimeDisplay() {
+                const current = tuttleAudio.currentTime || 0;
+                const duration = tuttleAudio.duration || 0;
+                audioTimeDisplay.textContent = `${formatTime(current)}/${formatTime(duration)}`;
+            }
+            
+            // Initialize time display when metadata loads
+            tuttleAudio.addEventListener('loadedmetadata', () => {
+                updateTimeDisplay();
+            });
+            
+            // Update time display during playback
+            tuttleAudio.addEventListener('timeupdate', () => {
+                updateTimeDisplay();
+            });
+            
+            // Handle play/pause button click
+            audioPlayButton.addEventListener('click', () => {
+                if (tuttleAudio.paused) {
+                    tuttleAudio.play();
+                    audioPlayButton.classList.add('playing');
+                } else {
+                    tuttleAudio.pause();
+                    audioPlayButton.classList.remove('playing');
+                }
+            });
+            
+            // Update button state when audio ends
+            tuttleAudio.addEventListener('ended', () => {
+                audioPlayButton.classList.remove('playing');
+                updateTimeDisplay();
+            });
+            
+            // Update button state on pause
+            tuttleAudio.addEventListener('pause', () => {
+                audioPlayButton.classList.remove('playing');
+            });
+            
+            // Update button state on play
+            tuttleAudio.addEventListener('play', () => {
+                audioPlayButton.classList.add('playing');
             });
         }
         

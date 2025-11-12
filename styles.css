@@ -356,6 +356,67 @@ body {
     display: inline-block;
 }
 
+/* Audio Player */
+.audio-player {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: rgba(30, 15, 45, 0.95);
+    border: 1px solid rgba(207, 189, 255, 0.3);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.audio-play-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    transition: opacity 0.2s ease;
+}
+
+.audio-play-button:hover {
+    opacity: 0.7;
+}
+
+.audio-play-button .play-icon,
+.audio-play-button .pause-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.audio-play-button.playing .play-icon {
+    display: none;
+}
+
+.audio-play-button.playing .pause-icon {
+    display: block !important;
+}
+
+.audio-play-button:not(.playing) .pause-icon {
+    display: none !important;
+}
+
+.audio-time {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: #ffffff;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
 .login-tooltip {
     position: absolute;
     top: 20px;
