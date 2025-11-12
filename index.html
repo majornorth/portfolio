@@ -182,6 +182,22 @@
             </div>
             <div class="screenshot-container horizontal-scroll">
                 <div class="screenshot-scroll-wrapper">
+                    <div class="iframe-wrapper">
+                        <iframe id="tuttle-iframe" src="https://tuttle-discovery-prototype.netlify.app/login" width="1124" height="710" frameborder="0" style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); background-color: #000;"></iframe>
+                        <div class="login-tooltip">
+                            <div class="tooltip-content">
+                                <div class="tooltip-title">Login Credentials</div>
+                                <div class="tooltip-credential">
+                                    <span class="credential-label">Email:</span>
+                                    <span class="credential-value">jason+1@tuttle.work</span>
+                                </div>
+                                <div class="tooltip-credential">
+                                    <span class="credential-label">Password:</span>
+                                    <span class="credential-value">hahaha</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <img src="images/tuttle-dashboard.png" alt="Tuttle Dashboard" class="screenshot">
                     <img src="images/new-request.png" alt="New Request" class="screenshot">
                     <img src="images/request-details.png" alt="Request Details" class="screenshot">
@@ -384,6 +400,7 @@
                 playButton.classList.remove('hidden');
             });
         }
+        
     </script>
 </body>
 </html>
