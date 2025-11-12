@@ -103,6 +103,9 @@
                                     <rect x="11" y="4" width="3" height="12" fill="currentColor"/>
                                 </svg>
                             </button>
+                            <button class="audio-reset-button" id="audio-reset-button" aria-label="Reset audio" title="Reset audio to start" disabled>
+                                <img src="images/arrow-counter-clockwise.svg" alt="Reset" width="20" height="20">
+                            </button>
                             <div class="audio-time" id="audio-time">0:00/0:00</div>
                         </div>
                         <div class="login-tooltip">
@@ -419,9 +422,10 @@
         // Audio player functionality
         const tuttleAudio = document.getElementById('tuttle-audio');
         const audioPlayButton = document.getElementById('audio-play-button');
+        const audioResetButton = document.getElementById('audio-reset-button');
         const audioTimeDisplay = document.getElementById('audio-time');
         
-        if (tuttleAudio && audioPlayButton && audioTimeDisplay) {
+        if (tuttleAudio && audioPlayButton && audioResetButton && audioTimeDisplay) {
             // Format time as MM:SS
             function formatTime(seconds) {
                 if (isNaN(seconds) || !isFinite(seconds)) return '0:00';
@@ -437,14 +441,25 @@
                 audioTimeDisplay.textContent = `${formatTime(current)}/${formatTime(duration)}`;
             }
             
+            // Update reset button state based on playback progress
+            function updateResetButton() {
+                if (tuttleAudio.currentTime > 0) {
+                    audioResetButton.disabled = false;
+                } else {
+                    audioResetButton.disabled = true;
+                }
+            }
+            
             // Initialize time display when metadata loads
             tuttleAudio.addEventListener('loadedmetadata', () => {
                 updateTimeDisplay();
+                updateResetButton();
             });
             
             // Update time display during playback
             tuttleAudio.addEventListener('timeupdate', () => {
                 updateTimeDisplay();
+                updateResetButton();
             });
             
             // Handle play/pause button click
@@ -458,10 +473,22 @@
                 }
             });
             
+            // Handle reset button click
+            audioResetButton.addEventListener('click', () => {
+                if (!audioResetButton.disabled) {
+                    tuttleAudio.currentTime = 0;
+                    tuttleAudio.pause();
+                    audioPlayButton.classList.remove('playing');
+                    updateTimeDisplay();
+                    updateResetButton();
+                }
+            });
+            
             // Update button state when audio ends
             tuttleAudio.addEventListener('ended', () => {
                 audioPlayButton.classList.remove('playing');
                 updateTimeDisplay();
+                updateResetButton();
             });
             
             // Update button state on pause
