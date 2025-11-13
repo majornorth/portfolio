@@ -465,14 +465,26 @@
             const snapThresholdY = viewportHeight * 0.65; // Lower in viewport (closer to bottom)
             const triangleHasReachedStickyPosition = triangleCenterY <= snapThresholdY;
             
+            // Calculate the target fixed position that corresponds to 60% of triangle container
+            // 60% of container height = triangleContainerRect.top + (triangleContainerRect.height * 0.6)
+            const targetFixedY = triangleContainerRect.top + (triangleContainerRect.height * 0.6);
+            
             // Check if profile photo has entered the top of the triangle
             // The photo enters when triangle top reaches or passes the sticky position
             const photoHasEnteredTriangle = triangleTop <= stickyViewportY;
             
             if (!triangleHasReachedStickyPosition) {
-                // Keep profile picture fixed at center of viewport
+                // Interpolate between stickyViewportY and targetFixedY based on progress
+                // Calculate progress: 0 when triangleCenterY is far above, 1 when it reaches snapThresholdY
+                const maxDistance = viewportHeight; // Distance over which to interpolate
+                const currentDistance = triangleCenterY - snapThresholdY;
+                const progress = Math.max(0, Math.min(1, 1 - (currentDistance / maxDistance)));
+                
+                // Smoothly interpolate the fixed position
+                const currentFixedY = stickyViewportY + (progress * (targetFixedY - stickyViewportY));
+                
                 profilePicture.style.position = 'fixed';
-                profilePicture.style.top = stickyViewportY + 'px';
+                profilePicture.style.top = currentFixedY + 'px';
                 profilePicture.style.left = '50%';
                 profilePicture.style.transform = 'translate(-50%, -50%)';
                 profilePicture.style.zIndex = '50';
@@ -491,7 +503,8 @@
                     triangleLabelBuilder.style.opacity = 0;
                 }
             } else {
-                // Triangle center has reached the sticky position - stop being sticky and position in triangle
+                // Triangle center has reached the sticky position - switch to absolute
+                // At this point, targetFixedY should equal the absolute position
                 profilePicture.style.position = 'absolute';
                 profilePicture.style.top = '60%';
                 profilePicture.style.left = '50%';
