@@ -628,19 +628,12 @@ body {
     min-height: 600px;
 }
 
-.screenshot-scroll-wrapper img[src="images/replay-demo.png"] {
-    width: 1104px;
-    height: 784.17px;
-}
 
 .screenshot-scroll-wrapper img[src="images/pull-request.png"] {
     width: auto;
     height: 804.17;
 }
 
-.screenshot-scroll-wrapper img[src="images/adobe.png"] {
-    height: 784.17px;
-}
 
 .screenshot-scroll-wrapper img[src="images/figma-link.png"],
 .screenshot-scroll-wrapper a[href*="figma.com"] img[src="images/figma-link.png"] {
