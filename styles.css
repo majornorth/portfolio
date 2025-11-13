@@ -13,6 +13,17 @@ body {
     scroll-snap-type: y proximity;
 }
 
+/* Text Selection */
+::selection {
+    background-color: #CEFC00;
+    color: #1E102C;
+}
+
+::-moz-selection {
+    background-color: #CEFC00;
+    color: #1E102C;
+}
+
 /* Navigation */
 .nav {
     position: sticky;
