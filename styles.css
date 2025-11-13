@@ -347,6 +347,62 @@ body {
     margin-bottom: 2rem;
 }
 
+.project-tags:has(.scroll-arrows) {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tags-wrapper {
+    display: flex;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+.scroll-arrows {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.scroll-arrow {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.33);
+    border-radius: 4px;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+    width: 40px;
+    height: 40px;
+}
+
+.scroll-arrow:hover {
+    opacity: 0.7;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.scroll-arrow:active {
+    opacity: 0.5;
+}
+
+.scroll-arrow img {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+.scroll-arrow:disabled {
+    opacity: 0.33;
+    cursor: not-allowed;
+}
+
+.scroll-arrow:disabled:hover {
+    opacity: 0.33;
+    background-color: transparent;
+}
+
 .tag {
     background-color: #2d2d2d;
     color: #ffffff;
