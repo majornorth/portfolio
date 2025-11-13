@@ -37,6 +37,10 @@
         </div>
     </nav>
 
+    <div class="cursor-badge" id="cursor-badge">
+        <img src="images/cursor.svg" alt="Built with Cursor">
+    </div>
+
     <div class="dots-overlay" id="dots-overlay"></div>
 
     <main class="main">
@@ -248,6 +252,21 @@
         const triangleLabelDesign = document.querySelector('.triangle-label-bottom-left');
         const triangleLabelEngineering = document.querySelector('.triangle-label-bottom-right');
         const triangleLabelBuilder = document.querySelector('.triangle-label-center');
+        const cursorBadge = document.getElementById('cursor-badge');
+        
+        // Hide cursor badge on scroll
+        let lastScrollTop = 0;
+        function handleCursorBadgeScroll() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 50) {
+                cursorBadge.classList.add('hidden');
+            } else {
+                cursorBadge.classList.remove('hidden');
+            }
+            
+            lastScrollTop = scrollTop;
+        }
         
         // Calculate initial font size based on viewport width
         // At 2540px viewport width, font size should be 377px
@@ -450,6 +469,10 @@
         
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll(); // Initial check
+        
+        // Cursor badge scroll handler
+        window.addEventListener('scroll', handleCursorBadgeScroll, { passive: true });
+        handleCursorBadgeScroll(); // Initial check
         
         // Dots animation on page load
         function createDotsAnimation() {

@@ -71,6 +71,29 @@ body {
     opacity: 0.7;
 }
 
+/* Cursor Badge */
+.cursor-badge {
+    position: fixed;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.cursor-badge img {
+    display: block;
+    width: 198px;
+    height: 59px;
+}
+
+.cursor-badge.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+    pointer-events: none;
+}
+
 /* Main Content */
 .main {
     max-width: 1200px;
