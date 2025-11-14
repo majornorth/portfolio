@@ -1590,41 +1590,54 @@ body {
         display: none !important;
     }
 
-    /* Hero - mobile typography */
+    /* Hero - mobile typography - centers content vertically, allows scrolling */
     .hero {
         min-height: 100vh;
-        padding-top: 140px;
-        padding-bottom: 0;
-        justify-content: flex-start;
+        padding-top: calc(50vh - 200px);
+        padding-bottom: calc(50vh - 200px);
+        justify-content: center;
+        align-items: center;
         overflow: visible;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        position: relative;
     }
 
     .name {
-        position: static !important;
-        top: auto !important;
-        left: auto !important;
-        transform: none !important;
+        position: absolute !important;
+        top: calc(50vh - 200px + 96px + 20px) !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
         z-index: 1 !important;
         font-size: calc((100vw - 3rem) / 9.2) !important;
         line-height: 0.9;
         letter-spacing: -0.13em;
         text-align: center;
-        margin-top: 180px;
+        margin: 0 !important;
         max-width: calc(100vw - 3rem);
         padding: 0 1.5rem;
         box-sizing: border-box;
     }
 
-    /* Profile picture - centered between nav and name */
+    /* Profile picture - centered in hero flow */
     .triangle-section {
-        min-height: 0;
-        height: 0;
-        padding: 0;
-        margin: 0;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+        pointer-events: none;
     }
 
     .triangle-container {
-        height: 0;
+        height: 0 !important;
+        display: block !important;
+        position: relative;
     }
 
     .triangle,
@@ -1632,15 +1645,20 @@ body {
         display: none !important;
     }
 
+    /* Position profile picture in hero flow, above name - ensure it's visible */
     .profile-picture {
-        position: fixed !important;
-        top: 160px !important;
+        position: absolute !important;
+        top: calc(50vh - 200px) !important;
         left: 50% !important;
         transform: translateX(-50%) !important;
-        width: 96px;
-        height: 96px;
-        border-radius: 0;
-        z-index: 2;
+        width: 96px !important;
+        height: 96px !important;
+        border-radius: 0 !important;
+        z-index: 2 !important;
+        margin: 0 !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 
     /* Hide all content sections except the starburst source */
@@ -1695,17 +1713,17 @@ body {
 
     /* Mobile starburst below the name */
     .mobile-starburst-badge {
-        position: fixed !important;
+        position: absolute !important;
         left: 50% !important;
         transform: translateX(-50%) rotate(-12deg) !important;
-        top: calc(140px + 180px + calc((100vw - 3rem) / 9.2) * 0.9 + 50px) !important;
+        top: calc(50vh - 200px + 96px + 20px + calc((100vw - 3rem) / 9.2) * 0.9 + 40px) !important;
         right: auto !important;
         bottom: auto !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         pointer-events: none !important;
-        z-index: 1000 !important;
+        z-index: 10 !important;
         visibility: visible !important;
         opacity: 1 !important;
         width: auto !important;
