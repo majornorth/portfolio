@@ -517,6 +517,11 @@ body {
     width: 140px;
 }
 
+/* Hide mobile starburst on larger screens */
+.mobile-starburst-badge {
+    display: none;
+}
+
 /* Audio Player */
 .audio-player {
     position: absolute;
@@ -1525,6 +1530,198 @@ body {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid #ddd;
+    }
+}
+
+@media (max-width: 700px) {
+    /* Layout */
+    body {
+        scroll-snap-type: none;
+        min-height: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    
+    html {
+        overflow-x: hidden;
+    }
+
+    .main {
+        max-width: none;
+        margin: 0;
+        padding: 0 1.5rem 2rem;
+        overflow: visible;
+    }
+
+    /* Navigation - show only 3 links on one line */
+    .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem 1.5rem;
+        justify-content: center;
+        gap: 24px;
+    }
+
+    .name-nav {
+        display: none !important;
+    }
+
+    .nav-left,
+    .nav-right {
+        flex: 0 0 auto;
+        gap: 24px;
+    }
+
+    /* Hide "Onsite deck" so only Intro video, Résumé, LinkedIn are visible */
+    .nav-left .nav-link:nth-child(2) {
+        display: none;
+    }
+
+    .nav-link {
+        white-space: nowrap;
+        font-size: 14px;
+    }
+
+    /* Hide non-mobile chrome */
+    .cursor-badge,
+    #cursor-badge {
+        display: none !important;
+    }
+
+    /* Hero - mobile typography */
+    .hero {
+        min-height: 100vh;
+        padding-top: 140px;
+        padding-bottom: 0;
+        justify-content: flex-start;
+        overflow: visible;
+    }
+
+    .name {
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        z-index: 1 !important;
+        font-size: calc((100vw - 3rem) / 9.2) !important;
+        line-height: 0.9;
+        letter-spacing: -0.13em;
+        text-align: center;
+        margin-top: 180px;
+        max-width: calc(100vw - 3rem);
+        padding: 0 1.5rem;
+        box-sizing: border-box;
+    }
+
+    /* Profile picture - centered between nav and name */
+    .triangle-section {
+        min-height: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    .triangle-container {
+        height: 0;
+    }
+
+    .triangle,
+    .triangle-label {
+        display: none !important;
+    }
+
+    .profile-picture {
+        position: fixed !important;
+        top: 160px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 96px;
+        height: 96px;
+        border-radius: 0;
+        z-index: 2;
+    }
+
+    /* Hide all content sections except the starburst source */
+    .bio-section,
+    .project:nth-of-type(n + 2) {
+        display: none !important;
+    }
+
+    /* First project section only used as a container for the starburst */
+    .project:first-of-type {
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+        display: block !important;
+    }
+
+    .project:first-of-type .project-title,
+    .project:first-of-type .project-description,
+    .project:first-of-type .project-tags,
+    .project:first-of-type .scroll-arrows,
+    .project:first-of-type iframe,
+    .project:first-of-type .audio-player,
+    .project:first-of-type .login-tooltip,
+    .project:first-of-type .screenshot-scroll-wrapper img {
+        display: none !important;
+    }
+
+    .project:first-of-type .screenshot-container.horizontal-scroll {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        display: block !important;
+        position: static !important;
+        height: auto !important;
+    }
+
+    .project:first-of-type .screenshot-scroll-wrapper {
+        padding: 0 !important;
+        width: auto !important;
+        display: block !important;
+        overflow: visible !important;
+        position: static !important;
+        height: auto !important;
+    }
+
+    /* Hide regular starburst on mobile */
+    .project:first-of-type .starburst-badge,
+    .project:first-of-type .starburst-icon {
+        display: none !important;
+    }
+
+    /* Mobile starburst below the name */
+    .mobile-starburst-badge {
+        position: fixed !important;
+        left: 50% !important;
+        transform: translateX(-50%) rotate(-12deg) !important;
+        top: calc(140px + 180px + calc((100vw - 3rem) / 9.2) * 0.9 + 50px) !important;
+        right: auto !important;
+        bottom: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        pointer-events: none !important;
+        z-index: 1000 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: auto !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .mobile-starburst-icon {
+        width: 230px !important;
+        height: 230px !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 }
 
