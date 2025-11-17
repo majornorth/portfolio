@@ -108,20 +108,20 @@
                         `
                     },
                     {
-                        title: 'Navigation',
+                        title: 'Dropbox Replay',
                         content: `
-                            <div class="slide-content features-slide">
-                                <div class="features-left">
-                                    <h1 class="features-title">Dropbox Replay</h1>
-                                    <p class="features-description">Led design from alpha→GA, reaching $2m ARR the first year after launch.</p>
-                                    <div class="features-tags">
-                                        <span class="feature-tag">2022</span>
-                                        <span class="feature-tag">B2C</span>
-                                        <span class="feature-tag">0→1</span>
+                            <div class="slide-content replay-slide">
+                                <div class="replay-left">
+                                    <h1 class="replay-title">Dropbox Replay</h1>
+                                    <p class="replay-description">Led design from alpha→GA, reaching $2m ARR the first year after launch.</p>
+                                    <div class="replay-tags">
+                                        <span class="replay-tag">2022</span>
+                                        <span class="replay-tag">B2C</span>
+                                        <span class="replay-tag">0→1</span>
                                     </div>
                                 </div>
-                                <div class="features-center">
-                                    <img src="images/replay-dashboard.png" alt="Dropbox Replay Dashboard" class="features-mobile-mockup">
+                                <div class="replay-image-container">
+                                    <img src="images/replay-dashboard.png" alt="Dropbox Replay Dashboard" class="replay-dashboard-image">
                                 </div>
                             </div>
                         `
@@ -217,7 +217,7 @@
                 deck.slides.forEach((slide, index) => {
                     const slideItem = document.createElement('button');
                     slideItem.className = 'slide-item';
-                    slideItem.textContent = slide.title;
+                    slideItem.textContent = `${index + 1}. ${slide.title}`;
                     slideItem.addEventListener('click', () => {
                         selectDeck(deck.id);
                         goToSlide(index);

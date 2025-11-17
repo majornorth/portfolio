@@ -1859,6 +1859,10 @@ body {
     overflow: hidden;
 }
 
+.deck-main:has(.replay-slide) {
+    overflow-x: visible;
+}
+
 .slide-container {
     flex: 1;
     display: flex;
@@ -1866,22 +1870,65 @@ body {
     justify-content: center;
     padding: 3rem;
     overflow-y: auto;
+    overflow-x: hidden;
     transition: opacity 0.3s ease;
-    background-color: #212121;
+    background-color: #808080;
+    min-height: 0;
+}
+
+.slide-container:has(.replay-slide) {
+    overflow-x: visible;
+    padding-right: 0;
 }
 
 .slide-content {
-    max-width: 900px;
     width: 100%;
+    max-width: 1920px;
+    max-height: 1080px;
+    aspect-ratio: 16 / 9;
+    min-height: 0;
     animation: slideIn 0.3s ease;
+    background-color: #212121;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    overflow-x: visible;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.slide-content.replay-slide {
+    overflow-x: visible;
+}
+
+/* In fullscreen mode, remove the background and padding to show full slide */
+.deck-container.fullscreen .slide-container {
+    background-color: #212121;
+    padding: 0;
+}
+
+.deck-container.fullscreen .slide-content {
+    background-color: transparent;
+    border-radius: 0;
+    padding: 3rem;
+    box-shadow: none;
+    max-width: 100%;
+    max-height: 100vh;
+    aspect-ratio: auto;
 }
 
 /* Welcome Slide Styles */
 .welcome-slide {
-    max-width: 1200px;
+    width: 100%;
+    height: 100%;
     display: flex;
     gap: 3rem;
     align-items: flex-start;
+    overflow-y: auto;
 }
 
 .welcome-left {
@@ -1949,11 +1996,114 @@ body {
 
 /* Features Slide Styles */
 .features-slide {
-    max-width: 1400px;
+    width: 100%;
+    height: 100%;
     display: flex;
     gap: 2rem;
     align-items: flex-start;
+    overflow-y: auto;
+}
+
+/* Replay Slide Styles */
+.replay-slide {
+    width: 100%;
     height: 100%;
+    position: relative;
+    overflow: visible;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.replay-left {
+    flex: 0 0 40%;
+    max-width: 480px;
+    padding-right: 3rem;
+    z-index: 10;
+    position: relative;
+    background-color: transparent;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.replay-title {
+    font-family: 'Jost', sans-serif;
+    font-size: 64px;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    margin: 0 0 1.5rem 0;
+    line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.replay-description {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #ffffff;
+    margin: 0 0 1.5rem 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.replay-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.replay-tag {
+    background-color: #2d2d2d;
+    color: #ffffff;
+    padding: 0.375rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 400;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    display: inline-block;
+}
+
+.replay-image-container {
+    position: absolute;
+    right: -2rem;
+    top: 0;
+    bottom: 0;
+    left: 40%;
+    overflow: visible;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.replay-dashboard-image {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+    width: auto;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: right center;
+}
+
+/* In fullscreen mode, allow image to bleed to viewport edge */
+.deck-container.fullscreen .replay-slide {
+    overflow: visible;
+}
+
+.deck-container.fullscreen .replay-image-container {
+    right: -3rem;
+    width: calc(60% + 3rem);
+}
+
+.deck-container.fullscreen .replay-dashboard-image {
+    right: 0;
 }
 
 .features-left {
