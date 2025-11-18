@@ -158,7 +158,13 @@
                                 </div>
                             </div>
                         `
-                    },
+                    }
+                ]
+            },
+            {
+                id: 'portfolio',
+                title: 'Tuttle for Personal Injury',
+                slides: [
                     {
                         title: 'Tuttle',
                         content: `
@@ -181,13 +187,15 @@
                                 </div>
                             </div>
                         `
-                    }
-                ]
-            },
-            {
-                id: 'portfolio',
-                title: 'Tuttle for Personal Injury',
-                slides: [
+                    },
+                    {
+                        title: 'Session Prep prototype',
+                        content: `
+                            <div class="slide-content nerdy-slide">
+                                <iframe src="https://tuttle-discovery-prototype.netlify.app/login" frameborder="0" allowfullscreen class="nerdy-iframe"></iframe>
+                            </div>
+                        `
+                    },
                     {
                         title: 'Portfolio',
                         content: `
@@ -219,7 +227,7 @@
                 title: 'Nerdy AI for Tutors',
                 slides: [
                     {
-                        title: 'Nerdy',
+                        title: 'Session Prep prototype',
                         content: `
                             <div class="slide-content nerdy-slide">
                                 <iframe src="https://nerdy-copilot.netlify.app/" frameborder="0" allowfullscreen class="nerdy-iframe"></iframe>
@@ -335,14 +343,24 @@
             slideContainer.innerHTML = slide.content;
             
             // Update slide indicators in sidebar
-            document.querySelectorAll('.slide-item').forEach((item, index) => {
-                const deckItem = item.closest('.sidebar-deck');
-                if (deckItem && deckItem.dataset.deckId === currentDeckId) {
-                    if (index === currentSlideIndex) {
-                        item.classList.add('active');
-                    } else {
+            document.querySelectorAll('.sidebar-deck').forEach(deckItem => {
+                const slideList = deckItem.querySelector('.slide-list-container');
+                if (deckItem.dataset.deckId === currentDeckId) {
+                    // This is the active deck - update its slide items
+                    const slideItems = slideList.querySelectorAll('.slide-item');
+                    slideItems.forEach((item, index) => {
+                        if (index === currentSlideIndex) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    });
+                } else {
+                    // Remove active class from all slide items in other decks
+                    const slideItems = slideList.querySelectorAll('.slide-item');
+                    slideItems.forEach(item => {
                         item.classList.remove('active');
-                    }
+                    });
                 }
             });
         }

@@ -1771,12 +1771,15 @@ body {
 .sidebar-header {
     padding: 1.5rem;
     border-bottom: 1px solid rgba(207, 189, 255, 0.2);
+    display: flex;
+    gap: 1rem;
+    align-items: center
 }
 
 .sidebar-title {
     font-family: 'Jost', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 400;
     color: #ffffff;
     margin: 0;
 }
@@ -1881,6 +1884,13 @@ body {
     width: 100%;
     /* Ensure consistent positioning - reserve space to prevent layout shifts */
     min-height: 0;
+    /* Use flexbox to properly center and constrain slide-content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Ensure container properly constrains child elements */
+    min-width: 0;
+    min-height: 0;
 }
 
 .slide-container:has(.replay-slide) {
@@ -1904,28 +1914,41 @@ body {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    flex-shrink: 0;
-    /* Use absolute positioning to ensure consistent placement */
-    position: absolute;
-    /* Center both horizontally and vertically */
-    /* Position from container's content area edges */
-    top: 3rem;
-    left: 3rem;
-    right: 3rem;
-    bottom: 3rem;
-    /* Use margin auto to center within the constrained area */
-    margin: auto;
-    /* Width and height will be constrained by the aspect-ratio and max dimensions */
-    width: auto;
+    flex-shrink: 1;
+    /* Use relative positioning within flex container */
+    position: relative;
+    /* Constrain to fit within available space while maintaining aspect ratio */
+    /* Use width that respects container bounds, aspect-ratio will calculate height */
+    width: min(1920px, 100%);
     height: auto;
-    /* Ensure max-width still applies */
-    max-width: 1920px;
+    /* Ensure both max-width and max-height constrain properly */
+    max-width: min(1920px, 100%);
+    max-height: min(1080px, 100%);
     /* Ensure consistent sizing to prevent repositioning */
     min-width: 0;
+    min-height: 0;
+    /* For viewports where height is the limiting factor, constrain based on available height */
+    /* Calculate max width based on available height: if container height is limiting, use height-based width */
+    /* This ensures the slide scales down proportionally on smaller/taller viewports */
 }
 
 .slide-content.replay-slide {
     overflow: hidden;
+}
+
+/* Ensure slide scales properly on smaller viewports (e.g., 1440x900px) */
+/* When height is the limiting factor, constrain width based on available height */
+@media (max-height: 1000px) and (min-width: 1200px) {
+    .slide-content {
+        /* Calculate max width based on available container height */
+        /* Container height = viewport height - controls (96px) - padding (96px) = viewport height - 192px */
+        /* Available height for slide = container height - 0 (no extra padding in content) */
+        /* Max width = (available height) * 16/9 */
+        /* But we need to account for container padding, so use a calculation */
+        max-width: min(1920px, calc((100vh - 192px) * 16 / 9));
+        /* Ensure width respects this constraint */
+        width: min(1920px, 100%, calc((100vh - 192px) * 16 / 9));
+    }
 }
 
 /* Nerdy Slide Styles */
