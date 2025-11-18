@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slide Deck - Case Studies</title>
+    <title>Case Studies - Slide Deck</title>
     <link rel="icon" type="image/png" href="./images/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,6 +53,20 @@
                 </svg>
                 <svg class="exit-fullscreen-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
                     <path d="M8 3V5C8 6.10457 8.89543 7 10 7H14C15.1046 7 16 6.10457 16 5V3M21 8H19C17.8954 8 17 8.89543 17 10V14C17 15.1046 17.8954 16 19 16H21M16 21V19C16 17.8954 15.1046 17 14 17H10C8.89543 17 8 17.8954 8 19V21M3 16H5C6.10457 16 7 15.1046 7 14V10C7 8.89543 6.10457 8 5 8H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <!-- Zoom Buttons -->
+            <button class="zoom-btn zoom-out-btn" id="zoom-out-btn" aria-label="Zoom out">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7 10H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <button class="zoom-btn zoom-in-btn" id="zoom-in-btn" aria-label="Zoom in">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 7V13M7 10H13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
         </main>
@@ -187,6 +201,7 @@
         let currentDeckId = null;
         let currentSlideIndex = 0;
         let isFullscreen = false;
+        let zoomLevel = 1;
 
         // DOM elements
         const sidebar = document.getElementById('deck-sidebar');
@@ -196,6 +211,8 @@
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
         const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const zoomInBtn = document.getElementById('zoom-in-btn');
+        const zoomOutBtn = document.getElementById('zoom-out-btn');
         const slideCounter = document.getElementById('slide-counter');
         const currentSlideSpan = document.getElementById('current-slide');
         const totalSlidesSpan = document.getElementById('total-slides');
@@ -382,6 +399,7 @@
                 deckContainer.classList.add('fullscreen');
                 fullscreenBtn.querySelector('.fullscreen-icon').style.display = 'none';
                 fullscreenBtn.querySelector('.exit-fullscreen-icon').style.display = 'block';
+                resetZoom(); // Reset zoom when entering fullscreen
             } else {
                 deckContainer.classList.remove('fullscreen');
                 fullscreenBtn.querySelector('.fullscreen-icon').style.display = 'block';
@@ -426,10 +444,37 @@
             }
         }
 
+        // Zoom functions
+        function zoomIn() {
+            if (isFullscreen) return;
+            zoomLevel = Math.min(zoomLevel + 0.1, 2); // Max zoom 2x
+            applyZoom();
+        }
+
+        function zoomOut() {
+            if (isFullscreen) return;
+            zoomLevel = Math.max(zoomLevel - 0.1, 0.5); // Min zoom 0.5x
+            applyZoom();
+        }
+
+        function applyZoom() {
+            slideContainer.style.transform = `scale(${zoomLevel})`;
+            slideContainer.style.transformOrigin = 'center center';
+        }
+
+        // Reset zoom when entering fullscreen
+        function resetZoom() {
+            zoomLevel = 1;
+            slideContainer.style.transform = '';
+            slideContainer.style.transformOrigin = '';
+        }
+
         // Event listeners
         prevBtn.addEventListener('click', prevSlide);
         nextBtn.addEventListener('click', nextSlide);
         fullscreenBtn.addEventListener('click', toggleFullscreen);
+        zoomInBtn.addEventListener('click', zoomIn);
+        zoomOutBtn.addEventListener('click', zoomOut);
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {

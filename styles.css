@@ -1876,7 +1876,7 @@ body {
     bottom: 96px;
     padding: 3rem;
     overflow: hidden;
-    background-color: #1b1a2b;
+    background-color: #000000;
     box-sizing: border-box;
     width: 100%;
     /* Ensure consistent positioning - reserve space to prevent layout shifts */
@@ -1976,6 +1976,8 @@ body {
     max-height: 100%;
     aspect-ratio: none;
     flex-shrink: 0;
+    left: 0;
+    right: 0;
 }
 
 /* Welcome Slide Styles */
@@ -2160,6 +2162,8 @@ body {
     height: 58.75rem; /* 940px / 16px = 58.75rem (equivalent to 940px when viewport is 1080px height) */
     width: auto;
     object-fit: contain;
+    position: relative;
+    left: 13rem;
 }
 
 /* In fullscreen mode, clip content at slide edges */
@@ -2174,6 +2178,11 @@ body {
 
 .deck-container.fullscreen .replay-dashboard-image {
     right: 0;
+    height: 58.75rem; /* 940px / 16px = 58.75rem */
+}
+
+.deck-container.fullscreen .column-left {
+    margin-left: 11.25rem; /* 180px / 16px = 11.25rem */
 }
 
 .column-left {
@@ -2378,6 +2387,44 @@ body {
     height: 24px;
 }
 
+/* Zoom Buttons */
+.zoom-btn {
+    position: absolute;
+    top: calc(1.5rem + 48px + 0.5rem);
+    right: 1.5rem;
+    background: rgba(42, 31, 61, 0.9);
+    border: 1px solid rgba(207, 189, 255, 0.3);
+    border-radius: 8px;
+    padding: 0.75rem;
+    cursor: pointer;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    width: 48px;
+    height: 48px;
+    z-index: 200;
+}
+
+.zoom-out-btn {
+    top: calc(1.5rem + 48px + 0.5rem);
+}
+
+.zoom-in-btn {
+    top: calc(1.5rem + 48px + 0.5rem + 48px + 0.5rem);
+}
+
+.zoom-btn:hover {
+    background-color: rgba(207, 189, 255, 0.2);
+    border-color: rgba(207, 189, 255, 0.5);
+}
+
+.zoom-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
 /* Fullscreen Mode */
 .deck-container.fullscreen {
     height: 100vh;
@@ -2405,6 +2452,10 @@ body {
     opacity: 1;
 }
 
+.deck-container.fullscreen .zoom-btn {
+    display: none;
+}
+
 .deck-container.fullscreen .deck-main {
     width: 100vw;
     height: 100vh;
@@ -2413,6 +2464,7 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
+    position: static;
 }
 
 /* Responsive Design */
@@ -2535,6 +2587,23 @@ body {
     }
 
     .fullscreen-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .zoom-btn {
+        top: calc(1rem + 40px + 0.5rem);
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+        padding: 0.5rem;
+    }
+
+    .zoom-in-btn {
+        top: calc(1rem + 40px + 0.5rem + 40px + 0.5rem);
+    }
+
+    .zoom-btn svg {
         width: 20px;
         height: 20px;
     }
