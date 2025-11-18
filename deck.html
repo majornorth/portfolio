@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Deck - Case Studies</title>
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="deck-body">
+    <div class="deck-container" id="deck-container">
+        <!-- Sidebar Navigation -->
+        <aside class="deck-sidebar" id="deck-sidebar">
+            <div class="sidebar-header">
+                <img src="images/favicon.png" alt="Jason McCoy" class="sidebar-logo">
+                <h2 class="sidebar-title">Case Studies</h2>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <!-- Decks and slides will be populated by JavaScript -->
+            </nav>
+        </aside>
+
+        <!-- Main Slide Area -->
+        <main class="deck-main" id="deck-main">
+            <div class="slide-container" id="slide-container">
+                <!-- Current slide content will be rendered here -->
+            </div>
+
+            <!-- Navigation Controls -->
+            <div class="deck-controls" id="deck-controls">
+                <button class="control-btn prev-btn" id="prev-btn" aria-label="Previous slide">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="slide-counter" id="slide-counter">
+                    <span id="current-slide">1</span> / <span id="total-slides">1</span>
+                </div>
+                <button class="control-btn next-btn" id="next-btn" aria-label="Next slide">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Fullscreen Button -->
+            <button class="fullscreen-btn" id="fullscreen-btn" aria-label="Toggle fullscreen">
+                <svg class="fullscreen-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 3H5C3.89543 3 3 3.89543 3 5V8M21 8V5C21 3.89543 20.1046 3 19 3H16M16 21H19C20.1046 21 21 20.1046 21 19V16M3 16V19C3 20.1046 3.89543 21 5 21H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <svg class="exit-fullscreen-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <path d="M8 3V5C8 6.10457 8.89543 7 10 7H14C15.1046 7 16 6.10457 16 5V3M21 8H19C17.8954 8 17 8.89543 17 10V14C17 15.1046 17.8954 16 19 16H21M16 21V19C16 17.8954 15.1046 17 14 17H10C8.89543 17 8 17.8954 8 19V21M3 16H5C6.10457 16 7 15.1046 7 14V10C7 8.89543 6.10457 8 5 8H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </main>
+    </div>
+
+    <script>
+        // Deck data structure
+        const decks = [
+            {
+                id: 'intro',
+                title: 'Overview',
+                slides: [
+                    {
+                        title: 'Who is Jason',
+                        content: `
+                            <div class="slide-content two-columns">
+                                <div class="column-left intro-slide">
+                                    <h1 class="welcome-name">JASON MCCOY</h1>
+                                    <p class="welcome-title">Principal Product Designer <span class="ampersand">&</span> Engineer</p>
+                                </div>
+                                <div class="column-right">
+                                    <div class="welcome-text">
+                                        <img src="images/jason-mccoy.png" alt="Jason McCoy" class="welcome-profile-picture">
+                                        <p>A multidisciplinary builder blending taste and craft with leadership in product, design, and engineering. I leverage AI to improve user workflows and internal operations.</p>
+                                        <p>I thrive in complex and regulated domains for B2B SaaS. I shape product strategy from ambiguity and lead end-to-end initiatives.</p>
+                                        <p>I enjoy aligning and mentoring cross-functional teams, using prioritization frameworks for P&L impact, customer value, and shipping value at high velocity.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'John Hancock Financial',
+                        content: `
+                            <div class="slide-content two-columns">
+                                <div class="column-left">
+                                    <h1 class="features-title">John Hancock Financial</h1>
+                                    <p class="features-description">Led customer and product discovery, defined differentiated IRA product for millennials while meeting fiduciary and compliance requirements.</p>
+                                    <div class="project-tags">
+                                        <span class="project-tag">2018</span>
+                                        <span class="project-tag">B2C</span>
+                                        <span class="project-tag">0→1</span>
+                                        <span class="project-tag">Mobile</span>
+                                        <span class="project-tag">PM</span>
+                                    </div>
+                                </div>
+                                <div class="column-right">
+                                    <img src="images/deck/twine-mobile-intro.png" alt="Twine Mobile App" class="twine-mobile-mockup">
+                                    <img src="images/deck/twine-flows.png" alt="Twine Flows" class="twine-flows">
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Dropbox Replay',
+                        content: `
+                            <div class="slide-content two-columns">
+                                <div class="column-left">
+                                    <h1 class="replay-title">Dropbox Replay</h1>
+                                    <p class="replay-description">Led design from alpha→GA, reaching $2m ARR the first year after launch.</p>
+                                    <div class="project-tags">
+                                        <span class="project-tag">2022</span>
+                                        <span class="project-tag">B2C</span>
+                                        <span class="project-tag">0→1</span>
+                                    </div>
+                                </div>
+                                <div class="column-right">
+                                    <img src="images/replay-dashboard.png" alt="Dropbox Replay Dashboard" class="replay-dashboard-image">
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Nerdy',
+                        content: `
+                            <div class="slide-content nerdy-slide">
+                                <iframe src="https://nerdy-copilot.netlify.app/" frameborder="0" allowfullscreen class="nerdy-iframe"></iframe>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 'portfolio',
+                title: 'Tuttle for Personal Injury',
+                slides: [
+                    {
+                        title: 'Portfolio',
+                        content: `
+                            <div class="slide-content">
+                                <h1 class="slide-title">Portfolio Overview</h1>
+                                <p class="slide-text">A collection of my work and projects.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Projects',
+                        content: `
+                            <div class="slide-content">
+                                <h1 class="slide-title">Projects</h1>
+                                <ul class="slide-list">
+                                    <li>Tuttle</li>
+                                    <li>Nerdy</li>
+                                    <li>Dropbox Replay</li>
+                                    <li>John Hancock Financial</li>
+                                    <li>Pulley.com</li>
+                                </ul>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            {
+                id: 'about',
+                title: 'Nerdy AI for Tutors',
+                slides: [
+                    {
+                        title: 'About Me',
+                        content: `
+                            <div class="slide-content">
+                                <h1 class="slide-title">About</h1>
+                                <p class="slide-text">Principal Product Designer & Engineer</p>
+                                <p class="slide-text">Multidisciplinary builder blending taste and craft with leadership in product, design, and engineering.</p>
+                            </div>
+                        `
+                    }
+                ]
+            }
+        ];
+
+        // State management
+        let currentDeckId = null;
+        let currentSlideIndex = 0;
+        let isFullscreen = false;
+
+        // DOM elements
+        const sidebar = document.getElementById('deck-sidebar');
+        const sidebarNav = document.getElementById('sidebar-nav');
+        const slideContainer = document.getElementById('slide-container');
+        const deckControls = document.getElementById('deck-controls');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const slideCounter = document.getElementById('slide-counter');
+        const currentSlideSpan = document.getElementById('current-slide');
+        const totalSlidesSpan = document.getElementById('total-slides');
+        const deckContainer = document.getElementById('deck-container');
+
+        // Initialize sidebar navigation
+        function initSidebar() {
+            sidebarNav.innerHTML = '';
+            
+            decks.forEach(deck => {
+                const deckItem = document.createElement('div');
+                deckItem.className = 'sidebar-deck';
+                deckItem.dataset.deckId = deck.id;
+                
+                const deckTitle = document.createElement('button');
+                deckTitle.className = 'deck-title-btn';
+                deckTitle.textContent = deck.title;
+                deckTitle.addEventListener('click', () => selectDeck(deck.id));
+                
+                deckItem.appendChild(deckTitle);
+                
+                const slideList = document.createElement('div');
+                slideList.className = 'slide-list-container';
+                slideList.style.display = 'none';
+                
+                deck.slides.forEach((slide, index) => {
+                    const slideItem = document.createElement('button');
+                    slideItem.className = 'slide-item';
+                    slideItem.textContent = `${index + 1}. ${slide.title}`;
+                    slideItem.addEventListener('click', () => {
+                        selectDeck(deck.id);
+                        goToSlide(index);
+                    });
+                    slideList.appendChild(slideItem);
+                });
+                
+                deckItem.appendChild(slideList);
+                sidebarNav.appendChild(deckItem);
+            });
+        }
+
+        // Select a deck
+        function selectDeck(deckId) {
+            currentDeckId = deckId;
+            currentSlideIndex = 0;
+            
+            // Update sidebar UI
+            document.querySelectorAll('.sidebar-deck').forEach(item => {
+                const slideList = item.querySelector('.slide-list-container');
+                if (item.dataset.deckId === deckId) {
+                    item.classList.add('active');
+                    slideList.style.display = 'block';
+                } else {
+                    item.classList.remove('active');
+                    slideList.style.display = 'none';
+                }
+            });
+            
+            // Update active slide indicators
+            updateSlideIndicators();
+            
+            // Render current slide
+            renderSlide();
+            
+            // Update URL
+            updateURL();
+        }
+
+        // Render current slide
+        function renderSlide() {
+            if (!currentDeckId) return;
+            
+            const deck = decks.find(d => d.id === currentDeckId);
+            if (!deck || !deck.slides[currentSlideIndex]) return;
+            
+            const slide = deck.slides[currentSlideIndex];
+            slideContainer.innerHTML = slide.content;
+            
+            // Update slide indicators in sidebar
+            document.querySelectorAll('.slide-item').forEach((item, index) => {
+                const deckItem = item.closest('.sidebar-deck');
+                if (deckItem && deckItem.dataset.deckId === currentDeckId) {
+                    if (index === currentSlideIndex) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                }
+            });
+        }
+
+        // Update slide indicators
+        function updateSlideIndicators() {
+            if (!currentDeckId) {
+                currentSlideSpan.textContent = '0';
+                totalSlidesSpan.textContent = '0';
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+                return;
+            }
+            
+            const deck = decks.find(d => d.id === currentDeckId);
+            if (deck) {
+                currentSlideSpan.textContent = currentSlideIndex + 1;
+                totalSlidesSpan.textContent = deck.slides.length;
+                
+                // Update button states
+                prevBtn.disabled = currentSlideIndex === 0;
+                nextBtn.disabled = currentSlideIndex === deck.slides.length - 1;
+            }
+        }
+
+        // Navigate to specific slide
+        function goToSlide(index) {
+            if (!currentDeckId) return;
+            
+            const deck = decks.find(d => d.id === currentDeckId);
+            if (!deck) return;
+            
+            if (index >= 0 && index < deck.slides.length) {
+                currentSlideIndex = index;
+                renderSlide();
+                updateSlideIndicators();
+                updateURL();
+            }
+        }
+
+        // Previous slide
+        function prevSlide() {
+            if (!currentDeckId) return;
+            
+            const deck = decks.find(d => d.id === currentDeckId);
+            if (!deck) return;
+            
+            if (currentSlideIndex > 0) {
+                goToSlide(currentSlideIndex - 1);
+            }
+        }
+
+        // Next slide
+        function nextSlide() {
+            if (!currentDeckId) return;
+            
+            const deck = decks.find(d => d.id === currentDeckId);
+            if (!deck) return;
+            
+            if (currentSlideIndex < deck.slides.length - 1) {
+                goToSlide(currentSlideIndex + 1);
+            }
+        }
+
+        // Toggle fullscreen
+        function toggleFullscreen() {
+            if (!isFullscreen) {
+                // Enter fullscreen
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) {
+                    document.documentElement.msRequestFullscreen();
+                }
+            } else {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        // Handle fullscreen change
+        function handleFullscreenChange() {
+            isFullscreen = !!(
+                document.fullscreenElement ||
+                document.webkitFullscreenElement ||
+                document.msFullscreenElement
+            );
+            
+            if (isFullscreen) {
+                deckContainer.classList.add('fullscreen');
+                fullscreenBtn.querySelector('.fullscreen-icon').style.display = 'none';
+                fullscreenBtn.querySelector('.exit-fullscreen-icon').style.display = 'block';
+            } else {
+                deckContainer.classList.remove('fullscreen');
+                fullscreenBtn.querySelector('.fullscreen-icon').style.display = 'block';
+                fullscreenBtn.querySelector('.exit-fullscreen-icon').style.display = 'none';
+            }
+        }
+
+        // Update URL hash
+        function updateURL() {
+            if (currentDeckId !== null) {
+                const hash = `#${currentDeckId}/${currentSlideIndex}`;
+                if (window.location.hash !== hash) {
+                    window.history.replaceState(null, null, hash);
+                }
+            }
+        }
+
+        // Restore state from URL
+        function restoreStateFromURL() {
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                const parts = hash.split('/');
+                if (parts.length >= 1) {
+                    const deckId = parts[0];
+                    const deck = decks.find(d => d.id === deckId);
+                    if (deck) {
+                        selectDeck(deckId);
+                        if (parts.length >= 2) {
+                            const slideIndex = parseInt(parts[1], 10);
+                            if (!isNaN(slideIndex) && slideIndex >= 0 && slideIndex < deck.slides.length) {
+                                goToSlide(slideIndex);
+                            }
+                        }
+                        return;
+                    }
+                }
+            }
+            
+            // Default to first deck
+            if (decks.length > 0) {
+                selectDeck(decks[0].id);
+            }
+        }
+
+        // Event listeners
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            
+            switch(e.key) {
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    prevSlide();
+                    break;
+                case 'ArrowRight':
+                case ' ':
+                    e.preventDefault();
+                    nextSlide();
+                    break;
+                case 'f':
+                case 'F':
+                    e.preventDefault();
+                    toggleFullscreen();
+                    break;
+                case 'Escape':
+                    if (isFullscreen) {
+                        e.preventDefault();
+                        toggleFullscreen();
+                    }
+                    break;
+            }
+        });
+
+        // Fullscreen change events
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+        document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+        // Initialize
+        initSidebar();
+        restoreStateFromURL();
+    </script>
+</body>
+</html>
+
