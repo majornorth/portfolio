@@ -2155,15 +2155,11 @@ body {
 }
 
 .replay-dashboard-image {
-    /* position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 100%;
+    border: 1px solid #727272;
+    border-radius: 12px;
+    height: 58.75rem; /* 940px / 16px = 58.75rem (equivalent to 940px when viewport is 1080px height) */
     width: auto;
-    max-height: 100%;
     object-fit: contain;
-    object-position: right center; */
 }
 
 /* In fullscreen mode, clip content at slide edges */
