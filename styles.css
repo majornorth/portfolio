@@ -2163,7 +2163,20 @@ body {
     width: auto;
     object-fit: contain;
     position: relative;
+}
+
+.deck-container.fullscreen .tuttle-image {
+    position: relative;
     left: 13rem;
+}
+
+.pulley-pr-image {
+    border: 1px solid #727272;
+    border-radius: 12px;
+    height: 58.75rem; /* 940px / 16px = 58.75rem (equivalent to 940px when viewport is 1080px height) */
+    width: auto;
+    object-fit: contain;
+    position: relative;
 }
 
 /* In fullscreen mode, clip content at slide edges */
