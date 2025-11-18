@@ -1814,14 +1814,15 @@ body {
 }
 
 .sidebar-deck.active .deck-title-btn {
-    background-color: rgba(207, 189, 255, 0.15);
+    /* background-color: rgba(207, 189, 255, 0.15); */
     color: #ffffff;
-    font-weight: 600;
+    /* font-weight: 600; */
 }
 
 .slide-list-container {
     padding-left: 1rem;
     padding-right: 0.5rem;
+    padding-top: 1rem;
 }
 
 .slide-item {
@@ -1875,7 +1876,7 @@ body {
     bottom: 96px;
     padding: 3rem;
     overflow: hidden;
-    background-color: #808080;
+    background-color: #1b1a2b;
     box-sizing: border-box;
     width: 100%;
     /* Ensure consistent positioning - reserve space to prevent layout shifts */
@@ -1978,6 +1979,11 @@ body {
 }
 
 /* Welcome Slide Styles */
+.column-left.intro-slide {
+    gap: 0;
+}
+
+
 .welcome-slide {
     width: 100%;
     height: 100%;
@@ -2023,18 +2029,22 @@ body {
 }
 
 .welcome-profile-picture {
-    width: 90px;
-    height: 90px;
+    width: 68px;
+    height: 68px;
     border-radius: 0;
     object-fit: cover;
     float: left;
     margin-right: 1.5rem;
     margin-bottom: 0.5rem;
     shape-outside: margin-box;
+    position: relative;
+    top: 8px;
 }
 
 .welcome-text {
     overflow: hidden;
+    max-width: 40.125rem; /* 642px / 16px = 40.125rem */
+    margin: 0 auto; /* Horizontally center within column-right */
 }
 
 .welcome-text p {
@@ -2051,19 +2061,19 @@ body {
 }
 
 /* Features Slide Styles */
-.slide-content.features-slide {
+.slide-content.two-columns {
     padding-left: 10rem; /* 160px padding-left */
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
 
-.features-slide {
+.two-columns {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: row;
     gap: 10rem; /* 160px horizontal space between columns */
-    align-items: flex-start;
+    align-items: center;
     overflow-y: auto;
     box-sizing: border-box;
 }
@@ -2116,13 +2126,13 @@ body {
     max-width: 100%;
 }
 
-.replay-tags {
+.project-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
 }
 
-.replay-tag {
+.project-tag {
     background-color: #2d2d2d;
     color: #ffffff;
     padding: 0.375rem 0.75rem;
@@ -2145,7 +2155,7 @@ body {
 }
 
 .replay-dashboard-image {
-    position: absolute;
+    /* position: absolute;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
@@ -2153,7 +2163,7 @@ body {
     width: auto;
     max-height: 100%;
     object-fit: contain;
-    object-position: right center;
+    object-position: right center; */
 }
 
 /* In fullscreen mode, clip content at slide edges */
@@ -2180,7 +2190,7 @@ body {
 
 .features-title {
     font-family: 'Jost', sans-serif;
-    font-size: 48px;
+    font-size: 54px;
     font-weight: 400;
     letter-spacing: -0.03em;
     color: #ffffff;
@@ -2197,22 +2207,6 @@ body {
     margin: 0;
 }
 
-.features-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.feature-tag {
-    background-color: #2d2d2d;
-    color: #ffffff;
-    padding: 0.375rem 0.75rem;
-    border-radius: 4px;
-    font-size: 0.875rem;
-    font-weight: 400;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    display: inline-block;
-}
 
 .features-center {
     flex: 1;
@@ -2232,10 +2226,15 @@ body {
     flex: 1;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     padding-right: 0;
     gap: 2rem;
+}
+
+/* Center welcome-text horizontally within column-right */
+.column-right:has(.welcome-text) {
+    justify-content: center;
 }
 
 .twine-flows {
@@ -2463,7 +2462,7 @@ body {
         font-size: 20px;
     }
 
-    .features-slide {
+    .two-columns {
         flex-direction: column;
         gap: 1.5rem;
     }
@@ -2554,12 +2553,6 @@ body {
 
     .welcome-text p {
         font-size: 18px;
-    }
-
-    .welcome-profile-picture {
-        width: 72px;
-        height: 72px;
-        margin-right: 1rem;
     }
 
     .features-title {
