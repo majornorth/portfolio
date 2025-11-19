@@ -2009,7 +2009,8 @@ body {
     justify-content: stretch;
 }
 
-.slide-content.nerdy-slide:has(.google-form-iframe) {
+.slide-content.nerdy-slide:has(.google-form-iframe),
+.slide-content.nerdy-slide:has(.zapier-logic-iframe) {
     align-items: center;
     justify-content: center;
 }
@@ -2035,6 +2036,22 @@ body {
     position: relative;
     top: 50px;
     left: -375px;
+}
+
+.zapier-logic-iframe {
+    max-width: 1366px;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+    display: block;
+}
+
+.deck-container.fullscreen .zapier-logic-iframe {
+    width: 80%;
+    height: 80%;
+    max-width: 80%;
+    max-height: 80%;
+    aspect-ratio: unset;
 }
 
 /* In fullscreen mode, fill viewport with 16:9 aspect ratio */
