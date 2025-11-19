@@ -1837,6 +1837,33 @@ body {
     padding: 0.5rem 0;
 }
 
+.sidebar-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.cursor-logo {
+}
+
+.cursor-built-btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #A8FF00;
+    color: #000000;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: opacity 0.2s ease;
+}
+
+.cursor-built-btn:hover {
+    opacity: 0.9;
+}
+
 .sidebar-deck {
     margin-bottom: 0.5rem;
 }
