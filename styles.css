@@ -2029,6 +2029,14 @@ body {
     display: block;
 }
 
+.tan-vo-overlay {
+    height: 90px;
+    width: 90px;
+    position: relative;
+    top: 50px;
+    left: -375px;
+}
+
 /* In fullscreen mode, fill viewport with 16:9 aspect ratio */
 .deck-container.fullscreen .slide-container {
     background-color: #212121;
