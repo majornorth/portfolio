@@ -2116,6 +2116,11 @@ body {
     align-items: stretch;
 }
 
+.deck-container.fullscreen .testimonial-cards {
+    width: 130%;
+    height: 49rem;
+}
+
 .testimonial-card {
     background-color: #2d2d2d;
     border-radius: 8px;
