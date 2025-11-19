@@ -191,8 +191,9 @@
                     {
                         title: 'Meet River Run Law',
                         content: `
-                            <div class="slide-content" style="display: flex; align-items: center; justify-content: center;">
+                            <div class="slide-content casey-slide" style="display: flex; align-items: center; justify-content: center;">
                                 <img src="images/deck/casey.png" alt="Meet River Run Law" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                                <img src="images/deck/tools-toast.png" alt="Tools Toast" class="tools-toast-image">
                             </div>
                         `
                     },
@@ -218,6 +219,30 @@
                         content: `
                             <div class="slide-content" style="display: flex; align-items: center; justify-content: center;">
                                 <img src="images/deck/figjam-workflows.png" alt="FigJam Workflows" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'New Request',
+                        content: `
+                            <div class="slide-content nerdy-slide">
+                                <iframe src="images/deck/new-request-empty-v1.html" frameborder="0" allowfullscreen class="new-request-iframe"></iframe>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Providers Spreadsheet',
+                        content: `
+                            <div class="slide-content" style="display: flex; align-items: center; justify-content: center;">
+                                <img src="images/deck/providers-spreadsheet.png" alt="Providers Spreadsheet" class="providers-spreadsheet-image">
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'New Provider',
+                        content: `
+                            <div class="slide-content nerdy-slide">
+                                <iframe src="images/deck/new-provider-empty-v1.html" frameborder="0" allowfullscreen class="new-provider-iframe"></iframe>
                             </div>
                         `
                     },
@@ -340,6 +365,14 @@
             
             const slide = deck.slides[currentSlideIndex];
             slideContainer.innerHTML = slide.content;
+            
+            // Set up click handler for Casey slide
+            const caseySlide = slideContainer.querySelector('.casey-slide');
+            if (caseySlide) {
+                caseySlide.addEventListener('click', function() {
+                    caseySlide.classList.add('animate-toast');
+                });
+            }
             
             // Update slide indicators in sidebar
             document.querySelectorAll('.sidebar-deck').forEach(deckItem => {
