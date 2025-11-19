@@ -2071,6 +2071,12 @@ body {
     border-radius: 12px;
 }
 
+.figjam-workflows-image {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
+
 .casey-slide {
     position: relative;
     cursor: pointer;
