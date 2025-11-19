@@ -436,6 +436,11 @@ body {
     background-color: #000;
 }
 
+/* Nerdy project video-container specific styling */
+.project:has(#nerdy-video) .video-container {
+    margin-bottom: 18.1875rem;
+}
+
 .video-placeholder-image {
     width: 100%;
     height: auto;
@@ -1747,6 +1752,48 @@ body {
 .deck-body {
     overflow: hidden;
     height: 100vh;
+}
+
+/* Hide horizontal scrollbars in Safari */
+/* Safari shows scrollbars by default, unlike Chrome which hides them until scrolling */
+/* Use Safari-specific detection: @supports with -webkit-appearance targets Safari/WebKit */
+@supports (-webkit-appearance: none) and (not (-webkit-appearance: button)) {
+    /* Hide horizontal scrollbars on body/html */
+    body::-webkit-scrollbar,
+    html::-webkit-scrollbar {
+        height: 0;
+        width: auto; /* Keep vertical scrollbar width */
+    }
+    
+    /* Hide horizontal scrollbar for deck container */
+    .deck-body::-webkit-scrollbar,
+    .deck-container::-webkit-scrollbar {
+        height: 0;
+        width: auto; /* Keep vertical scrollbar width */
+    }
+    
+    /* Hide horizontal scrollbar but keep vertical for elements with horizontal overflow */
+    [style*="overflow-x: auto"]::-webkit-scrollbar,
+    [style*="overflow-x: scroll"]::-webkit-scrollbar {
+        height: 0;
+    }
+}
+
+/* Safari-specific: Hide horizontal scrollbar for .horizontal-scroll class */
+/* This overrides the existing scrollbar styling to hide it in Safari */
+@supports (-webkit-appearance: none) {
+    .horizontal-scroll::-webkit-scrollbar {
+        height: 0 !important;
+        display: none !important;
+    }
+    
+    .horizontal-scroll::-webkit-scrollbar-track {
+        display: none !important;
+    }
+    
+    .horizontal-scroll::-webkit-scrollbar-thumb {
+        display: none !important;
+    }
 }
 
 .deck-container {
