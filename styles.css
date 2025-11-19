@@ -296,9 +296,9 @@ body {
     gap: 1.5rem;
 }
 
-.testimonial-photo {
+/* .testimonial-photo {
     opacity: 0.5;
-}
+} */
 
 .testimonial-author {
     display: flex;
@@ -2093,6 +2093,87 @@ body {
     opacity: 1;
 }
 
+.testimonials-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    background-color: #1a1a1a;
+}
+
+.testimonial-cards {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1600px;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.testimonial-card {
+    background-color: #2d2d2d;
+    border-radius: 8px;
+    padding: 2.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    height: 40.625rem; /* 650px / 16px = 40.625rem */
+    max-height: 100%;
+}
+
+.deck-container.fullscreen .testimonial-card {
+    height: 100%;
+    max-height: 100%;
+}
+
+.testimonial-quote {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #ffffff;
+    margin: 0 0 2rem 0;
+}
+
+.testimonial-attribution {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.testimonial-photo {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.testimonial-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.testimonial-title {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.testimonial-firm {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.2;
+}
+
 /* In fullscreen mode, fill viewport with 16:9 aspect ratio */
 .deck-container.fullscreen .slide-container {
     background-color: #212121;
@@ -2282,7 +2363,7 @@ body {
 }
 
 .project-tag {
-    background-color: #2d2d2d;
+    background-color: #555555;
     color: #ffffff;
     padding: 0.375rem 0.75rem;
     border-radius: 4px;
