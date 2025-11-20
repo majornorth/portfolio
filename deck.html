@@ -11,6 +11,16 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="deck-body">
+    <!-- Under Construction Modal -->
+    <div class="construction-modal" id="construction-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <img src="https://media.tenor.com/MRCIli40TYoAAAAj/under-construction90s-90s.gif" alt="Under Construction" class="construction-gif">
+            <p class="modal-text">Figma does not allow the embedding of real apps. I've built several, including this deck presentation app that allows me to iframe the apps that I've built. If we have a portfolio presentation, I'll get rid of this modal and show you how I built new products and brought them to market using Cursor.</p>
+            <button class="modal-dismiss-btn" id="modal-dismiss-btn">Okay, show me WIP</button>
+        </div>
+    </div>
+
     <div class="deck-container" id="deck-container">
         <!-- Sidebar Navigation -->
         <aside class="deck-sidebar" id="deck-sidebar">
@@ -643,6 +653,24 @@
         document.addEventListener('fullscreenchange', handleFullscreenChange);
         document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
         document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+        // Show construction modal on page load
+        const constructionModal = document.getElementById('construction-modal');
+        const dismissBtn = document.getElementById('modal-dismiss-btn');
+        
+        if (constructionModal) {
+            // Show modal after a brief delay to ensure it renders properly
+            setTimeout(() => {
+                constructionModal.classList.add('show');
+            }, 100);
+        }
+        
+        // Dismiss modal when button is clicked
+        if (dismissBtn) {
+            dismissBtn.addEventListener('click', () => {
+                constructionModal.classList.remove('show');
+            });
+        }
 
         // Initialize
         initSidebar();
