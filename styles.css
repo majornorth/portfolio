@@ -300,6 +300,12 @@ body {
     opacity: 0.5;
 } */
 
+.jaimin-photo {
+    opacity: 0.5;
+    height: 70px;
+    width: 70px;
+}
+
 .testimonial-author {
     display: flex;
     flex-direction: column;
