@@ -2592,8 +2592,7 @@ body {
     justify-content: center;
     gap: 2rem;
     padding: 1.5rem;
-    background-color: rgba(42, 31, 61, 0.8);
-    border-top: 1px solid rgba(207, 189, 255, 0.2);
+    background-color: #000000;
     transition: opacity 0.3s ease, transform 0.3s ease;
     z-index: 100;
 }
