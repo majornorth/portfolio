@@ -429,7 +429,7 @@ body {
     position: relative;
     width: 100%;
     max-width: 1200px;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -437,9 +437,9 @@ body {
 }
 
 /* Nerdy project video-container specific styling */
-.project:has(#nerdy-video) .video-container {
+/* .project:has(#nerdy-video) .video-container {
     margin-bottom: 18.1875rem;
-}
+} */
 
 .video-placeholder-image {
     width: 100%;
