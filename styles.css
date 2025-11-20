@@ -1842,6 +1842,7 @@ body {
     flex-direction: column;
     gap: 0.5rem;
     align-items: center;
+    padding-bottom: 20px;
 }
 
 .cursor-logo {
