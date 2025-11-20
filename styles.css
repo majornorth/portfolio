@@ -262,25 +262,44 @@ body.scrolled {
     padding: 4rem 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
+    gap: 2rem;
     margin-bottom: 340px;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    flex-wrap: wrap;
+    /* Break out of main container's max-width constraint */
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    /* Add horizontal padding to prevent edge-to-edge on small screens */
+    padding-left: 3rem;
+    padding-right: 3rem;
+    box-sizing: border-box;
 }
 
 .bio-container {
-    width: 1104px;
+    flex: 1;
+    min-width: 0;
+    max-width: 1104px;
     padding: 150px;
     background-color: #362743;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: space-between;
+    /* Ensure containers don't shrink below a reasonable minimum */
+    min-width: min(400px, 100%);
+    /* Add minimum height to ensure space-between works */
+    min-height: 600px;
 }
 
 .testimonial-text {
     width: 100%;
     max-width: 800px;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
+    /* Prevent testimonial-text from growing */
+    flex-shrink: 0;
 }
 
 .bio-text {
@@ -303,29 +322,45 @@ body.scrolled {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    width: 100%;
+    /* Remove margin-top: auto since justify-content: space-between handles it */
+    margin-top: 7.25rem;
+    /* Prevent attribution from growing */
+    flex-shrink: 0;
 }
 
-/* .testimonial-photo {
-    opacity: 0.5;
-} */
-
+.pk-image,
 .jaimin-photo {
     opacity: 0.5;
-    height: 70px;
-    width: 70px;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 0;
+    flex-shrink: 0;
 }
 
 .testimonial-author {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    flex: 1;
+    width: 100%;
+}
+
+.testimonial-name-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    gap: 1rem;
 }
 
 .testimonial-name {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 400;
     color: #ffffff;
+    flex-shrink: 0;
 }
 
 .testimonial-title,
@@ -334,6 +369,15 @@ body.scrolled {
     font-size: 16px;
     font-weight: 400;
     color: #E0E0E0;
+}
+
+.testimonial-companies {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #B2B2B2;
+    text-align: right;
+    flex-shrink: 0;
 }
 
 /* Project Sections */
@@ -1511,6 +1555,12 @@ body.scrolled {
 }
 
 /* Responsive Design */
+@media (max-width: 1440px) {
+    .bio-container {
+        padding: 2.5rem; /* 40px equivalent */
+    }
+}
+
 @media (max-width: 768px) {
     .nav {
         padding: 1.5rem;
@@ -1550,6 +1600,22 @@ body.scrolled {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid #ddd;
+    }
+
+    .bio-section {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem 1.5rem;
+    }
+
+    .bio-container {
+        width: 100%;
+        max-width: 100%;
+        padding: 2rem 1.5rem;
+    }
+
+    .bio-text {
+        font-size: 18px;
     }
 }
 
