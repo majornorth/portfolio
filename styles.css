@@ -300,6 +300,12 @@ body.scrolled {
     margin-bottom: 0;
     /* Prevent testimonial-text from growing */
     flex-shrink: 0;
+    opacity: 0.05;
+    transition: opacity 0.3s ease;
+}
+
+.bio-container:hover .testimonial-text {
+    opacity: 1.0;
 }
 
 .bio-text {
@@ -1558,6 +1564,10 @@ body.scrolled {
 @media (max-width: 1440px) {
     .bio-container {
         padding: 2.5rem; /* 40px equivalent */
+    }
+    
+    .bio-section {
+        padding: 15rem 0 4rem 0;
     }
 }
 
