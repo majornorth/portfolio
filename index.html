@@ -328,6 +328,17 @@
             lastScrollTop = scrollTop;
         }
         
+        // Hide background image on scroll
+        function handleBackgroundScroll() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 0) {
+                document.body.classList.add('scrolled');
+            } else {
+                document.body.classList.remove('scrolled');
+            }
+        }
+        
         // Calculate initial font size based on viewport width
         // At 2540px viewport width, font size should be 377px
         const referenceViewportWidth = 2540;
@@ -546,6 +557,10 @@
         // Cursor badge scroll handler
         window.addEventListener('scroll', handleCursorBadgeScroll, { passive: true });
         handleCursorBadgeScroll(); // Initial check
+        
+        // Background image scroll handler
+        window.addEventListener('scroll', handleBackgroundScroll, { passive: true });
+        handleBackgroundScroll(); // Initial check
         
         // Dots animation on page load
         function createDotsAnimation() {
