@@ -1563,7 +1563,7 @@ body.scrolled {
 /* Responsive Design */
 @media (max-width: 1440px) {
     .bio-container {
-        padding: 3.5rem; /* 40px equivalent */
+        padding: 3rem; /* 40px equivalent */
     }
     
     .bio-section {
