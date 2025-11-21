@@ -337,12 +337,19 @@ body.scrolled {
 
 .pk-image,
 .jaimin-photo {
-    opacity: 0.5;
     height: 40px;
     width: 40px;
     object-fit: cover;
     border-radius: 0;
     flex-shrink: 0;
+}
+
+.jaimin-photo {
+    opacity: 0.5;
+}
+
+.pk-image {
+    opacity: .7;
 }
 
 .testimonial-author {
