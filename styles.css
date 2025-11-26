@@ -2009,6 +2009,16 @@ body.scrolled {
     align-items: center
 }
 
+.sidebar-logo-link {
+    display: block;
+    height: 32px;
+}
+
+.sidebar-logo-link img {
+    height: 100%;
+    width: auto;
+}
+
 .sidebar-title {
     font-family: 'Jost', sans-serif;
     font-size: 16px;
@@ -3092,4 +3102,64 @@ body.scrolled {
         font-size: 14px;
     }
 }
+
+/* User Flow Slide Styles */
+.user-flow-slide {
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0;
+    background-color: #2a2a2a;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.user-flow-image-container {
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-width: fit-content;
+}
+
+.user-flow-image {
+    max-width: none;
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    object-position: left top;
+    display: block;
+    flex-shrink: 0;
+}
+
+/* New Request Slide Styles - Full width, vertical scrolling */
+.new-request-slide {
+    overflow-x: hidden;
+    overflow-y: auto;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.new-request-slide .user-flow-image-container {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.new-request-slide .user-flow-image {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left top;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
 
