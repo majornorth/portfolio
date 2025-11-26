@@ -2408,6 +2408,84 @@ body.scrolled {
     line-height: 1.2;
 }
 
+/* Buyer/User Cards Styles */
+.buyer-user-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.buyer-user-cards {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1600px;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.deck-container.fullscreen .buyer-user-cards {
+    width: 130%;
+    height: 49rem;
+}
+
+.buyer-user-card {
+    background-color: #2d2d2d;
+    border-radius: 8px;
+    padding: 2.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    height: 40.625rem;
+    max-height: 100%;
+}
+
+.deck-container.fullscreen .buyer-user-card {
+    height: 100%;
+    max-height: 100%;
+}
+
+.buyer-user-tag {
+    font-family: 'Jost', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.10);
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: auto;
+    align-self: flex-start;
+}
+
+.buyer-user-text {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #ffffff;
+    margin: 0;
+    flex-grow: 1;
+    display: flex;
+    align-items: start;
+    padding-top: 40px;
+}
+
+.buyer-user-photo {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 0;
+    margin-top: auto;
+    align-self: flex-start;
+}
+
 /* In fullscreen mode, fill viewport with 16:9 aspect ratio */
 .deck-container.fullscreen .slide-container {
     background-color: #212121;
