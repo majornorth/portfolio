@@ -25,7 +25,9 @@
         <!-- Sidebar Navigation -->
         <aside class="deck-sidebar" id="deck-sidebar">
             <div class="sidebar-header">
-                <img src="images/favicon.png" alt="Jason McCoy" class="sidebar-logo">
+                <a href="index.html" class="sidebar-logo-link">
+                    <img src="images/favicon.png" alt="Jason McCoy" class="sidebar-logo">
+                </a>
                 <h2 class="sidebar-title">Case Studies</h2>
             </div>
             <nav class="sidebar-nav" id="sidebar-nav">
@@ -275,6 +277,16 @@
                         `
                     },
                     {
+                        title: 'Requests workflow',
+                        content: `
+                            <div class="slide-content user-flow-slide">
+                                <div class="user-flow-image-container">
+                                    <img src="images/deck/user-flow/1-user-flow-records-request.png" alt="User Flow Step 1" class="user-flow-image active" data-step="1">
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
                         title: 'New Request',
                         content: `
                             <div class="slide-content nerdy-slide">
@@ -431,6 +443,75 @@
             if (caseySlide) {
                 caseySlide.addEventListener('click', function() {
                     caseySlide.classList.add('animate-toast');
+                });
+            }
+            
+            // Set up progressive image reveal for user flow slide
+            const userFlowSlide = slideContainer.querySelector('.user-flow-slide');
+            if (userFlowSlide) {
+                const imageContainer = userFlowSlide.querySelector('.user-flow-image-container');
+                const maxImages = 20; // Images go from 1 to 20
+                let currentImageIndex = 1;
+                let isScrolling = false;
+                
+                // Reset to first image
+                const currentImage = imageContainer.querySelector('.user-flow-image');
+                if (currentImage) {
+                    currentImage.src = 'images/deck/user-flow/1-user-flow-records-request.png';
+                    currentImage.dataset.step = '1';
+                    currentImage.classList.add('active');
+                }
+                
+                // Track scrolling to prevent click during scroll
+                userFlowSlide.addEventListener('scroll', function() {
+                    isScrolling = true;
+                    clearTimeout(userFlowSlide.scrollTimeout);
+                    userFlowSlide.scrollTimeout = setTimeout(function() {
+                        isScrolling = false;
+                    }, 150);
+                });
+                
+                userFlowSlide.addEventListener('click', function(e) {
+                    // Don't advance if user is scrolling
+                    if (isScrolling) {
+                        return;
+                    }
+                    
+                    if (currentImageIndex < maxImages) {
+                        // Save current scroll position
+                        const scrollLeft = userFlowSlide.scrollLeft;
+                        
+                        // Skip image 4 (duplicate) - go from 3 to 5
+                        if (currentImageIndex === 3) {
+                            currentImageIndex = 5;
+                        } else {
+                            currentImageIndex++;
+                        }
+                        
+                        const imagePath = `images/deck/user-flow/${currentImageIndex}-user-flow-records-request.png`;
+                        const currentImage = imageContainer.querySelector('.user-flow-image');
+                        if (currentImage) {
+                            // Remove previous onload handler if any
+                            const previousOnload = currentImage.onload;
+                            currentImage.onload = null;
+                            
+                            currentImage.src = imagePath;
+                            currentImage.dataset.step = currentImageIndex.toString();
+                            
+                            // Restore scroll position after image loads (or immediately if cached)
+                            const restoreScroll = function() {
+                                userFlowSlide.scrollLeft = scrollLeft;
+                            };
+                            
+                            if (currentImage.complete) {
+                                // Image is already cached, restore immediately
+                                setTimeout(restoreScroll, 0);
+                            } else {
+                                // Wait for image to load
+                                currentImage.onload = restoreScroll;
+                            }
+                        }
+                    }
                 });
             }
             
