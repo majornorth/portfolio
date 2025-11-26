@@ -213,7 +213,7 @@
                         `
                     },
                     {
-                        title: 'Request Form',
+                        title: 'Request form',
                         content: `
                             <div class="slide-content nerdy-slide">
                                 <img src="images/deck/tan-vo.png" alt="Tan Vo" class="tan-vo-overlay">
@@ -222,7 +222,7 @@
                         `
                     },
                     {
-                        title: 'Zapier Logic',
+                        title: 'Zapier logic',
                         content: `
                             <div class="slide-content nerdy-slide">
                                 <iframe src="images/deck/casey-zapier-logic.html" frameborder="0" allowfullscreen class="zapier-logic-iframe"></iframe>
@@ -230,7 +230,7 @@
                         `
                     },
                     {
-                        title: 'The Pain Is Real',
+                        title: 'The pain is real',
                         content: `
                             <div class="slide-content testimonials-slide">
                                 <div class="testimonial-cards">
@@ -269,7 +269,7 @@
                         `
                     },
                     {
-                        title: 'Legal Workflows',
+                        title: 'Legal workflows',
                         content: `
                             <div class="slide-content" style="display: flex; align-items: center; justify-content: center;">
                                 <img src="images/deck/figjam-workflows.png" alt="FigJam Workflows" class="figjam-workflows-image">
@@ -287,15 +287,17 @@
                         `
                     },
                     {
-                        title: 'New Request',
+                        title: 'New request',
                         content: `
-                            <div class="slide-content nerdy-slide">
-                                <iframe src="images/deck/new-request-empty-v1.html" frameborder="0" allowfullscreen class="new-request-iframe"></iframe>
+                            <div class="slide-content user-flow-slide new-request-slide">
+                                <div class="user-flow-image-container">
+                                    <img src="images/deck/new-request/1-new-request-empty-v1.png" alt="New Request Step 1" class="user-flow-image active" data-step="1">
+                                </div>
                             </div>
                         `
                     },
                     {
-                        title: 'Providers Spreadsheet',
+                        title: 'Providers spreadsheet',
                         content: `
                             <div class="slide-content" style="display: flex; align-items: center; justify-content: center;">
                                 <img src="images/deck/providers-spreadsheet.png" alt="Providers Spreadsheet" class="providers-spreadsheet-image">
@@ -303,7 +305,7 @@
                         `
                     },
                     {
-                        title: 'New Provider',
+                        title: 'New provider',
                         content: `
                             <div class="slide-content nerdy-slide">
                                 <iframe src="images/deck/new-provider-empty-v1.html" frameborder="0" allowfullscreen class="new-provider-iframe"></iframe>
@@ -333,7 +335,7 @@
                         `
                     },
                     {
-                        title: 'Session Prep prototype',
+                        title: 'Session prep prototype',
                         content: `
                             <div class="slide-content nerdy-slide">
                                 <iframe src="https://nerdy-copilot.netlify.app/" frameborder="0" allowfullscreen class="nerdy-iframe"></iframe>
@@ -450,16 +452,33 @@
             const userFlowSlide = slideContainer.querySelector('.user-flow-slide');
             if (userFlowSlide) {
                 const imageContainer = userFlowSlide.querySelector('.user-flow-image-container');
-                const maxImages = 20; // Images go from 1 to 20
+                const currentImage = imageContainer.querySelector('.user-flow-image');
+                
+                // Detect slide type based on initial image src or class
+                const isNewRequestSlide = userFlowSlide.classList.contains('new-request-slide');
+                const maxImages = isNewRequestSlide ? 13 : 20; // New request has 13 images, user-flow has 20
                 let currentImageIndex = 1;
                 let isScrolling = false;
                 
-                // Reset to first image
-                const currentImage = imageContainer.querySelector('.user-flow-image');
-                if (currentImage) {
-                    currentImage.src = 'images/deck/user-flow/1-user-flow-records-request.png';
-                    currentImage.dataset.step = '1';
-                    currentImage.classList.add('active');
+                if (isNewRequestSlide) {
+                    // New request slide - show only first image, click to advance
+                    // Reset to first image
+                    if (currentImage) {
+                        currentImage.src = 'images/deck/new-request/1-new-request-empty-v1.png';
+                        currentImage.dataset.step = '1';
+                        currentImage.classList.add('active');
+                    }
+                    // Scroll to top when slide loads
+                    setTimeout(function() {
+                        userFlowSlide.scrollTop = 0;
+                    }, 0);
+                } else {
+                    // Reset to first image for user-flow slide
+                    if (currentImage) {
+                        currentImage.src = 'images/deck/user-flow/1-user-flow-records-request.png';
+                        currentImage.dataset.step = '1';
+                        currentImage.classList.add('active');
+                    }
                 }
                 
                 // Track scrolling to prevent click during scroll
@@ -471,6 +490,7 @@
                     }, 150);
                 });
                 
+                // Click handler for both slide types
                 userFlowSlide.addEventListener('click', function(e) {
                     // Don't advance if user is scrolling
                     if (isScrolling) {
@@ -478,37 +498,69 @@
                     }
                     
                     if (currentImageIndex < maxImages) {
-                        // Save current scroll position
-                        const scrollLeft = userFlowSlide.scrollLeft;
-                        
-                        // Skip image 4 (duplicate) - go from 3 to 5
-                        if (currentImageIndex === 3) {
-                            currentImageIndex = 5;
-                        } else {
+                        if (isNewRequestSlide) {
+                            // New request slide - vertical scrolling, simple increment
+                            // Preserve scroll position when advancing
+                            const scrollTop = userFlowSlide.scrollTop;
+                            
                             currentImageIndex++;
-                        }
-                        
-                        const imagePath = `images/deck/user-flow/${currentImageIndex}-user-flow-records-request.png`;
-                        const currentImage = imageContainer.querySelector('.user-flow-image');
-                        if (currentImage) {
-                            // Remove previous onload handler if any
-                            const previousOnload = currentImage.onload;
-                            currentImage.onload = null;
+                            const imagePath = `images/deck/new-request/${currentImageIndex}-new-request-empty-v1.png`;
+                            const currentImage = imageContainer.querySelector('.user-flow-image');
+                            if (currentImage) {
+                                // Remove previous onload handler if any
+                                const previousOnload = currentImage.onload;
+                                currentImage.onload = null;
+                                
+                                currentImage.src = imagePath;
+                                currentImage.dataset.step = currentImageIndex.toString();
+                                
+                                // Restore scroll position after image loads (or immediately if cached)
+                                const restoreScroll = function() {
+                                    userFlowSlide.scrollTop = scrollTop;
+                                };
+                                
+                                if (currentImage.complete) {
+                                    // Image is already cached, restore scroll position immediately
+                                    setTimeout(restoreScroll, 0);
+                                } else {
+                                    // Wait for image to load, then restore scroll position
+                                    currentImage.onload = restoreScroll;
+                                }
+                            }
+                        } else {
+                            // User flow slide - horizontal scrolling
+                            // Save current scroll position
+                            const scrollLeft = userFlowSlide.scrollLeft;
                             
-                            currentImage.src = imagePath;
-                            currentImage.dataset.step = currentImageIndex.toString();
-                            
-                            // Restore scroll position after image loads (or immediately if cached)
-                            const restoreScroll = function() {
-                                userFlowSlide.scrollLeft = scrollLeft;
-                            };
-                            
-                            if (currentImage.complete) {
-                                // Image is already cached, restore immediately
-                                setTimeout(restoreScroll, 0);
+                            // Skip image 4 (duplicate) - go from 3 to 5
+                            if (currentImageIndex === 3) {
+                                currentImageIndex = 5;
                             } else {
-                                // Wait for image to load
-                                currentImage.onload = restoreScroll;
+                                currentImageIndex++;
+                            }
+                            
+                            const imagePath = `images/deck/user-flow/${currentImageIndex}-user-flow-records-request.png`;
+                            const currentImage = imageContainer.querySelector('.user-flow-image');
+                            if (currentImage) {
+                                // Remove previous onload handler if any
+                                const previousOnload = currentImage.onload;
+                                currentImage.onload = null;
+                                
+                                currentImage.src = imagePath;
+                                currentImage.dataset.step = currentImageIndex.toString();
+                                
+                                // Restore scroll position after image loads (or immediately if cached)
+                                const restoreScroll = function() {
+                                    userFlowSlide.scrollLeft = scrollLeft;
+                                };
+                                
+                                if (currentImage.complete) {
+                                    // Image is already cached, restore immediately
+                                    setTimeout(restoreScroll, 0);
+                                } else {
+                                    // Wait for image to load
+                                    currentImage.onload = restoreScroll;
+                                }
                             }
                         }
                     }
