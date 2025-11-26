@@ -2411,9 +2411,38 @@ body.scrolled {
 /* Buyer/User Cards Styles */
 .buyer-user-slide {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 2rem;
+    height: 100%;
+}
+
+.buyer-user-headings {
+    display: flex;
+    width: 100%;
+    max-width: 1600px;
+    justify-content: space-between;
+    margin-top: 6rem;
+    gap: 2rem;
+}
+
+.buyer-user-heading {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.33);
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #6a6a6a;
+}
+
+.buyer-user-heading:first-child {
+    flex: 3;
+}
+
+.buyer-user-heading:last-child {
+    flex: 1;
 }
 
 .buyer-user-cards {
@@ -2421,13 +2450,27 @@ body.scrolled {
     gap: 2rem;
     width: 100%;
     max-width: 1600px;
-    justify-content: center;
-    align-items: stretch;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 534px;
+}
+
+.buyer-user-card-group {
+    display: flex;
+    gap: 2rem;
+    height: 534px;
+}
+
+.buyer-user-card-group:first-child {
+    flex: 3;
+}
+
+.buyer-user-card-group:last-child {
+    flex: 1;
 }
 
 .deck-container.fullscreen .buyer-user-cards {
     width: 130%;
-    height: 49rem;
 }
 
 .buyer-user-card {
@@ -2442,6 +2485,7 @@ body.scrolled {
     height: 40.625rem;
     max-height: 100%;
 }
+
 
 .deck-container.fullscreen .buyer-user-card {
     height: 100%;
@@ -2484,6 +2528,30 @@ body.scrolled {
     border-radius: 0;
     margin-top: auto;
     align-self: flex-start;
+}
+
+.buyer-user-footer {
+    width: 100%;
+    max-width: 1600px;
+    margin-bottom: 80px;
+    position: relative;
+}
+
+.buyer-user-green-line {
+    width: calc(50% - 1rem);
+    height: 2px;
+    background-color: #CEFC00;
+    margin-bottom: 1rem;
+    margin-left: auto;
+}
+
+.buyer-user-footer-text {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: #CEFC00;
+    margin: 0;
+    text-align: right;
 }
 
 /* In fullscreen mode, fill viewport with 16:9 aspect ratio */
