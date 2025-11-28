@@ -181,18 +181,18 @@
                 title: 'Tuttle for Personal Injury',
                 slides: [
                     {
-                        title: 'Tuttle',
+                        title: 'Introducing Tuttle',
                         content: `
                             <div class="slide-content two-columns">
                                 <div class="column-left">
                                     <h1 class="replay-title">Tuttle</h1>
-                                    <p class="replay-description">Product Lead from discovery to production and GTM for bootstrapped B2B SaaS for personal injury law firms.</p>
+                                    <p class="replay-description">Automated records requests for personal injury practices. Increasing staff capacity, closing cases faster, and increasing firm cashflow.</p>
                                     <div class="project-tags">
                                         <span class="project-tag">2025</span>
                                         <span class="project-tag">B2B</span>
-                                        <span class="project-tag">Product</span>
-                                        <span class="project-tag">UX</span>
                                         <span class="project-tag">Discovery</span>
+                                        <span class="project-tag">Product</span>
+                                        <span class="project-tag">Design</span>
                                         <span class="project-tag">AI</span>
                                         <span class="project-tag">Sales</span>
                                     </div>
@@ -200,6 +200,32 @@
                                 <div class="column-right">
                                     <img src="images/deck/tuttle-add-provider.png" alt="Tuttle Add Provider UI" class="tuttle-image">
                                 </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Discovery prototype',
+                        content: `
+                            <div class="slide-content nerdy-slide">
+                                <iframe src="https://tuttle-discovery-prototype.netlify.app/login" frameborder="0" allowfullscreen class="nerdy-iframe"></iframe>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Workflow overview',
+                        content: `
+                            <div class="slide-content user-flow-slide simple-request-flow-slide">
+                                <div class="user-flow-image-container">
+                                    <img src="images/deck/simple-request-flow/1-simplified-request-flow.png" alt="Workflow Overview Step 1" class="user-flow-image active" data-step="1">
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: '2100% ROI',
+                        content: `
+                            <div class="slide-content" style="display: flex; align-items: center; justify-content: center; padding: 0; margin: 0;">
+                                <img src="images/deck/business-opportunity.png" alt="2100% ROI" style="width: 100%; height: 100%; object-fit: cover;">
                             </div>
                         `
                     },
@@ -272,27 +298,39 @@
                         title: 'Buyers and users',
                         content: `
                             <div class="slide-content buyer-user-slide">
+                                <div class="buyer-user-headings">
+                                    <h2 class="buyer-user-heading">Small personal injury law firm</h2>
+                                    <h2 class="buyer-user-heading full-service">Full-service law firm</h2>
+                                </div>
                                 <div class="buyer-user-cards">
-                                    <div class="buyer-user-card">
-                                        <span class="buyer-user-tag buyer-tag">Buyer</span>
-                                        <p class="buyer-user-text">Partner at small personal injury law firm</p>
-                                        <img src="images/deck/chris-small.png" alt="Chris" class="buyer-user-photo">
+                                    <div class="buyer-user-card-group personal-injury">
+                                        <div class="buyer-user-card">
+                                            <span class="buyer-user-tag buyer-tag">Buyer</span>
+                                            <p class="buyer-user-text">Firm partner</p>
+                                            <img src="images/deck/chris-small.png" alt="Chris" class="buyer-user-photo">
+                                        </div>
+                                        <div class="buyer-user-card">
+                                            <span class="buyer-user-tag user-tag">User</span>
+                                            <p class="buyer-user-text">Paralegal</p>
+                                            <img src="images/deck/jacayla-small.png" alt="Jacayla" class="buyer-user-photo">
+                                        </div>
+                                        <div class="buyer-user-card">
+                                            <span class="buyer-user-tag user-tag">User</span>
+                                            <p class="buyer-user-text">Legal assistant</p>
+                                            <img src="images/deck/tan-vo-small.png" alt="Tan Vo" class="buyer-user-photo">
+                                        </div>
                                     </div>
-                                    <div class="buyer-user-card">
-                                        <span class="buyer-user-tag user-tag">User</span>
-                                        <p class="buyer-user-text">Paralegal at small personal injury law firm</p>
-                                        <img src="images/deck/jacayla-small.png" alt="Jacayla" class="buyer-user-photo">
+                                    <div class="buyer-user-card-group full-service">
+                                        <div class="buyer-user-card">
+                                            <span class="buyer-user-tag buyer-tag">Buyer</span>
+                                            <p class="buyer-user-text">Attorney</p>
+                                            <img src="images/deck/ryan-ash.png" alt="Ryan" class="buyer-user-photo">
+                                        </div>
                                     </div>
-                                    <div class="buyer-user-card">
-                                        <span class="buyer-user-tag user-tag">User</span>
-                                        <p class="buyer-user-text">Legal assistant at small personal injury law firm</p>
-                                        <img src="images/deck/tan-vo-small.png" alt="Tan Vo" class="buyer-user-photo">
-                                    </div>
-                                    <div class="buyer-user-card">
-                                        <span class="buyer-user-tag buyer-tag">Buyer</span>
-                                        <p class="buyer-user-text">Attorney at full service firm, no existing support</p>
-                                        <img src="images/deck/ryan-ash.png" alt="Ryan" class="buyer-user-photo">
-                                    </div>
+                                </div>
+                                <div class="buyer-user-footer">
+                                    <div class="buyer-user-green-line"></div>
+                                    <p class="buyer-user-footer-text">Minimal training, no standardized workflows</p>
                                 </div>
                             </div>
                         `
@@ -316,11 +354,21 @@
                         `
                     },
                     {
+                        title: 'Interaction model',
+                        content: `
+                            <div class="slide-content user-flow-slide interaction-model-slide">
+                                <div class="user-flow-image-container">
+                                    <img src="images/deck/interaction-model/1-interaction-model.png" alt="Interaction Model Step 1" class="user-flow-image active" data-step="1">
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
                         title: 'New request',
                         content: `
                             <div class="slide-content user-flow-slide new-request-slide">
                                 <div class="user-flow-image-container">
-                                    <img src="images/deck/new-request/1-new-request-empty-v1.png" alt="New Request Step 1" class="user-flow-image active" data-step="1">
+                                    <img src="images/deck/new-request-empty-v1.png" alt="New Request Empty" class="user-flow-image active" data-step="0">
                                 </div>
                             </div>
                         `
@@ -328,8 +376,10 @@
                     {
                         title: 'Providers spreadsheet',
                         content: `
-                            <div class="slide-content" style="display: flex; align-items: center; justify-content: center;">
-                                <img src="images/deck/providers-spreadsheet.png" alt="Providers Spreadsheet" class="providers-spreadsheet-image">
+                            <div class="slide-content user-flow-slide provider-contacts-slide">
+                                <div class="user-flow-image-container">
+                                    <img src="images/deck/providers-spreadsheet.png" alt="Providers Spreadsheet" class="user-flow-image active" data-step="0">
+                                </div>
                             </div>
                         `
                     },
@@ -338,14 +388,6 @@
                         content: `
                             <div class="slide-content nerdy-slide">
                                 <iframe src="images/deck/new-provider-empty-v1.html" frameborder="0" allowfullscreen class="new-provider-iframe"></iframe>
-                            </div>
-                        `
-                    },
-                    {
-                        title: 'Discovery prototype',
-                        content: `
-                            <div class="slide-content nerdy-slide">
-                                <iframe src="https://tuttle-discovery-prototype.netlify.app/login" frameborder="0" allowfullscreen class="nerdy-iframe"></iframe>
                             </div>
                         `
                     }
@@ -477,24 +519,60 @@
                 });
             }
             
+            // Set up click handler for buyer-user slide
+            const buyerUserSlide = slideContainer.querySelector('.buyer-user-slide');
+            if (buyerUserSlide) {
+                let clickCount = 0;
+                
+                buyerUserSlide.addEventListener('click', function() {
+                    clickCount++;
+                    
+                    if (clickCount === 1) {
+                        // First click: show full-service heading and card group
+                        const fullServiceHeading = buyerUserSlide.querySelector('.buyer-user-heading.full-service');
+                        const fullServiceCardGroup = buyerUserSlide.querySelector('.buyer-user-card-group.full-service');
+                        
+                        if (fullServiceHeading) {
+                            fullServiceHeading.style.opacity = '1';
+                        }
+                        if (fullServiceCardGroup) {
+                            fullServiceCardGroup.style.opacity = '1';
+                        }
+                    } else if (clickCount === 2) {
+                        // Second click: show footer
+                        const footer = buyerUserSlide.querySelector('.buyer-user-footer');
+                        if (footer) {
+                            footer.style.opacity = '1';
+                        }
+                    }
+                });
+            }
+            
             // Set up progressive image reveal for user flow slide
             const userFlowSlide = slideContainer.querySelector('.user-flow-slide');
             if (userFlowSlide) {
-                const imageContainer = userFlowSlide.querySelector('.user-flow-image-container');
-                const currentImage = imageContainer.querySelector('.user-flow-image');
-                
-                // Detect slide type based on initial image src or class
-                const isNewRequestSlide = userFlowSlide.classList.contains('new-request-slide');
+                // Skip if this is a provider-contacts-slide, interaction-model-slide, or simple-request-flow-slide (they have their own handlers)
+                const isProviderContactsSlide = userFlowSlide.classList.contains('provider-contacts-slide');
+                const isInteractionModelSlide = userFlowSlide.classList.contains('interaction-model-slide');
+                const isSimpleRequestFlowSlide = userFlowSlide.classList.contains('simple-request-flow-slide');
+                if (isProviderContactsSlide || isInteractionModelSlide || isSimpleRequestFlowSlide) {
+                    // Don't set up user-flow handler for these slides
+                } else {
+                    const imageContainer = userFlowSlide.querySelector('.user-flow-image-container');
+                    const currentImage = imageContainer.querySelector('.user-flow-image');
+                    
+                    // Detect slide type based on initial image src or class
+                    const isNewRequestSlide = userFlowSlide.classList.contains('new-request-slide');
                 const maxImages = isNewRequestSlide ? 13 : 20; // New request has 13 images, user-flow has 20
-                let currentImageIndex = 1;
+                let currentImageIndex = isNewRequestSlide ? 0 : 1; // New request starts at 0 (new-request-empty-v1.png), user-flow starts at 1
                 let isScrolling = false;
                 
                 if (isNewRequestSlide) {
-                    // New request slide - show only first image, click to advance
-                    // Reset to first image
+                    // New request slide - start with new-request-empty-v1.png, click to advance
+                    // Reset to first image (new-request-empty-v1.png)
                     if (currentImage) {
-                        currentImage.src = 'images/deck/new-request/1-new-request-empty-v1.png';
-                        currentImage.dataset.step = '1';
+                        currentImage.src = 'images/deck/new-request-empty-v1.png';
+                        currentImage.dataset.step = '0';
                         currentImage.classList.add('active');
                     }
                     // Scroll to top when slide loads
@@ -532,9 +610,19 @@
                             // Preserve scroll position when advancing
                             const scrollTop = userFlowSlide.scrollTop;
                             
-                            currentImageIndex++;
-                            const imagePath = `images/deck/new-request/${currentImageIndex}-new-request-empty-v1.png`;
                             const currentImage = imageContainer.querySelector('.user-flow-image');
+                            let imagePath;
+                            
+                            if (currentImageIndex === 0) {
+                                // First click: advance from new-request-empty-v1.png to first new-request image
+                                currentImageIndex = 1;
+                                imagePath = 'images/deck/new-request/1-new-request-empty-v1.png';
+                            } else {
+                                // Subsequent clicks: continue through new-request images
+                                currentImageIndex++;
+                                imagePath = `images/deck/new-request/${currentImageIndex}-new-request-empty-v1.png`;
+                            }
+                            
                             if (currentImage) {
                                 // Remove previous onload handler if any
                                 const previousOnload = currentImage.onload;
@@ -593,6 +681,109 @@
                             }
                         }
                     }
+                });
+                }
+            }
+            
+            // Set up progressive image reveal for provider contacts slide
+            const providerContactsSlide = slideContainer.querySelector('.provider-contacts-slide');
+            if (providerContactsSlide) {
+                const imageContainer = providerContactsSlide.querySelector('.user-flow-image-container');
+                const currentImage = imageContainer.querySelector('.user-flow-image');
+                
+                const maxImages = 7; // 1-provider-contacts.png through 7-provider-contacts.png
+                let currentImageIndex = 0; // Start at 0 (providers-spreadsheet.png)
+                
+                // Reset to first image when slide loads
+                if (currentImage) {
+                    currentImage.src = 'images/deck/providers-spreadsheet.png';
+                    currentImage.dataset.step = '0';
+                    currentImage.classList.add('active');
+                }
+                
+                // Click handler
+                providerContactsSlide.addEventListener('click', function(e) {
+                    // Stop propagation to prevent other handlers from running
+                    e.stopPropagation();
+                    
+                    if (currentImageIndex < maxImages) {
+                        currentImageIndex++;
+                        const imagePath = `images/deck/provider-contacts/${currentImageIndex}-provider-contacts.png`;
+                        
+                        if (currentImage) {
+                            currentImage.src = imagePath;
+                            currentImage.dataset.step = currentImageIndex.toString();
+                        }
+                    }
+                    // When currentImageIndex reaches maxImages (7), no more images will load
+                });
+            }
+            
+            // Set up progressive image reveal for interaction model slide
+            const interactionModelSlide = slideContainer.querySelector('.interaction-model-slide');
+            if (interactionModelSlide) {
+                const imageContainer = interactionModelSlide.querySelector('.user-flow-image-container');
+                const currentImage = imageContainer.querySelector('.user-flow-image');
+                
+                const maxImages = 5; // 1-interaction-model.png through 5-interaction-model.png
+                let currentImageIndex = 1; // Start at 1 (1-interaction-model.png)
+                
+                // Reset to first image when slide loads
+                if (currentImage) {
+                    currentImage.src = 'images/deck/interaction-model/1-interaction-model.png';
+                    currentImage.dataset.step = '1';
+                    currentImage.classList.add('active');
+                }
+                
+                // Click handler
+                interactionModelSlide.addEventListener('click', function(e) {
+                    // Stop propagation to prevent other handlers from running
+                    e.stopPropagation();
+                    
+                    if (currentImageIndex < maxImages) {
+                        currentImageIndex++;
+                        const imagePath = `images/deck/interaction-model/${currentImageIndex}-interaction-model.png`;
+                        
+                        if (currentImage) {
+                            currentImage.src = imagePath;
+                            currentImage.dataset.step = currentImageIndex.toString();
+                        }
+                    }
+                    // When currentImageIndex reaches maxImages (5), no more images will load
+                });
+            }
+            
+            // Set up progressive image reveal for simple request flow slide
+            const simpleRequestFlowSlide = slideContainer.querySelector('.simple-request-flow-slide');
+            if (simpleRequestFlowSlide) {
+                const imageContainer = simpleRequestFlowSlide.querySelector('.user-flow-image-container');
+                const currentImage = imageContainer.querySelector('.user-flow-image');
+                
+                const maxImages = 7; // 1-simplified-request-flow.png through 7-simplified-request-flow.png
+                let currentImageIndex = 1; // Start at 1 (1-simplified-request-flow.png)
+                
+                // Reset to first image when slide loads
+                if (currentImage) {
+                    currentImage.src = 'images/deck/simple-request-flow/1-simplified-request-flow.png';
+                    currentImage.dataset.step = '1';
+                    currentImage.classList.add('active');
+                }
+                
+                // Click handler
+                simpleRequestFlowSlide.addEventListener('click', function(e) {
+                    // Stop propagation to prevent other handlers from running
+                    e.stopPropagation();
+                    
+                    if (currentImageIndex < maxImages) {
+                        currentImageIndex++;
+                        const imagePath = `images/deck/simple-request-flow/${currentImageIndex}-simplified-request-flow.png`;
+                        
+                        if (currentImage) {
+                            currentImage.src = imagePath;
+                            currentImage.dataset.step = currentImageIndex.toString();
+                        }
+                    }
+                    // When currentImageIndex reaches maxImages (7), no more images will load
                 });
             }
             
