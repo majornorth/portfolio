@@ -186,19 +186,37 @@
                             <div class="slide-content two-columns">
                                 <div class="column-left">
                                     <h1 class="replay-title">Tuttle</h1>
-                                    <p class="replay-description">Product Lead from discovery to production and GTM for bootstrapped B2B SaaS for personal injury law firms.</p>
+                                    <p class="replay-description">Automated records requests for personal injury practices. Increasing staff capacity, closing cases faster, and increasing firm cashflow.</p>
                                     <div class="project-tags">
                                         <span class="project-tag">2025</span>
                                         <span class="project-tag">B2B</span>
-                                        <span class="project-tag">Product</span>
-                                        <span class="project-tag">UX</span>
                                         <span class="project-tag">Discovery</span>
+                                        <span class="project-tag">Product</span>
+                                        <span class="project-tag">Design</span>
                                         <span class="project-tag">AI</span>
                                         <span class="project-tag">Sales</span>
                                     </div>
                                 </div>
                                 <div class="column-right">
                                     <img src="images/deck/tuttle-add-provider.png" alt="Tuttle Add Provider UI" class="tuttle-image">
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Discovery prototype',
+                        content: `
+                            <div class="slide-content nerdy-slide">
+                                <iframe src="https://tuttle-discovery-prototype.netlify.app/login" frameborder="0" allowfullscreen class="nerdy-iframe"></iframe>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Workflow overview',
+                        content: `
+                            <div class="slide-content user-flow-slide simple-request-flow-slide">
+                                <div class="user-flow-image-container">
+                                    <img src="images/deck/simple-request-flow/1-simplified-request-flow.png" alt="Workflow Overview Step 1" class="user-flow-image active" data-step="1">
                                 </div>
                             </div>
                         `
@@ -364,14 +382,6 @@
                                 <iframe src="images/deck/new-provider-empty-v1.html" frameborder="0" allowfullscreen class="new-provider-iframe"></iframe>
                             </div>
                         `
-                    },
-                    {
-                        title: 'Discovery prototype',
-                        content: `
-                            <div class="slide-content nerdy-slide">
-                                <iframe src="https://tuttle-discovery-prototype.netlify.app/login" frameborder="0" allowfullscreen class="nerdy-iframe"></iframe>
-                            </div>
-                        `
                     }
                 ]
             },
@@ -533,10 +543,11 @@
             // Set up progressive image reveal for user flow slide
             const userFlowSlide = slideContainer.querySelector('.user-flow-slide');
             if (userFlowSlide) {
-                // Skip if this is a provider-contacts-slide or interaction-model-slide (they have their own handlers)
+                // Skip if this is a provider-contacts-slide, interaction-model-slide, or simple-request-flow-slide (they have their own handlers)
                 const isProviderContactsSlide = userFlowSlide.classList.contains('provider-contacts-slide');
                 const isInteractionModelSlide = userFlowSlide.classList.contains('interaction-model-slide');
-                if (isProviderContactsSlide || isInteractionModelSlide) {
+                const isSimpleRequestFlowSlide = userFlowSlide.classList.contains('simple-request-flow-slide');
+                if (isProviderContactsSlide || isInteractionModelSlide || isSimpleRequestFlowSlide) {
                     // Don't set up user-flow handler for these slides
                 } else {
                     const imageContainer = userFlowSlide.querySelector('.user-flow-image-container');
@@ -731,6 +742,40 @@
                         }
                     }
                     // When currentImageIndex reaches maxImages (5), no more images will load
+                });
+            }
+            
+            // Set up progressive image reveal for simple request flow slide
+            const simpleRequestFlowSlide = slideContainer.querySelector('.simple-request-flow-slide');
+            if (simpleRequestFlowSlide) {
+                const imageContainer = simpleRequestFlowSlide.querySelector('.user-flow-image-container');
+                const currentImage = imageContainer.querySelector('.user-flow-image');
+                
+                const maxImages = 7; // 1-simplified-request-flow.png through 7-simplified-request-flow.png
+                let currentImageIndex = 1; // Start at 1 (1-simplified-request-flow.png)
+                
+                // Reset to first image when slide loads
+                if (currentImage) {
+                    currentImage.src = 'images/deck/simple-request-flow/1-simplified-request-flow.png';
+                    currentImage.dataset.step = '1';
+                    currentImage.classList.add('active');
+                }
+                
+                // Click handler
+                simpleRequestFlowSlide.addEventListener('click', function(e) {
+                    // Stop propagation to prevent other handlers from running
+                    e.stopPropagation();
+                    
+                    if (currentImageIndex < maxImages) {
+                        currentImageIndex++;
+                        const imagePath = `images/deck/simple-request-flow/${currentImageIndex}-simplified-request-flow.png`;
+                        
+                        if (currentImage) {
+                            currentImage.src = imagePath;
+                            currentImage.dataset.step = currentImageIndex.toString();
+                        }
+                    }
+                    // When currentImageIndex reaches maxImages (7), no more images will load
                 });
             }
             
