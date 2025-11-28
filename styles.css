@@ -2364,7 +2364,7 @@ body.scrolled {
 
 .testimonial-quote {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 48px;
+    font-size: 36px;
     font-weight: 400;
     line-height: 1.2;
     color: #ffffff;
@@ -2469,6 +2469,16 @@ body.scrolled {
     flex: 1;
 }
 
+.buyer-user-card-group.full-service {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.buyer-user-heading.full-service {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
 .deck-container.fullscreen .buyer-user-cards {
     width: 130%;
 }
@@ -2535,6 +2545,8 @@ body.scrolled {
     max-width: 1600px;
     margin-bottom: 80px;
     position: relative;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .buyer-user-green-line {

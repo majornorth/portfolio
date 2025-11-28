@@ -181,7 +181,7 @@
                 title: 'Tuttle for Personal Injury',
                 slides: [
                     {
-                        title: 'Tuttle',
+                        title: 'Introducing Tuttle',
                         content: `
                             <div class="slide-content two-columns">
                                 <div class="column-left">
@@ -274,7 +274,7 @@
                             <div class="slide-content buyer-user-slide">
                                 <div class="buyer-user-headings">
                                     <h2 class="buyer-user-heading">Small personal injury law firm</h2>
-                                    <h2 class="buyer-user-heading">Full-service law firm</h2>
+                                    <h2 class="buyer-user-heading full-service">Full-service law firm</h2>
                                 </div>
                                 <div class="buyer-user-cards">
                                     <div class="buyer-user-card-group personal-injury">
@@ -328,11 +328,21 @@
                         `
                     },
                     {
+                        title: 'Interaction model',
+                        content: `
+                            <div class="slide-content user-flow-slide interaction-model-slide">
+                                <div class="user-flow-image-container">
+                                    <img src="images/deck/interaction-model/1-interaction-model.png" alt="Interaction Model Step 1" class="user-flow-image active" data-step="1">
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
                         title: 'New request',
                         content: `
                             <div class="slide-content user-flow-slide new-request-slide">
                                 <div class="user-flow-image-container">
-                                    <img src="images/deck/new-request/1-new-request-empty-v1.png" alt="New Request Step 1" class="user-flow-image active" data-step="1">
+                                    <img src="images/deck/new-request-empty-v1.png" alt="New Request Empty" class="user-flow-image active" data-step="0">
                                 </div>
                             </div>
                         `
@@ -340,8 +350,10 @@
                     {
                         title: 'Providers spreadsheet',
                         content: `
-                            <div class="slide-content" style="display: flex; align-items: center; justify-content: center;">
-                                <img src="images/deck/providers-spreadsheet.png" alt="Providers Spreadsheet" class="providers-spreadsheet-image">
+                            <div class="slide-content user-flow-slide provider-contacts-slide">
+                                <div class="user-flow-image-container">
+                                    <img src="images/deck/providers-spreadsheet.png" alt="Providers Spreadsheet" class="user-flow-image active" data-step="0">
+                                </div>
                             </div>
                         `
                     },
@@ -489,24 +501,59 @@
                 });
             }
             
+            // Set up click handler for buyer-user slide
+            const buyerUserSlide = slideContainer.querySelector('.buyer-user-slide');
+            if (buyerUserSlide) {
+                let clickCount = 0;
+                
+                buyerUserSlide.addEventListener('click', function() {
+                    clickCount++;
+                    
+                    if (clickCount === 1) {
+                        // First click: show full-service heading and card group
+                        const fullServiceHeading = buyerUserSlide.querySelector('.buyer-user-heading.full-service');
+                        const fullServiceCardGroup = buyerUserSlide.querySelector('.buyer-user-card-group.full-service');
+                        
+                        if (fullServiceHeading) {
+                            fullServiceHeading.style.opacity = '1';
+                        }
+                        if (fullServiceCardGroup) {
+                            fullServiceCardGroup.style.opacity = '1';
+                        }
+                    } else if (clickCount === 2) {
+                        // Second click: show footer
+                        const footer = buyerUserSlide.querySelector('.buyer-user-footer');
+                        if (footer) {
+                            footer.style.opacity = '1';
+                        }
+                    }
+                });
+            }
+            
             // Set up progressive image reveal for user flow slide
             const userFlowSlide = slideContainer.querySelector('.user-flow-slide');
             if (userFlowSlide) {
-                const imageContainer = userFlowSlide.querySelector('.user-flow-image-container');
-                const currentImage = imageContainer.querySelector('.user-flow-image');
-                
-                // Detect slide type based on initial image src or class
-                const isNewRequestSlide = userFlowSlide.classList.contains('new-request-slide');
+                // Skip if this is a provider-contacts-slide or interaction-model-slide (they have their own handlers)
+                const isProviderContactsSlide = userFlowSlide.classList.contains('provider-contacts-slide');
+                const isInteractionModelSlide = userFlowSlide.classList.contains('interaction-model-slide');
+                if (isProviderContactsSlide || isInteractionModelSlide) {
+                    // Don't set up user-flow handler for these slides
+                } else {
+                    const imageContainer = userFlowSlide.querySelector('.user-flow-image-container');
+                    const currentImage = imageContainer.querySelector('.user-flow-image');
+                    
+                    // Detect slide type based on initial image src or class
+                    const isNewRequestSlide = userFlowSlide.classList.contains('new-request-slide');
                 const maxImages = isNewRequestSlide ? 13 : 20; // New request has 13 images, user-flow has 20
-                let currentImageIndex = 1;
+                let currentImageIndex = isNewRequestSlide ? 0 : 1; // New request starts at 0 (new-request-empty-v1.png), user-flow starts at 1
                 let isScrolling = false;
                 
                 if (isNewRequestSlide) {
-                    // New request slide - show only first image, click to advance
-                    // Reset to first image
+                    // New request slide - start with new-request-empty-v1.png, click to advance
+                    // Reset to first image (new-request-empty-v1.png)
                     if (currentImage) {
-                        currentImage.src = 'images/deck/new-request/1-new-request-empty-v1.png';
-                        currentImage.dataset.step = '1';
+                        currentImage.src = 'images/deck/new-request-empty-v1.png';
+                        currentImage.dataset.step = '0';
                         currentImage.classList.add('active');
                     }
                     // Scroll to top when slide loads
@@ -544,9 +591,19 @@
                             // Preserve scroll position when advancing
                             const scrollTop = userFlowSlide.scrollTop;
                             
-                            currentImageIndex++;
-                            const imagePath = `images/deck/new-request/${currentImageIndex}-new-request-empty-v1.png`;
                             const currentImage = imageContainer.querySelector('.user-flow-image');
+                            let imagePath;
+                            
+                            if (currentImageIndex === 0) {
+                                // First click: advance from new-request-empty-v1.png to first new-request image
+                                currentImageIndex = 1;
+                                imagePath = 'images/deck/new-request/1-new-request-empty-v1.png';
+                            } else {
+                                // Subsequent clicks: continue through new-request images
+                                currentImageIndex++;
+                                imagePath = `images/deck/new-request/${currentImageIndex}-new-request-empty-v1.png`;
+                            }
+                            
                             if (currentImage) {
                                 // Remove previous onload handler if any
                                 const previousOnload = currentImage.onload;
@@ -605,6 +662,75 @@
                             }
                         }
                     }
+                });
+                }
+            }
+            
+            // Set up progressive image reveal for provider contacts slide
+            const providerContactsSlide = slideContainer.querySelector('.provider-contacts-slide');
+            if (providerContactsSlide) {
+                const imageContainer = providerContactsSlide.querySelector('.user-flow-image-container');
+                const currentImage = imageContainer.querySelector('.user-flow-image');
+                
+                const maxImages = 7; // 1-provider-contacts.png through 7-provider-contacts.png
+                let currentImageIndex = 0; // Start at 0 (providers-spreadsheet.png)
+                
+                // Reset to first image when slide loads
+                if (currentImage) {
+                    currentImage.src = 'images/deck/providers-spreadsheet.png';
+                    currentImage.dataset.step = '0';
+                    currentImage.classList.add('active');
+                }
+                
+                // Click handler
+                providerContactsSlide.addEventListener('click', function(e) {
+                    // Stop propagation to prevent other handlers from running
+                    e.stopPropagation();
+                    
+                    if (currentImageIndex < maxImages) {
+                        currentImageIndex++;
+                        const imagePath = `images/deck/provider-contacts/${currentImageIndex}-provider-contacts.png`;
+                        
+                        if (currentImage) {
+                            currentImage.src = imagePath;
+                            currentImage.dataset.step = currentImageIndex.toString();
+                        }
+                    }
+                    // When currentImageIndex reaches maxImages (7), no more images will load
+                });
+            }
+            
+            // Set up progressive image reveal for interaction model slide
+            const interactionModelSlide = slideContainer.querySelector('.interaction-model-slide');
+            if (interactionModelSlide) {
+                const imageContainer = interactionModelSlide.querySelector('.user-flow-image-container');
+                const currentImage = imageContainer.querySelector('.user-flow-image');
+                
+                const maxImages = 5; // 1-interaction-model.png through 5-interaction-model.png
+                let currentImageIndex = 1; // Start at 1 (1-interaction-model.png)
+                
+                // Reset to first image when slide loads
+                if (currentImage) {
+                    currentImage.src = 'images/deck/interaction-model/1-interaction-model.png';
+                    currentImage.dataset.step = '1';
+                    currentImage.classList.add('active');
+                }
+                
+                // Click handler
+                interactionModelSlide.addEventListener('click', function(e) {
+                    // Stop propagation to prevent other handlers from running
+                    e.stopPropagation();
+                    
+                    if (currentImageIndex < maxImages) {
+                        currentImageIndex++;
+                        const imagePath = `images/deck/interaction-model/${currentImageIndex}-interaction-model.png`;
+                        
+                        if (currentImage) {
+                            currentImage.src = imagePath;
+                            currentImage.dataset.step = currentImageIndex.toString();
+                        }
+                    }
+                    // When currentImageIndex reaches maxImages (5), no more images will load
                 });
             }
             
