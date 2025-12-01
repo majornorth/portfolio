@@ -3320,4 +3320,24 @@ body.scrolled {
     padding: 0;
 }
 
+/* Copilot Alpha Slide Styles - Centered image */
+.copilot-alpha-slide {
+    align-items: center;
+    justify-content: center;
+}
+
+.copilot-alpha-slide .user-flow-image-container {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.user-flow-image.nerdy-og {
+    height: 80%;
+    width: auto;
+    object-fit: contain;
+    object-position: center center;
+}
+
 

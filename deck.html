@@ -424,6 +424,16 @@
                 title: 'Nerdy AI for Tutors',
                 slides: [
                     {
+                        title: 'Copilot alpha',
+                        content: `
+                            <div class="slide-content user-flow-slide copilot-alpha-slide">
+                                <div class="user-flow-image-container">
+                                    <img src="images/deck/nerdy-ai/1-og-nerdy-copilot-collapsed.png" alt="Copilot Alpha Step 1" class="user-flow-image nerdy-og active" data-step="1">
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
                         title: 'Nerdy Copilot prototype',
                         content: `
                             <div class="slide-content nerdy-slide">
@@ -577,11 +587,12 @@
             // Set up progressive image reveal for user flow slide
             const userFlowSlide = slideContainer.querySelector('.user-flow-slide');
             if (userFlowSlide) {
-                // Skip if this is a provider-contacts-slide, interaction-model-slide, or simple-request-flow-slide (they have their own handlers)
+                // Skip if this is a provider-contacts-slide, interaction-model-slide, simple-request-flow-slide, or copilot-alpha-slide (they have their own handlers)
                 const isProviderContactsSlide = userFlowSlide.classList.contains('provider-contacts-slide');
                 const isInteractionModelSlide = userFlowSlide.classList.contains('interaction-model-slide');
                 const isSimpleRequestFlowSlide = userFlowSlide.classList.contains('simple-request-flow-slide');
-                if (isProviderContactsSlide || isInteractionModelSlide || isSimpleRequestFlowSlide) {
+                const isCopilotAlphaSlide = userFlowSlide.classList.contains('copilot-alpha-slide');
+                if (isProviderContactsSlide || isInteractionModelSlide || isSimpleRequestFlowSlide || isCopilotAlphaSlide) {
                     // Don't set up user-flow handler for these slides
                 } else {
                     const imageContainer = userFlowSlide.querySelector('.user-flow-image-container');
@@ -810,6 +821,40 @@
                         }
                     }
                     // When currentImageIndex reaches maxImages (7), no more images will load
+                });
+            }
+            
+            // Set up progressive image reveal for copilot alpha slide
+            const copilotAlphaSlide = slideContainer.querySelector('.copilot-alpha-slide');
+            if (copilotAlphaSlide) {
+                const imageContainer = copilotAlphaSlide.querySelector('.user-flow-image-container');
+                const currentImage = imageContainer.querySelector('.user-flow-image');
+                
+                const maxImages = 2; // 1-og-nerdy-copilot-collapsed.png through 2-og-nerdy-copilot-expanded.png
+                let currentImageIndex = 1; // Start at 1 (1-og-nerdy-copilot-collapsed.png)
+                
+                // Reset to first image when slide loads
+                if (currentImage) {
+                    currentImage.src = 'images/deck/nerdy-ai/1-og-nerdy-copilot-collapsed.png';
+                    currentImage.dataset.step = '1';
+                    currentImage.classList.add('active');
+                }
+                
+                // Click handler
+                copilotAlphaSlide.addEventListener('click', function(e) {
+                    // Stop propagation to prevent other handlers from running
+                    e.stopPropagation();
+                    
+                    if (currentImageIndex < maxImages) {
+                        currentImageIndex++;
+                        const imagePath = `images/deck/nerdy-ai/${currentImageIndex}-og-nerdy-copilot-expanded.png`;
+                        
+                        if (currentImage) {
+                            currentImage.src = imagePath;
+                            currentImage.dataset.step = currentImageIndex.toString();
+                        }
+                    }
+                    // When currentImageIndex reaches maxImages (2), no more images will load
                 });
             }
             
