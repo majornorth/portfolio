@@ -138,22 +138,9 @@
                         <iframe id="tuttle-iframe" src="https://tuttle-discovery-prototype.netlify.app/login" width="1124" height="710" frameborder="0" style="border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); background-color: #000;"></iframe>
                         <audio id="tuttle-audio" preload="metadata">
                             <source src="images/tuttle-audio.m4a" type="audio/mp4">
+                            <source src="images/tuttle-audio.m4a" type="audio/x-m4a">
+                            Your browser does not support the audio element.
                         </audio>
-                        <div class="audio-player">
-                            <button class="audio-play-button" id="audio-play-button" aria-label="Play audio">
-                                <svg class="play-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M6 4L6 16L14 10L6 4Z" fill="currentColor"/>
-                                </svg>
-                                <svg class="pause-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                                    <rect x="6" y="4" width="3" height="12" fill="currentColor"/>
-                                    <rect x="11" y="4" width="3" height="12" fill="currentColor"/>
-                                </svg>
-                            </button>
-                            <button class="audio-reset-button" id="audio-reset-button" aria-label="Reset audio" title="Reset audio to start" disabled>
-                                <img src="images/arrow-counter-clockwise.svg" alt="Reset" width="20" height="20">
-                            </button>
-                            <div class="audio-time" id="audio-time">0:00/0:00</div>
-                        </div>
                         <div class="login-tooltip" id="login-tooltip">
                             <div class="tooltip-content">
                                 <button class="tooltip-close" id="tooltip-close" aria-label="Close login credentials">
@@ -169,6 +156,24 @@
                                 <div class="tooltip-credential">
                                     <span class="credential-label">Password:</span>
                                     <span class="credential-value">hahaha</span>
+                                </div>
+                            </div>
+                            <div class="audio-player">
+                                <div class="explain-audio">Listen to me explain the app</div>
+                                <div class="explain-controls">
+                                    <button class="audio-play-button" id="audio-play-button" aria-label="Play audio">
+                                        <svg class="play-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M6 4L6 16L14 10L6 4Z" fill="currentColor"/>
+                                        </svg>
+                                        <svg class="pause-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <rect x="6" y="4" width="3" height="12" fill="currentColor"/>
+                                            <rect x="11" y="4" width="3" height="12" fill="currentColor"/>
+                                        </svg>
+                                    </button>
+                                    <button class="audio-reset-button" id="audio-reset-button" aria-label="Reset audio" title="Reset audio to start" disabled>
+                                        <img src="images/arrow-counter-clockwise.svg" alt="Reset" width="20" height="20">
+                                    </button>
+                                    <div class="audio-time" id="audio-time">0:00/0:00</div>
                                 </div>
                             </div>
                         </div>
@@ -832,6 +837,18 @@
                 }
             }
             
+            // Handle audio loading errors
+            tuttleAudio.addEventListener('error', (e) => {
+                console.error('Audio loading error:', e);
+                console.error('Audio error details:', {
+                    code: tuttleAudio.error?.code,
+                    message: tuttleAudio.error?.message,
+                    networkState: tuttleAudio.networkState,
+                    readyState: tuttleAudio.readyState,
+                    src: tuttleAudio.src || tuttleAudio.currentSrc
+                });
+            });
+            
             // Initialize time display when metadata loads
             tuttleAudio.addEventListener('loadedmetadata', () => {
                 updateTimeDisplay();
@@ -845,13 +862,27 @@
             });
             
             // Handle play/pause button click
-            audioPlayButton.addEventListener('click', () => {
-                if (tuttleAudio.paused) {
-                    tuttleAudio.play();
-                    audioPlayButton.classList.add('playing');
-                } else {
-                    tuttleAudio.pause();
-                    audioPlayButton.classList.remove('playing');
+            audioPlayButton.addEventListener('click', async () => {
+                try {
+                    if (tuttleAudio.paused) {
+                        await tuttleAudio.play();
+                        audioPlayButton.classList.add('playing');
+                    } else {
+                        tuttleAudio.pause();
+                        audioPlayButton.classList.remove('playing');
+                    }
+                } catch (error) {
+                    console.error('Error playing audio:', error);
+                    // Try to load the audio source if it hasn't loaded
+                    if (tuttleAudio.readyState === 0) {
+                        tuttleAudio.load();
+                        try {
+                            await tuttleAudio.play();
+                            audioPlayButton.classList.add('playing');
+                        } catch (retryError) {
+                            console.error('Error playing audio after reload:', retryError);
+                        }
+                    }
                 }
             });
             
@@ -885,12 +916,12 @@
         }
         
         // Login tooltip close functionality
-        const loginTooltip = document.getElementById('login-tooltip');
+        const tooltipContent = document.querySelector('.tooltip-content');
         const tooltipClose = document.getElementById('tooltip-close');
         
-        if (loginTooltip && tooltipClose) {
+        if (tooltipContent && tooltipClose) {
             tooltipClose.addEventListener('click', () => {
-                loginTooltip.classList.add('hidden');
+                tooltipContent.classList.add('hidden');
             });
         }
         

@@ -601,12 +601,12 @@ body.scrolled {
 
 /* Audio Player */
 .audio-player {
-    position: absolute;
+    /* position: absolute; */
     bottom: 20px;
     left: 20px;
     z-index: 100;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 0.75rem;
     background-color: rgba(30, 15, 45, 0.95);
     border: 1px solid rgba(207, 189, 255, 0.3);
@@ -614,6 +614,20 @@ body.scrolled {
     padding: 0.75rem 1rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
+    margin-top: 10px;
+    pointer-events: auto;
+}
+
+.explain-audio {
+    width: 100%;
+}
+
+.explain-controls {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
 }
 
 .audio-play-button,
@@ -692,6 +706,10 @@ body.scrolled {
 }
 
 .login-tooltip.hidden {
+    display: none;
+}
+
+.tooltip-content.hidden {
     display: none;
 }
 
