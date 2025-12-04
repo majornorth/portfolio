@@ -568,7 +568,8 @@ body.scrolled {
     display: flex;
     align-items: center;
     gap: 0;
-    pointer-events: none;
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 .starburst-icon {
@@ -787,6 +788,80 @@ body.scrolled {
     background-color: rgba(207, 189, 255, 0.1);
     padding: 0.125rem 0.5rem;
     border-radius: 4px;
+}
+
+#email-credential {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    position: relative;
+}
+
+#email-credential:hover {
+    background-color: rgba(207, 189, 255, 0.2);
+}
+
+#email-credential::after {
+    content: attr(data-hover-text);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    margin-top: 0.25rem;
+    background-color: rgba(30, 15, 45, 0.95);
+    color: #CFBDFF;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 1000;
+}
+
+#email-credential:hover::after {
+    opacity: 1;
+}
+
+#email-credential.copied::after {
+    content: "Email copied!";
+    opacity: 1;
+}
+
+#password-credential {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    position: relative;
+}
+
+#password-credential:hover {
+    background-color: rgba(207, 189, 255, 0.2);
+}
+
+#password-credential::after {
+    content: attr(data-hover-text);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    margin-top: 0.25rem;
+    background-color: rgba(30, 15, 45, 0.95);
+    color: #CFBDFF;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 1000;
+}
+
+#password-credential:hover::after {
+    opacity: 1;
+}
+
+#password-credential.copied::after {
+    content: "Password copied!";
+    opacity: 1;
 }
 
 /* Screenshot Containers */

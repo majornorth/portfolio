@@ -151,11 +151,11 @@
                                 <div class="tooltip-title">Login Credentials</div>
                                 <div class="tooltip-credential">
                                     <span class="credential-label">Email:</span>
-                                    <span class="credential-value">jason+1@tuttle.work</span>
+                                    <span class="credential-value" id="email-credential">jason+1@tuttle.work</span>
                                 </div>
                                 <div class="tooltip-credential">
                                     <span class="credential-label">Password:</span>
-                                    <span class="credential-value">hahaha</span>
+                                    <span class="credential-value" id="password-credential">hahaha</span>
                                 </div>
                             </div>
                             <div class="audio-player">
@@ -996,6 +996,121 @@
             document.addEventListener('DOMContentLoaded', initScrollArrows);
         } else {
             initScrollArrows();
+        }
+        
+        // Email copy functionality
+        const emailCredential = document.getElementById('email-credential');
+        if (emailCredential) {
+            const originalEmail = emailCredential.textContent;
+            
+            // Set hover text
+            emailCredential.setAttribute('data-hover-text', 'Click to copy');
+            
+            emailCredential.addEventListener('click', async () => {
+                try {
+                    // Copy to clipboard
+                    await navigator.clipboard.writeText(originalEmail);
+                    
+                    // Show "Email copied!" message
+                    emailCredential.classList.add('copied');
+                    emailCredential.setAttribute('data-hover-text', 'Email copied!');
+                    
+                    // Revert after 2 seconds
+                    setTimeout(() => {
+                        emailCredential.classList.remove('copied');
+                        emailCredential.setAttribute('data-hover-text', 'Click to copy');
+                    }, 2000);
+                } catch (err) {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = originalEmail;
+                    textArea.style.position = 'fixed';
+                    textArea.style.opacity = '0';
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        emailCredential.classList.add('copied');
+                        emailCredential.setAttribute('data-hover-text', 'Email copied!');
+                        setTimeout(() => {
+                            emailCredential.classList.remove('copied');
+                            emailCredential.setAttribute('data-hover-text', 'Click to copy');
+                        }, 2000);
+                    } catch (fallbackErr) {
+                        console.error('Failed to copy email:', fallbackErr);
+                    }
+                    document.body.removeChild(textArea);
+                }
+            });
+        }
+        
+        // Password copy functionality
+        const passwordCredential = document.getElementById('password-credential');
+        if (passwordCredential) {
+            const originalPassword = passwordCredential.textContent;
+            
+            // Set hover text
+            passwordCredential.setAttribute('data-hover-text', 'Click to copy');
+            
+            passwordCredential.addEventListener('click', async () => {
+                try {
+                    // Copy to clipboard
+                    await navigator.clipboard.writeText(originalPassword);
+                    
+                    // Show "Password copied!" message
+                    passwordCredential.classList.add('copied');
+                    passwordCredential.setAttribute('data-hover-text', 'Password copied!');
+                    
+                    // Revert after 2 seconds
+                    setTimeout(() => {
+                        passwordCredential.classList.remove('copied');
+                        passwordCredential.setAttribute('data-hover-text', 'Click to copy');
+                    }, 2000);
+                } catch (err) {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = originalPassword;
+                    textArea.style.position = 'fixed';
+                    textArea.style.opacity = '0';
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        passwordCredential.classList.add('copied');
+                        passwordCredential.setAttribute('data-hover-text', 'Password copied!');
+                        setTimeout(() => {
+                            passwordCredential.classList.remove('copied');
+                            passwordCredential.setAttribute('data-hover-text', 'Click to copy');
+                        }, 2000);
+                    } catch (fallbackErr) {
+                        console.error('Failed to copy password:', fallbackErr);
+                    }
+                    document.body.removeChild(textArea);
+                }
+            });
+        }
+        
+        // Starburst badge hover and click functionality
+        const starburstBadge = document.querySelector('.starburst-badge');
+        const starburstIcon = document.querySelector('.starburst-icon');
+        
+        if (starburstBadge && starburstIcon) {
+            const originalSrc = starburstIcon.src;
+            const hoverSrc = originalSrc.replace('starburst.svg', 'starburst-hover.svg');
+            
+            // Handle hover - change to hover image
+            starburstBadge.addEventListener('mouseenter', () => {
+                starburstIcon.src = hoverSrc;
+            });
+            
+            starburstBadge.addEventListener('mouseleave', () => {
+                starburstIcon.src = originalSrc;
+            });
+            
+            // Handle click - hide badge
+            starburstBadge.addEventListener('click', () => {
+                starburstBadge.style.display = 'none';
+            });
         }
         
     </script>
