@@ -138,11 +138,12 @@ body.scrolled {
     width: 580px;
     height: auto;
     padding: 80px;
-    background-color: rgba(30, 16, 44, 0.4);
+    background-color: rgba(30, 16, 44, 0.7);
     box-sizing: border-box;
     text-align: left;
     display: flex;
     flex-direction: column;
+    border: 1px solid #43374E;
 }
 
 .personal-statement p:first-child {

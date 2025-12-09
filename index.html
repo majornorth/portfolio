@@ -606,13 +606,30 @@
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
             
-            // Get the actual position of the profile picture (it's positioned by handleScroll)
+            // 1. Load profile-picture first (position it via handleScroll)
+            handleScroll();
+            
+            // 2. Set profile picture opacity to 0 (but keep it positioned)
+            profilePicture.style.opacity = '0';
+            profilePicture.style.visibility = 'visible'; // Keep visible so it can be positioned
+            
             // Wait a couple frames to ensure positioning is complete and browser has rendered
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
+                    // Call handleScroll() one more time right before reading to ensure position is current
+                    handleScroll();
+                    void profilePicture.offsetHeight; // Force reflow
+                    
+                    // 3. Get the Y value of profile-picture for centerY
                     const rect = profilePicture.getBoundingClientRect();
                     const centerX = rect.left + rect.width / 2;
-                    const centerY = rect.top + rect.height / 2;
+                    let centerY = rect.top + rect.height / 2; // Use actual Y position of profile picture
+                    
+                    // Adjust position for 1440x900 viewport (100px closer to top)
+                    if (viewportWidth === 1440 && viewportHeight === 900) {
+                        centerY = centerY - 80;
+                    }
+                    
                     const imageSize = rect.width; // Profile picture is 90px x 90px
                     
                     // Load image and sample it to create dots
