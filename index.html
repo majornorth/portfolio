@@ -32,7 +32,7 @@
     <link rel="icon" type="image/png" href="./images/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Jost:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -57,6 +57,11 @@
     <main class="main">
         <section class="hero">
             <h1 class="name">JASON MCCOY</h1>
+            <div class="personal-statement">
+                <p>Principal Product Designer <span class="ampersand">&amp;</span> Engineer</p>
+                <p style="line-height: 1.6;">A multidisciplinary builder blending taste and craft with leadership in product, design, and engineering. I leverage AI to improve user workflows and internal operations.</p>
+                <p style="line-height: 1.6;">I thrive in complex and regulated domains for B2B SaaS. I shape product strategy from ambiguity and lead end-to-end initiatives. I run on cereal.</p>
+            </div>
             <div class="mobile-starburst-badge">
                 <img src="images/mobile-starburst.svg" alt="" class="mobile-starburst-icon">
             </div>
@@ -521,7 +526,7 @@
             const triangleCenterY = triangleContainerRect.top + (triangleContainerRect.height / 2);
             
             // Profile picture should be centered in viewport on page load
-            const stickyViewportY = viewportHeight * 0.5; // Center of viewport for initial positioning
+            const stickyViewportY = viewportHeight * 0.29; // Center of viewport for initial positioning
             
             // Snap threshold - triangle section snaps when it reaches this lower position
             // This positions the triangle section closer to bottom when snapping occurs

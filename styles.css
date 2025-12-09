@@ -127,12 +127,47 @@ body.scrolled {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-    padding-bottom: 140px;
     position: relative;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+}
+
+.personal-statement {
+    width: 580px;
+    height: auto;
+    padding: 80px;
+    background-color: rgba(30, 16, 44, 0.4);
+    box-sizing: border-box;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.personal-statement p:first-child {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #B7B7B7;
+    margin: 0 0 1.5rem 0;
+}
+
+.personal-statement p:first-child .ampersand {
+    font-family: 'Libre Baskerville', 'Baskerville', 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif;
+    font-style: italic;
+}
+
+.personal-statement p:not(:first-child) {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6em;
+    color: #ffffff;
+    margin: 0 0 1em 0;
+}
+
+.personal-statement p:last-child {
+    margin-bottom: 0;
 }
 
 .profile-picture {
@@ -2785,7 +2820,7 @@ body.scrolled {
 }
 
 .welcome-title .ampersand {
-    font-family: 'Baskerville', 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif;
+    font-family: 'Libre Baskerville', 'Baskerville', 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif;
     font-style: italic;
 }
 
