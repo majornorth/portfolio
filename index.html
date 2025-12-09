@@ -507,7 +507,7 @@
             } else {
                 // Always use fixed positioning to prevent flicker
                 // Calculate position based on hero's current position
-                name.style.opacity = '1';
+                name.style.opacity = '0.1';
                 name.style.pointerEvents = 'auto';
                 nameNav.classList.remove('visible');
                 
@@ -525,8 +525,8 @@
             const triangleTop = triangleRect.top;
             const triangleCenterY = triangleContainerRect.top + (triangleContainerRect.height / 2);
             
-            // Profile picture should be centered in viewport on page load
-            const stickyViewportY = viewportHeight * 0.29; // Center of viewport for initial positioning
+            // Profile picture position in viewport on page load
+            const stickyViewportY = viewportHeight * 0.29;
             
             // Snap threshold - triangle section snaps when it reaches this lower position
             // This positions the triangle section closer to bottom when snapping occurs

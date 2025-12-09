@@ -222,6 +222,7 @@ body.scrolled {
     letter-spacing: -0.13em;
     text-transform: uppercase;
     color: #ffffff;
+    opacity: 0.1;
     white-space: nowrap;
     will-change: font-size, transform, position;
     transition: opacity 0.3s ease;
