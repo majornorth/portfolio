@@ -626,11 +626,19 @@
                     // 3. Get the Y value of profile-picture for centerY
                     const rect = profilePicture.getBoundingClientRect();
                     const centerX = rect.left + rect.width / 2;
-                    let centerY = rect.top + rect.height / 2; // Use actual Y position of profile picture
+                    let centerY;
                     
-                    // Adjust position for 1440x900 viewport (100px closer to top)
-                    if (viewportWidth === 1440 && viewportHeight === 900) {
-                        centerY = centerY - 180;
+                    // Use calculated position for viewports 1440px or smaller, otherwise use getBoundingClientRect()
+                    if (viewportWidth <= 1440) {
+                        const stickyViewportY = viewportHeight * 0.23; // Match profile picture initial position
+                        centerY = stickyViewportY;
+                        
+                        // Adjust position for 1440x900 viewport
+                        if (viewportWidth === 1440 && viewportHeight === 900) {
+                            centerY = centerY + 65; // Adjust as needed
+                        }
+                    } else {
+                        centerY = rect.top + rect.height / 2; // Use actual Y position for larger viewports
                     }
                     
                     const imageSize = rect.width; // Profile picture is 90px x 90px
