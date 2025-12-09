@@ -128,9 +128,9 @@
             </div>
             <div class="screenshot-container horizontal-scroll" data-scroll-container="replay">
                 <div class="screenshot-scroll-wrapper">
+                    <video src="images/adobe-replay.mp4" title="Dropbox Replay Adobe Premiere Pro Integration" class="screenshot lightbox-image" loop muted playsinline autoplay></video>
                     <img src="images/replay-dashboard.png" alt="Dropbox Replay Dashboard" class="screenshot lightbox-image">
                     <img src="images/replay-demo.png" alt="Dropbox Replay Feedback View" class="screenshot lightbox-image">
-                    <img src="images/adobe.png" alt="Dropbox Replay Adobe Premiere Pro Integration" class="screenshot lightbox-image">
                     <a href="https://www.figma.com/design/d5CbuljSDTZtR68xSVIq0D/Replay-Organization---Sharing?node-id=4642-34267&t=bA8j4MOX5PLF816o-1" target="_blank" rel="noopener noreferrer" class="figma-link-large"><img src="images/figma-link-large.png" alt="Retire" class="screenshot"></a>
                 </div>
             </div>
@@ -1120,6 +1120,7 @@
     <!-- Lightbox -->
     <div class="lightbox-overlay" id="lightbox-overlay">
         <img class="lightbox-image-content" id="lightbox-image-content" src="" alt="">
+        <video class="lightbox-video-content" id="lightbox-video-content" src="" loop muted playsinline autoplay></video>
     </div>
 
     <script>
@@ -1127,6 +1128,7 @@
         const lightboxImages = document.querySelectorAll('.lightbox-image');
         const lightboxOverlay = document.getElementById('lightbox-overlay');
         const lightboxImageContent = document.getElementById('lightbox-image-content');
+        const lightboxVideoContent = document.getElementById('lightbox-video-content');
         let currentImageIndex = -1;
         
         // Function to convert image path to @2x version
@@ -1145,15 +1147,34 @@
             return originalPath;
         }
         
-        // Function to show image at a specific index
+        // Function to show image/video at a specific index
         function showLightboxImage(index) {
             if (index >= 0 && index < lightboxImages.length) {
                 currentImageIndex = index;
-                const img = lightboxImages[index];
-                const imgSrc = img.src;
-                const imgSrc2x = get2xImagePath(imgSrc);
-                lightboxImageContent.src = imgSrc2x;
-                lightboxImageContent.alt = img.alt;
+                const element = lightboxImages[index];
+                
+                // Check if it's a video or image
+                if (element.tagName === 'VIDEO') {
+                    // Hide image, show video
+                    lightboxImageContent.style.display = 'none';
+                    lightboxVideoContent.style.display = 'block';
+                    lightboxVideoContent.src = element.src;
+                    // Ensure video plays when loaded
+                    lightboxVideoContent.load();
+                    lightboxVideoContent.play().catch(function(error) {
+                        // Autoplay was prevented, user interaction may be required
+                        console.log('Video autoplay prevented:', error);
+                    });
+                } else {
+                    // Hide video, show image
+                    lightboxVideoContent.style.display = 'none';
+                    lightboxVideoContent.pause();
+                    lightboxImageContent.style.display = 'block';
+                    const imgSrc = element.src;
+                    const imgSrc2x = get2xImagePath(imgSrc);
+                    lightboxImageContent.src = imgSrc2x;
+                    lightboxImageContent.alt = element.alt || '';
+                }
             }
         }
         
@@ -1187,9 +1208,13 @@
         });
         
         lightboxOverlay.addEventListener('click', function(e) {
-            if (e.target === lightboxOverlay || e.target === lightboxImageContent) {
+            if (e.target === lightboxOverlay || e.target === lightboxImageContent || e.target === lightboxVideoContent) {
                 lightboxOverlay.classList.remove('active');
                 document.body.style.overflow = '';
+                // Pause video when closing
+                if (lightboxVideoContent) {
+                    lightboxVideoContent.pause();
+                }
             }
         });
         
@@ -1202,6 +1227,10 @@
             if (e.key === 'Escape') {
                 lightboxOverlay.classList.remove('active');
                 document.body.style.overflow = '';
+                // Pause video when closing
+                if (lightboxVideoContent) {
+                    lightboxVideoContent.pause();
+                }
             } else if (e.key === 'ArrowRight') {
                 e.preventDefault();
                 showNextImage();

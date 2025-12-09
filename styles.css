@@ -914,6 +914,16 @@ body.scrolled {
     cursor: zoom-out;
 }
 
+.lightbox-video-content {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    cursor: zoom-out;
+    display: none;
+}
+
 .horizontal-scroll {
     overflow-x: auto;
     overflow-y: hidden;
@@ -971,6 +981,11 @@ body.scrolled {
     height: 804.17;
 }
 
+.screenshot-scroll-wrapper video[src="images/adobe-replay.mp4"] {
+    width: auto;
+    height: 805px;
+    object-fit: contain;
+}
 
 .screenshot-scroll-wrapper img[src="images/figma-link.png"],
 .screenshot-scroll-wrapper a[href*="figma.com"] img[src="images/figma-link.png"] {
