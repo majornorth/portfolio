@@ -389,10 +389,13 @@
                 return referenceFontSize;
             } else if (viewportWidth <= minViewportWidth) {
                 return minFontSize;
+            } else if (viewportWidth <= 1440) {
+                // For viewports 1440px and smaller (but larger than 768px), use 216.7px
+                return 216.7;
             } else {
-                // Linear interpolation between minFontSize and referenceFontSize
-                const ratio = (viewportWidth - minViewportWidth) / (referenceViewportWidth - minViewportWidth);
-                return minFontSize + (referenceFontSize - minFontSize) * ratio;
+                // Linear interpolation between 216.7px and referenceFontSize for viewports between 1440px and 2540px
+                const ratio = (viewportWidth - 1440) / (referenceViewportWidth - 1440);
+                return 216.7 + (referenceFontSize - 216.7) * ratio;
             }
         }
         
