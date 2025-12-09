@@ -60,7 +60,7 @@
             <div class="personal-statement">
                 <p>Principal Product Designer <span class="ampersand">&amp;</span> Engineer</p>
                 <p style="line-height: 1.6;">A multidisciplinary builder blending taste and craft with leadership in product, design, and engineering. I leverage AI to improve user workflows and internal operations.</p>
-                <p style="line-height: 1.6;">I thrive in complex and regulated domains for B2B SaaS. I shape product strategy from ambiguity and lead end-to-end initiatives. I run on cereal.</p>
+                <p style="line-height: 1.6;">I thrive in complex and regulated domains for B2B SaaS. I shape product strategy from ambiguity and lead end-to-end initiatives. I run on <span class="cereal-hover">cereal</span>.</p>
             </div>
             <div class="mobile-starburst-badge">
                 <img src="images/mobile-starburst.svg" alt="" class="mobile-starburst-icon">
@@ -1146,6 +1146,23 @@
             starburstBadge.addEventListener('click', () => {
                 starburstBadge.style.display = 'none';
             });
+        }
+        
+        // Cereal hover image positioning
+        const cerealHover = document.querySelector('.cereal-hover');
+        if (cerealHover) {
+            function updateCerealPosition() {
+                const rect = cerealHover.getBoundingClientRect();
+                const root = document.documentElement;
+                root.style.setProperty('--cereal-top', (rect.top + rect.height / 2) + 'px');
+                root.style.setProperty('--cereal-left', (rect.left + rect.width / 2) + 'px');
+            }
+            
+            cerealHover.addEventListener('mouseenter', updateCerealPosition);
+            
+            // Update position on scroll and resize to keep it aligned
+            window.addEventListener('scroll', updateCerealPosition, { passive: true });
+            window.addEventListener('resize', updateCerealPosition);
         }
         
     </script>

@@ -172,6 +172,44 @@ body.scrolled {
     margin-bottom: 0;
 }
 
+.cereal-hover {
+    position: relative;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 2px;
+}
+
+.cereal-hover {
+    position: relative;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 2px;
+}
+
+.cereal-hover::after {
+    content: '';
+    position: fixed;
+    top: var(--cereal-top, 50%);
+    left: var(--cereal-left, 50%);
+    width: 600px;
+    height: 600px;
+    background-image: url('./images/cereal.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10000 !important;
+    transform: translateX(-50%) translateY(-100%);
+}
+
+.cereal-hover:hover::after {
+    opacity: 1;
+}
+
 .profile-picture {
     width: 90px;
     height: 90px;
@@ -1757,10 +1795,6 @@ body.scrolled {
     
     .bio-section {
         padding: 15rem 2rem 4rem 2rem;
-    }
-    
-    .name {
-        font-size: 13.54rem; /* 216.7px equivalent */
     }
 }
 
