@@ -10,7 +10,7 @@ body {
     background-image: url('./images/squiggle.svg');
     background-size: 100% auto;
     background-repeat: no-repeat;
-    background-position: center 26vh;
+    background-position: center 19vh;
     color: #ffffff;
     line-height: 1.6;
     min-height: 100vh;
@@ -137,13 +137,14 @@ body.scrolled {
 .personal-statement {
     width: 580px;
     height: auto;
-    padding: 80px;
-    background-color: rgba(30, 16, 44, 0.7);
+    padding: 60px;
+    background-color: rgba(30, 16, 44, 0.8);
     box-sizing: border-box;
     text-align: left;
     display: flex;
     flex-direction: column;
     border: 1px solid #43374E;
+    transform: translateY(-7vh); /* Move 7vh closer to top */
 }
 
 .personal-statement p:first-child {
