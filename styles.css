@@ -1875,6 +1875,14 @@ body.scrolled {
 }
 
 @media (max-width: 768px) {
+    .personal-statement {
+        display: none;
+    }
+
+    .dots-overlay {
+        display: none;
+    }
+
     .nav {
         padding: 1.5rem;
     }
