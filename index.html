@@ -70,6 +70,7 @@
         <section class="triangle-section">
             <div class="triangle-container">
                 <div class="triangle-label triangle-label-top">
+                    <div class="label-dots"></div>
                     <span class="product-label-text">
                         Product
                         <div class="product-tooltip">
@@ -81,9 +82,17 @@
                     <polygon points="200,50 50,350 350,350" fill="none" stroke="rgba(207, 189, 255, 0.3)" stroke-width="1"/>
                 </svg>
                 <img src="images/jason-mccoy.png" alt="Jason McCoy" class="profile-picture initial-load">
-                <div class="triangle-label triangle-label-bottom-left">Design</div>
-                <div class="triangle-label triangle-label-bottom-right">Engineering</div>
-                <div class="triangle-label triangle-label-center">Principal Product Builder</div>
+                <div class="triangle-label triangle-label-bottom-left">
+                    <div class="label-dots"></div>
+                    Design
+                </div>
+                <div class="triangle-label triangle-label-bottom-right">
+                    <div class="label-dots"></div>
+                    Engineering
+                </div>
+                <div class="triangle-label triangle-label-center">
+                    Principal Product Builder
+                </div>
             </div>
         </section>
 
@@ -357,6 +366,49 @@
         const triangleLabelEngineering = document.querySelector('.triangle-label-bottom-right');
         const triangleLabelBuilder = document.querySelector('.triangle-label-center');
         const cursorBadge = document.getElementById('cursor-badge');
+        
+        // Animate blurry dots behind triangle labels
+        (function() {
+            const triangleLabels = document.querySelectorAll('.triangle-label');
+            
+            triangleLabels.forEach(label => {
+                const dotsContainer = label.querySelector('.label-dots');
+                if (!dotsContainer) return;
+                
+                // Create 6-8 dots with random properties
+                const dotCount = Math.floor(Math.random() * 3) + 6; // 6-8 dots
+                
+                for (let i = 0; i < dotCount; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'label-dot';
+                    
+                    // Random size between 2px and 6px (1/10 the original size)
+                    const size = Math.random() * 4 + 2;
+                    dot.style.width = size + 'px';
+                    dot.style.height = size + 'px';
+                    
+                    // Random starting position within the container
+                    const startX = (Math.random() - 0.5) * 100;
+                    const startY = (Math.random() - 0.5) * 100;
+                    dot.style.left = `calc(50% + ${startX}px)`;
+                    dot.style.top = `calc(50% + ${startY}px)`;
+                    
+                    // Random animation duration between 8s and 15s
+                    const duration = Math.random() * 7 + 8;
+                    dot.style.animation = `float ${duration}s ease-in-out infinite`;
+                    
+                    // Random animation delay
+                    const delay = Math.random() * 2;
+                    dot.style.animationDelay = `${delay}s`;
+                    
+                    // Random opacity variation
+                    const opacity = Math.random() * 0.2 + 0.7;
+                    dot.style.opacity = opacity;
+                    
+                    dotsContainer.appendChild(dot);
+                }
+            });
+        })();
         
         // Hide cursor badge on scroll
         let lastScrollTop = 0;
