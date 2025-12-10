@@ -637,11 +637,13 @@ body.scrolled {
     background-color: none;
     border: 1px solid rgba(255, 255, 255, 0.33);
     color: #ffffff;
-    padding: 0.375rem 0.75rem;
+    padding: 0.5625rem 0.75rem;
     border-radius: 4px;
     font-size: 0.875rem;
     font-weight: 400;
     display: inline-block;
+    line-height: 1.43;
+    font-family: 'PT Mono', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 /* Video Container */
