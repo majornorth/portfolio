@@ -177,7 +177,7 @@ body.scrolled {
     cursor: pointer;
     text-decoration: underline;
     text-decoration-style: dotted;
-    text-underline-offset: 2px;
+    text-underline-offset: 5px;
 }
 
 .cereal-hover {
@@ -185,7 +185,7 @@ body.scrolled {
     cursor: pointer;
     text-decoration: underline;
     text-decoration-style: dotted;
-    text-underline-offset: 2px;
+    text-underline-offset: 5px;
 }
 
 .cereal-hover::after {
@@ -322,7 +322,7 @@ body.scrolled {
     cursor: pointer;
     text-decoration: underline;
     text-decoration-style: dotted;
-    text-underline-offset: 2px;
+    text-underline-offset: 5px;
 }
 
 .product-tooltip {
@@ -330,12 +330,13 @@ body.scrolled {
     /* top: var(--product-tooltip-top, 50%);
     left: var(--product-tooltip-left, 50%);
     transform: translate(-50%, -50%); */
+    border: 1px solid #43374E;
     left: 400px;
     width: 500px;
     max-width: 90vw;
     background-color: #352841;
     padding: 60px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 40px 10px rgba(0, 0, 0, 0.2);
     color: #ffffff;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 16px;
