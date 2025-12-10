@@ -634,7 +634,7 @@
                         centerY = stickyViewportY;
                         
                         // Adjust position for 1440x900 viewport
-                        if (viewportWidth === 1440 && viewportHeight === 900) {
+                        if (viewportWidth <= 1440 && viewportHeight <= 900) {
                             centerY = centerY + 65; // Adjust as needed
                         }
                     } else {
