@@ -69,7 +69,14 @@
 
         <section class="triangle-section">
             <div class="triangle-container">
-                <div class="triangle-label triangle-label-top">Product</div>
+                <div class="triangle-label triangle-label-top">
+                    <span class="product-label-text">
+                        Product
+                        <div class="product-tooltip">
+                            As a 5x founding designer, I am an expert in not only understanding user needs, but identify true pull—intense demand for a solution because a person is blocked from achieving their goals by their current options and actively trying to solve their problem—now. This skill is particularly valuable for helping product teams stay focused on deliver customer and business value, and to delivering momentum in both GTM while retaining customers and keeping the product as simple as necessary.
+                        </div>
+                    </span>
+                </div>
                 <svg class="triangle" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
                     <polygon points="200,50 50,350 350,350" fill="none" stroke="rgba(207, 189, 255, 0.3)" stroke-width="1"/>
                 </svg>
@@ -1163,6 +1170,83 @@
             // Update position on scroll and resize to keep it aligned
             window.addEventListener('scroll', updateCerealPosition, { passive: true });
             window.addEventListener('resize', updateCerealPosition);
+        }
+        
+        // Product tooltip positioning
+        const productLabelText = document.querySelector('.product-label-text');
+        const productTooltip = document.querySelector('.product-tooltip');
+        if (productLabelText && productTooltip) {
+            // Cache tooltip dimensions
+            let cachedTooltipWidth = 400;
+            let cachedTooltipHeight = 200;
+            
+            function updateProductTooltipPosition() {
+                const rect = productLabelText.getBoundingClientRect();
+                const root = document.documentElement;
+                
+                // Calculate ideal center position
+                let centerX = rect.left + rect.width / 2;
+                let centerY = rect.top + rect.height / 2;
+                
+                // Viewport dimensions
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                const margin = 100;
+                
+                // Get tooltip dimensions
+                // If tooltip is visible, measure it and cache dimensions
+                const computedStyle = window.getComputedStyle(productTooltip);
+                const isVisible = computedStyle.opacity !== '0' && computedStyle.visibility !== 'hidden';
+                
+                let tooltipWidth = cachedTooltipWidth;
+                let tooltipHeight = cachedTooltipHeight;
+                
+                if (isVisible) {
+                    const tooltipRect = productTooltip.getBoundingClientRect();
+                    if (tooltipRect.width > 0) {
+                        tooltipWidth = tooltipRect.width;
+                        cachedTooltipWidth = tooltipWidth;
+                    }
+                    if (tooltipRect.height > 0) {
+                        tooltipHeight = tooltipRect.height;
+                        cachedTooltipHeight = tooltipHeight;
+                    }
+                }
+                
+                // Adjust horizontal position to stay within viewport with margin
+                const halfTooltipWidth = tooltipWidth / 2;
+                let adjustedX = centerX;
+                if (centerX + halfTooltipWidth > viewportWidth - margin) {
+                    adjustedX = viewportWidth - margin - halfTooltipWidth;
+                }
+                if (centerX - halfTooltipWidth < margin) {
+                    adjustedX = margin + halfTooltipWidth;
+                }
+                
+                // Adjust vertical position to stay within viewport with margin
+                const halfTooltipHeight = tooltipHeight / 2;
+                let adjustedY = centerY;
+                if (centerY + halfTooltipHeight > viewportHeight - margin) {
+                    adjustedY = viewportHeight - margin - halfTooltipHeight;
+                }
+                if (centerY - halfTooltipHeight < margin) {
+                    adjustedY = margin + halfTooltipHeight;
+                }
+                
+                root.style.setProperty('--product-tooltip-top', adjustedY + 'px');
+                root.style.setProperty('--product-tooltip-left', adjustedX + 'px');
+            }
+            
+            productLabelText.addEventListener('mouseenter', function() {
+                // Use requestAnimationFrame to ensure tooltip is rendered before measuring
+                requestAnimationFrame(() => {
+                    updateProductTooltipPosition();
+                });
+            });
+            
+            // Update position on scroll and resize to keep it aligned
+            window.addEventListener('scroll', updateProductTooltipPosition, { passive: true });
+            window.addEventListener('resize', updateProductTooltipPosition);
         }
         
     </script>
