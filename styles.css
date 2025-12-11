@@ -3688,4 +3688,10 @@ body.scrolled {
     object-position: center center;
 }
 
+@media (max-width: 1440px) {
+    .nerdy-iframe {
+        zoom: 0.7;
+    }
+}
+
 
