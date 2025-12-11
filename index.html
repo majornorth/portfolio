@@ -588,7 +588,8 @@
             const triangleCenterY = triangleContainerRect.top + (triangleContainerRect.height / 2);
             
             // Profile picture position in viewport on page load
-            const stickyViewportY = viewportHeight * 0.23;
+            const viewportWidth = window.innerWidth;
+            const stickyViewportY = viewportHeight * (viewportWidth <= 1440 ? 0.23 : 0.23);
             
             // Snap threshold - triangle section snaps when it reaches this lower position
             // This positions the triangle section closer to bottom when snapping occurs
@@ -694,7 +695,7 @@
                         
                         // Adjust position for 1440x900 viewport
                         if (viewportWidth <= 1440 && viewportHeight <= 900) {
-                            centerY = centerY + 63; // Adjust as needed
+                            centerY = centerY + 70; // Adjust as needed
                         }
                     } else {
                         centerY = rect.top + rect.height / 2; // Use actual Y position for larger viewports

@@ -1865,6 +1865,7 @@ body.scrolled {
 @media (max-width: 1440px) {
     .bio-container {
         padding: 3rem; /* 40px equivalent */
+        min-height: 400px;
     }
     
     .bio-section {
@@ -1873,6 +1874,26 @@ body.scrolled {
 
     .product-tooltip {
         left: 210px;
+    }
+
+    .personal-statement {
+        width: 480px;
+        padding: 40px;
+        position: relative;
+        top: -20px;
+    }
+
+    .personal-statement p:first-child {
+        font-size: 17px;
+    }
+
+    .personal-statement p:not(:first-child) {
+        font-size: 14px;
+    }
+
+    .profile-picture {
+        width: 80px;
+        height: 80px;
     }
 }
 
