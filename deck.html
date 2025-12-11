@@ -508,22 +508,26 @@
                 
                 deckItem.appendChild(deckTitle);
                 
-                const slideList = document.createElement('div');
-                slideList.className = 'slide-list-container';
-                slideList.style.display = 'none';
-                
-                deck.slides.forEach((slide, index) => {
-                    const slideItem = document.createElement('button');
-                    slideItem.className = 'slide-item';
-                    slideItem.textContent = `${index + 1}. ${slide.title}`;
-                    slideItem.addEventListener('click', () => {
-                        selectDeck(deck.id);
-                        goToSlide(index);
+                // Skip slide-list-container for Dropbox Replay deck
+                if (deck.id !== 'dropbox-replay') {
+                    const slideList = document.createElement('div');
+                    slideList.className = 'slide-list-container';
+                    slideList.style.display = 'none';
+                    
+                    deck.slides.forEach((slide, index) => {
+                        const slideItem = document.createElement('button');
+                        slideItem.className = 'slide-item';
+                        slideItem.textContent = `${index + 1}. ${slide.title}`;
+                        slideItem.addEventListener('click', () => {
+                            selectDeck(deck.id);
+                            goToSlide(index);
+                        });
+                        slideList.appendChild(slideItem);
                     });
-                    slideList.appendChild(slideItem);
-                });
+                    
+                    deckItem.appendChild(slideList);
+                }
                 
-                deckItem.appendChild(slideList);
                 sidebarNav.appendChild(deckItem);
             });
         }
@@ -533,15 +537,37 @@
             currentDeckId = deckId;
             currentSlideIndex = 0;
             
+            const deckMain = document.getElementById('deck-main');
+            
+            // Add figma-fullscreen class for Dropbox Replay deck
+            if (deckId === 'dropbox-replay') {
+                deckMain.classList.add('figma-fullscreen');
+                // Hide navigation controls for Dropbox Replay
+                deckControls.style.display = 'none';
+            } else {
+                deckMain.classList.remove('figma-fullscreen');
+                // Show navigation controls for other decks
+                deckControls.style.display = 'flex';
+                // Clean up any iframe that might be in deck-main when switching away from Dropbox Replay
+                const existingIframe = deckMain.querySelector('iframe');
+                if (existingIframe) {
+                    existingIframe.remove();
+                }
+            }
+            
             // Update sidebar UI
             document.querySelectorAll('.sidebar-deck').forEach(item => {
                 const slideList = item.querySelector('.slide-list-container');
                 if (item.dataset.deckId === deckId) {
                     item.classList.add('active');
-                    slideList.style.display = 'block';
+                    if (slideList) {
+                        slideList.style.display = 'block';
+                    }
                 } else {
                     item.classList.remove('active');
-                    slideList.style.display = 'none';
+                    if (slideList) {
+                        slideList.style.display = 'none';
+                    }
                 }
             });
             
@@ -563,6 +589,28 @@
             if (!deck || !deck.slides[currentSlideIndex]) return;
             
             const slide = deck.slides[currentSlideIndex];
+            
+            // For Dropbox Replay deck, render iframe directly in deck-main
+            if (currentDeckId === 'dropbox-replay') {
+                slideContainer.innerHTML = '';
+                const deckMain = document.getElementById('deck-main');
+                // Remove any existing iframe
+                const existingIframe = deckMain.querySelector('iframe');
+                if (existingIframe) {
+                    existingIframe.remove();
+                }
+                // Create and append iframe directly to deck-main
+                const iframe = document.createElement('iframe');
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.border = '0';
+                iframe.setAttribute('allowfullscreen', '');
+                iframe.src = 'https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/K0YaaAOtqvCgeLE9Vulmtn/Jason-McCoy?page-id=49723%3A18804&node-id=55692-26697&p=f&viewport=25259%2C6836%2C0.25&t=qK23kmNYg5ClZrSs-1&scaling=min-zoom&scaling=scale-down&content-scaling=responsive&starting-point-node-id=55692%3A26697&hide-ui=1';
+                deckMain.appendChild(iframe);
+                return;
+            }
+            
+            // Normal slide rendering for other decks
             slideContainer.innerHTML = slide.content;
             
             // Set up click handler for Casey slide
@@ -881,20 +929,24 @@
                 const slideList = deckItem.querySelector('.slide-list-container');
                 if (deckItem.dataset.deckId === currentDeckId) {
                     // This is the active deck - update its slide items
-                    const slideItems = slideList.querySelectorAll('.slide-item');
-                    slideItems.forEach((item, index) => {
-                        if (index === currentSlideIndex) {
-                            item.classList.add('active');
-                        } else {
-                            item.classList.remove('active');
-                        }
-                    });
+                    if (slideList) {
+                        const slideItems = slideList.querySelectorAll('.slide-item');
+                        slideItems.forEach((item, index) => {
+                            if (index === currentSlideIndex) {
+                                item.classList.add('active');
+                            } else {
+                                item.classList.remove('active');
+                            }
+                        });
+                    }
                 } else {
                     // Remove active class from all slide items in other decks
-                    const slideItems = slideList.querySelectorAll('.slide-item');
-                    slideItems.forEach(item => {
-                        item.classList.remove('active');
-                    });
+                    if (slideList) {
+                        const slideItems = slideList.querySelectorAll('.slide-item');
+                        slideItems.forEach(item => {
+                            item.classList.remove('active');
+                        });
+                    }
                 }
             });
         }
