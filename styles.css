@@ -353,6 +353,53 @@ body.scrolled {
     opacity: 1;
 }
 
+.design-label-text,
+.engineering-label-text {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 5px;
+}
+
+.design-tooltip,
+.engineering-tooltip {
+    position: fixed;
+    border: 1px solid #43374E;
+    width: 500px;
+    max-width: 90vw;
+    background-color: #352841;
+    padding: 60px;
+    box-shadow: 0 4px 40px 10px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10000 !important;
+    text-align: left;
+    white-space: normal;
+    /* top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+}
+
+.design-tooltip {
+    left: 400px;
+}
+
+.engineering-tooltip {
+    right: 140px;
+}
+
+.design-label-text:hover .design-tooltip,
+.engineering-label-text:hover .engineering-tooltip {
+    opacity: 1;
+}
+
 .triangle-label-bottom-left {
     bottom: -2rem;
     left: 0;

@@ -74,7 +74,7 @@
                     <span class="product-label-text">
                         Product
                         <div class="product-tooltip">
-                            As a 5x founding designer, I am an expert in not only understanding user needs, but identifying true pull&mdash;intense demand for a solution because a person is blocked from achieving their goals by their current options and actively trying to solve their problem. This skill is particularly valuable for helping product teams stay focused on delivering customer and business value, and for increasing momentum in GTM while retaining customers and keeping the product as simple as necessary.
+                            As a 4x Product Lead, I am an expert in not only understanding user needs, but identifying true pull&mdash;intense demand for a solution because a person is blocked from achieving their goals by their current options and actively trying to solve their problem. This skill is particularly valuable for helping product teams stay focused on delivering customer and business value, and for increasing momentum in GTM while retaining customers and keeping the product as simple as necessary.
                         </div>
                     </span>
                 </div>
@@ -84,11 +84,21 @@
                 <img src="images/jason-mccoy.png" alt="Jason McCoy" class="profile-picture initial-load">
                 <div class="triangle-label triangle-label-bottom-left">
                     <div class="label-dots"></div>
-                    Design
+                    <span class="design-label-text">
+                        Design
+                        <div class="design-tooltip">
+                            As a 5x founding designer, I am an expert in the fundamentals of visual design (type scales, whitespace, grids, color, composition), highly-polished UX/UI design, extensible design systems, web and mobile patterns, and leading user research to uncover both unmet needs and align designs to the user's real-world workflows.
+                        </div>
+                    </span>
                 </div>
                 <div class="triangle-label triangle-label-bottom-right">
                     <div class="label-dots"></div>
-                    Engineering
+                    <span class="engineering-label-text">
+                        Engineering
+                        <div class="engineering-tooltip">
+                            I've shipped production code at almost every company I've worked at since 2012. I'm an expert at CSS, HTML, JavaScript, and React. I've managed four different engineering teams (with as many as 6 engineers at a time). I can cherry pick a commit and leverage Cursor as a key tool in my product development workflow. Cursor is the new Figma, and I rapidly develop highly-polished and data-driven prototypes for research and executive alignment, which then become the reference implementation for Engineering.
+                        </div>
+                    </span>
                 </div>
                 <div class="triangle-label triangle-label-center">
                     Principal Product Builder
@@ -1300,6 +1310,156 @@
             // Update position on scroll and resize to keep it aligned
             window.addEventListener('scroll', updateProductTooltipPosition, { passive: true });
             window.addEventListener('resize', updateProductTooltipPosition);
+        }
+        
+        // Design tooltip positioning
+        const designLabelText = document.querySelector('.design-label-text');
+        const designTooltip = document.querySelector('.design-tooltip');
+        if (designLabelText && designTooltip) {
+            // Cache tooltip dimensions
+            let cachedTooltipWidth = 400;
+            let cachedTooltipHeight = 200;
+            
+            function updateDesignTooltipPosition() {
+                const rect = designLabelText.getBoundingClientRect();
+                const root = document.documentElement;
+                
+                // Calculate ideal center position
+                let centerX = rect.left + rect.width / 2;
+                let centerY = rect.top + rect.height / 2;
+                
+                // Viewport dimensions
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                const margin = 100;
+                
+                // Get tooltip dimensions
+                const computedStyle = window.getComputedStyle(designTooltip);
+                const isVisible = computedStyle.opacity !== '0' && computedStyle.visibility !== 'hidden';
+                
+                let tooltipWidth = cachedTooltipWidth;
+                let tooltipHeight = cachedTooltipHeight;
+                
+                if (isVisible) {
+                    const tooltipRect = designTooltip.getBoundingClientRect();
+                    if (tooltipRect.width > 0) {
+                        tooltipWidth = tooltipRect.width;
+                        cachedTooltipWidth = tooltipWidth;
+                    }
+                    if (tooltipRect.height > 0) {
+                        tooltipHeight = tooltipRect.height;
+                        cachedTooltipHeight = tooltipHeight;
+                    }
+                }
+                
+                // Adjust horizontal position to stay within viewport with margin
+                const halfTooltipWidth = tooltipWidth / 2;
+                let adjustedX = centerX;
+                if (centerX + halfTooltipWidth > viewportWidth - margin) {
+                    adjustedX = viewportWidth - margin - halfTooltipWidth;
+                }
+                if (centerX - halfTooltipWidth < margin) {
+                    adjustedX = margin + halfTooltipWidth;
+                }
+                
+                // Adjust vertical position to stay within viewport with margin
+                const halfTooltipHeight = tooltipHeight / 2;
+                let adjustedY = centerY;
+                if (centerY + halfTooltipHeight > viewportHeight - margin) {
+                    adjustedY = viewportHeight - margin - halfTooltipHeight;
+                }
+                if (centerY - halfTooltipHeight < margin) {
+                    adjustedY = margin + halfTooltipHeight;
+                }
+                
+                designTooltip.style.top = adjustedY + 'px';
+                // designTooltip.style.left = adjustedX + 'px';
+                designTooltip.style.transform = 'translate(-50%, -50%)';
+            }
+            
+            designLabelText.addEventListener('mouseenter', function() {
+                requestAnimationFrame(() => {
+                    updateDesignTooltipPosition();
+                });
+            });
+            
+            window.addEventListener('scroll', updateDesignTooltipPosition, { passive: true });
+            window.addEventListener('resize', updateDesignTooltipPosition);
+        }
+        
+        // Engineering tooltip positioning
+        const engineeringLabelText = document.querySelector('.engineering-label-text');
+        const engineeringTooltip = document.querySelector('.engineering-tooltip');
+        if (engineeringLabelText && engineeringTooltip) {
+            // Cache tooltip dimensions
+            let cachedTooltipWidth = 400;
+            let cachedTooltipHeight = 200;
+            
+            function updateEngineeringTooltipPosition() {
+                const rect = engineeringLabelText.getBoundingClientRect();
+                const root = document.documentElement;
+                
+                // Calculate ideal center position
+                let centerX = rect.left + rect.width / 2;
+                let centerY = rect.top + rect.height / 2;
+                
+                // Viewport dimensions
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                const margin = 100;
+                
+                // Get tooltip dimensions
+                const computedStyle = window.getComputedStyle(engineeringTooltip);
+                const isVisible = computedStyle.opacity !== '0' && computedStyle.visibility !== 'hidden';
+                
+                let tooltipWidth = cachedTooltipWidth;
+                let tooltipHeight = cachedTooltipHeight;
+                
+                if (isVisible) {
+                    const tooltipRect = engineeringTooltip.getBoundingClientRect();
+                    if (tooltipRect.width > 0) {
+                        tooltipWidth = tooltipRect.width;
+                        cachedTooltipWidth = tooltipWidth;
+                    }
+                    if (tooltipRect.height > 0) {
+                        tooltipHeight = tooltipRect.height;
+                        cachedTooltipHeight = tooltipHeight;
+                    }
+                }
+                
+                // Adjust horizontal position to stay within viewport with margin
+                const halfTooltipWidth = tooltipWidth / 2;
+                let adjustedX = centerX;
+                if (centerX + halfTooltipWidth > viewportWidth - margin) {
+                    adjustedX = viewportWidth - margin - halfTooltipWidth;
+                }
+                if (centerX - halfTooltipWidth < margin) {
+                    adjustedX = margin + halfTooltipWidth;
+                }
+                
+                // Adjust vertical position to stay within viewport with margin
+                const halfTooltipHeight = tooltipHeight / 2;
+                let adjustedY = centerY;
+                if (centerY + halfTooltipHeight > viewportHeight - margin) {
+                    adjustedY = viewportHeight - margin - halfTooltipHeight;
+                }
+                if (centerY - halfTooltipHeight < margin) {
+                    adjustedY = margin + halfTooltipHeight;
+                }
+                
+                engineeringTooltip.style.top = adjustedY + 'px';
+                // engineeringTooltip.style.left = adjustedX + 'px';
+                engineeringTooltip.style.transform = 'translateY(-50%)';
+            }
+            
+            engineeringLabelText.addEventListener('mouseenter', function() {
+                requestAnimationFrame(() => {
+                    updateEngineeringTooltipPosition();
+                });
+            });
+            
+            window.addEventListener('scroll', updateEngineeringTooltipPosition, { passive: true });
+            window.addEventListener('resize', updateEngineeringTooltipPosition);
         }
         
     </script>
