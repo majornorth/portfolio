@@ -2266,7 +2266,7 @@ body.scrolled {
 }
 
 .construction-gif {
-    width: 200px;
+    width: 100px;
     height: auto;
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
@@ -2486,6 +2486,14 @@ body.scrolled {
     transition: background-color 0.2s ease, color 0.2s ease;
     border-radius: 4px;
     margin-bottom: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.slide-number {
+    text-align: right;
+    margin-left: auto;
 }
 
 .slide-item:hover {
