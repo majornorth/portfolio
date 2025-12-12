@@ -10,7 +10,7 @@ body {
     background-image: url('./images/squiggle.svg');
     background-size: 100% auto;
     background-repeat: no-repeat;
-    background-position: center 19vh;
+    background-position: center 15vh;
     color: #ffffff;
     line-height: 1.6;
     min-height: 100vh;
@@ -439,6 +439,7 @@ body.scrolled {
     min-width: min(400px, 100%);
     /* Add minimum height to ensure space-between works */
     min-height: 600px;
+    max-width: 900px;
 }
 
 .testimonial-text {
