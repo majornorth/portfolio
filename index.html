@@ -1480,10 +1480,13 @@
             window.addEventListener('resize', updateProductTooltipPosition);
         }
         
-        // Design tooltip positioning
-        const designLabelText = document.querySelector('.design-label-text');
-        const designTooltip = document.querySelector('.design-tooltip');
-        if (designLabelText && designTooltip) {
+        // Design tooltip positioning - ensure DOM is ready
+        function initDesignTooltip() {
+            const designLabelText = document.querySelector('.design-label-text');
+            const designTooltip = document.querySelector('.design-tooltip');
+            if (!designLabelText || !designTooltip) {
+                return;
+            }
             // Cache tooltip dimensions
             let cachedTooltipWidth = 400;
             let cachedTooltipHeight = 200;
@@ -1545,20 +1548,44 @@
                 designTooltip.style.transform = 'translate(-50%, -50%)';
             }
             
+            // Use JavaScript to show/hide tooltip for Safari compatibility
+            // Use class-based approach which Safari handles better
             designLabelText.addEventListener('mouseenter', function() {
-                requestAnimationFrame(() => {
-                    updateDesignTooltipPosition();
-                });
+                updateDesignTooltipPosition();
+                designTooltip.classList.add('visible');
+            });
+            
+            designLabelText.addEventListener('mouseleave', function() {
+                designTooltip.classList.remove('visible');
+            });
+            
+            // Also handle tooltip hover to keep it visible when mouse moves to tooltip
+            designTooltip.addEventListener('mouseenter', function() {
+                designTooltip.classList.add('visible');
+            });
+            
+            designTooltip.addEventListener('mouseleave', function() {
+                designTooltip.classList.remove('visible');
             });
             
             window.addEventListener('scroll', updateDesignTooltipPosition, { passive: true });
             window.addEventListener('resize', updateDesignTooltipPosition);
         }
         
-        // Engineering tooltip positioning
-        const engineeringLabelText = document.querySelector('.engineering-label-text');
-        const engineeringTooltip = document.querySelector('.engineering-tooltip');
-        if (engineeringLabelText && engineeringTooltip) {
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initDesignTooltip);
+        } else {
+            initDesignTooltip();
+        }
+        
+        // Engineering tooltip positioning - ensure DOM is ready
+        function initEngineeringTooltip() {
+            const engineeringLabelText = document.querySelector('.engineering-label-text');
+            const engineeringTooltip = document.querySelector('.engineering-tooltip');
+            if (!engineeringLabelText || !engineeringTooltip) {
+                return;
+            }
             // Cache tooltip dimensions
             let cachedTooltipWidth = 400;
             let cachedTooltipHeight = 200;
@@ -1620,14 +1647,35 @@
                 engineeringTooltip.style.transform = 'translateY(-50%)';
             }
             
+            // Use JavaScript to show/hide tooltip for Safari compatibility
+            // Use class-based approach which Safari handles better
             engineeringLabelText.addEventListener('mouseenter', function() {
-                requestAnimationFrame(() => {
-                    updateEngineeringTooltipPosition();
-                });
+                updateEngineeringTooltipPosition();
+                engineeringTooltip.classList.add('visible');
+            });
+            
+            engineeringLabelText.addEventListener('mouseleave', function() {
+                engineeringTooltip.classList.remove('visible');
+            });
+            
+            // Also handle tooltip hover to keep it visible when mouse moves to tooltip
+            engineeringTooltip.addEventListener('mouseenter', function() {
+                engineeringTooltip.classList.add('visible');
+            });
+            
+            engineeringTooltip.addEventListener('mouseleave', function() {
+                engineeringTooltip.classList.remove('visible');
             });
             
             window.addEventListener('scroll', updateEngineeringTooltipPosition, { passive: true });
             window.addEventListener('resize', updateEngineeringTooltipPosition);
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initEngineeringTooltip);
+        } else {
+            initEngineeringTooltip();
         }
         
     </script>

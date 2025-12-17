@@ -377,8 +377,9 @@ body.scrolled {
     font-size: 16px;
     line-height: 1.6;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 10000 !important;
     text-align: left;
     white-space: normal;
@@ -398,6 +399,15 @@ body.scrolled {
 .design-label-text:hover .design-tooltip,
 .engineering-label-text:hover .engineering-tooltip {
     opacity: 1;
+    visibility: visible;
+}
+
+/* JavaScript-controlled visibility for Safari compatibility */
+.design-tooltip.visible,
+.engineering-tooltip.visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
 }
 
 .triangle-label-bottom-left {
