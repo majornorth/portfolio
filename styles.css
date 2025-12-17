@@ -2545,14 +2545,15 @@ body.scrolled {
 
 .next-case-study-btn {
     position: fixed;
-    bottom: 40px;
-    right: 40px;
-    padding: 12px 24px;
+    bottom: 24px;
+    right: 24px;
+    height: 48px;
+    padding: 0 24px;
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     color: #ffffff;
-    font-family: 'Jost', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
@@ -2561,6 +2562,9 @@ body.scrolled {
     transition: opacity 0.2s ease, background-color 0.2s ease;
     z-index: 1000;
     backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .next-case-study-btn:hover {
