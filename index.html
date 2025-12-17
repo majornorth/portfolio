@@ -1033,8 +1033,9 @@
         // Horizontal scroll arrow functionality
         function initScrollArrows() {
             const scrollContainers = document.querySelectorAll('.horizontal-scroll');
+            const projectSections = Array.from(document.querySelectorAll('.project'));
             
-            scrollContainers.forEach(container => {
+            scrollContainers.forEach((container, index) => {
                 const projectSection = container.closest('.project');
                 if (!projectSection) return;
                 
@@ -1046,6 +1047,11 @@
                 
                 if (!leftArrow || !rightArrow) return;
                 
+                // Find current project section index
+                const currentProjectIndex = projectSections.indexOf(projectSection);
+                const nextProjectSection = projectSections[currentProjectIndex + 1];
+                const prevProjectSection = projectSections[currentProjectIndex - 1];
+                
                 function updateArrowStates() {
                     const scrollLeft = container.scrollLeft;
                     const scrollWidth = container.scrollWidth;
@@ -1054,14 +1060,14 @@
                     
                     // Update left arrow
                     if (scrollLeft <= 0) {
-                        leftArrow.disabled = true;
+                        leftArrow.disabled = !prevProjectSection; // Enable if previous project exists
                     } else {
                         leftArrow.disabled = false;
                     }
                     
                     // Update right arrow
                     if (scrollLeft >= maxScroll - 1) { // -1 for rounding issues
-                        rightArrow.disabled = true;
+                        rightArrow.disabled = !nextProjectSection; // Enable if next project exists
                     } else {
                         rightArrow.disabled = false;
                     }
@@ -1078,20 +1084,66 @@
                 
                 // Left arrow click
                 leftArrow.addEventListener('click', () => {
-                    const scrollAmount = container.clientWidth * 0.8; // Scroll 80% of container width
-                    container.scrollBy({
-                        left: -scrollAmount,
-                        behavior: 'smooth'
-                    });
+                    const scrollLeft = container.scrollLeft;
+                    const scrollWidth = container.scrollWidth;
+                    const clientWidth = container.clientWidth;
+                    const maxScroll = scrollWidth - clientWidth;
+                    
+                    // If at the beginning and previous project exists, go to last slide of previous project
+                    if (scrollLeft <= 0 && prevProjectSection) {
+                        const prevContainer = prevProjectSection.querySelector('.horizontal-scroll');
+                        if (prevContainer) {
+                            // Scroll page to previous project section
+                            prevProjectSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            
+                            // Wait for scroll to complete, then scroll to last slide
+                            setTimeout(() => {
+                                prevContainer.scrollTo({
+                                    left: prevContainer.scrollWidth,
+                                    behavior: 'smooth'
+                                });
+                            }, 300);
+                        }
+                    } else {
+                        // Normal scroll within current container
+                        const scrollAmount = container.clientWidth * 0.8;
+                        container.scrollBy({
+                            left: -scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    }
                 });
                 
                 // Right arrow click
                 rightArrow.addEventListener('click', () => {
-                    const scrollAmount = container.clientWidth * 0.8; // Scroll 80% of container width
-                    container.scrollBy({
-                        left: scrollAmount,
-                        behavior: 'smooth'
-                    });
+                    const scrollLeft = container.scrollLeft;
+                    const scrollWidth = container.scrollWidth;
+                    const clientWidth = container.clientWidth;
+                    const maxScroll = scrollWidth - clientWidth;
+                    
+                    // If at the end and next project exists, go to first slide of next project
+                    if (scrollLeft >= maxScroll - 1 && nextProjectSection) {
+                        const nextContainer = nextProjectSection.querySelector('.horizontal-scroll');
+                        if (nextContainer) {
+                            // Scroll page to next project section
+                            nextProjectSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            
+                            // Wait for scroll to complete, then scroll to first slide
+                            setTimeout(() => {
+                                nextContainer.scrollTo({
+                                    left: 0,
+                                    behavior: 'smooth'
+                                });
+                            }, 300);
+                        }
+                    } else {
+                        // Normal scroll within current container
+                        const scrollAmount = container.clientWidth * 0.8;
+                        container.scrollBy({
+                            left: scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    }
                 });
             });
         }
@@ -1101,6 +1153,122 @@
             document.addEventListener('DOMContentLoaded', initScrollArrows);
         } else {
             initScrollArrows();
+        }
+        
+        // Keyboard navigation for horizontal scroll containers
+        function initKeyboardNavigation() {
+            const projectSections = Array.from(document.querySelectorAll('.project'));
+            
+            document.addEventListener('keydown', function(e) {
+                // Don't interfere with lightbox navigation
+                const lightboxOverlay = document.getElementById('lightbox-overlay');
+                if (lightboxOverlay && lightboxOverlay.classList.contains('active')) {
+                    return;
+                }
+                
+                // Only handle ArrowRight and ArrowLeft
+                if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') {
+                    return;
+                }
+                
+                // Find the currently visible horizontal scroll container
+                const scrollContainers = document.querySelectorAll('.horizontal-scroll');
+                let activeContainer = null;
+                let activeProjectSection = null;
+                
+                // Find the container that's most visible in the viewport
+                for (const container of scrollContainers) {
+                    const rect = container.getBoundingClientRect();
+                    const projectSection = container.closest('.project');
+                    
+                    // Check if container is visible and in viewport
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        // Prefer containers that are more centered in viewport
+                        const centerY = rect.top + rect.height / 2;
+                        const viewportCenter = window.innerHeight / 2;
+                        const distanceFromCenter = Math.abs(centerY - viewportCenter);
+                        
+                        if (!activeContainer || distanceFromCenter < Math.abs(activeContainer.getBoundingClientRect().top + activeContainer.getBoundingClientRect().height / 2 - viewportCenter)) {
+                            activeContainer = container;
+                            activeProjectSection = projectSection;
+                        }
+                    }
+                }
+                
+                if (!activeContainer || !activeProjectSection) {
+                    return;
+                }
+                
+                const scrollLeft = activeContainer.scrollLeft;
+                const scrollWidth = activeContainer.scrollWidth;
+                const clientWidth = activeContainer.clientWidth;
+                const maxScroll = scrollWidth - clientWidth;
+                
+                const currentProjectIndex = projectSections.indexOf(activeProjectSection);
+                const nextProjectSection = projectSections[currentProjectIndex + 1];
+                const prevProjectSection = projectSections[currentProjectIndex - 1];
+                
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    
+                    // If at the end and next project exists, go to first slide of next project
+                    if (scrollLeft >= maxScroll - 1 && nextProjectSection) {
+                        const nextContainer = nextProjectSection.querySelector('.horizontal-scroll');
+                        if (nextContainer) {
+                            // Scroll page to next project section
+                            nextProjectSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            
+                            // Wait for scroll to complete, then scroll to first slide
+                            setTimeout(() => {
+                                nextContainer.scrollTo({
+                                    left: 0,
+                                    behavior: 'smooth'
+                                });
+                            }, 300);
+                        }
+                    } else {
+                        // Normal scroll within current container
+                        const scrollAmount = activeContainer.clientWidth * 0.8;
+                        activeContainer.scrollBy({
+                            left: scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    }
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    
+                    // If at the beginning and previous project exists, go to last slide of previous project
+                    if (scrollLeft <= 0 && prevProjectSection) {
+                        const prevContainer = prevProjectSection.querySelector('.horizontal-scroll');
+                        if (prevContainer) {
+                            // Scroll page to previous project section
+                            prevProjectSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            
+                            // Wait for scroll to complete, then scroll to last slide
+                            setTimeout(() => {
+                                prevContainer.scrollTo({
+                                    left: prevContainer.scrollWidth,
+                                    behavior: 'smooth'
+                                });
+                            }, 300);
+                        }
+                    } else {
+                        // Normal scroll within current container
+                        const scrollAmount = activeContainer.clientWidth * 0.8;
+                        activeContainer.scrollBy({
+                            left: -scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        }
+        
+        // Initialize keyboard navigation when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initKeyboardNavigation);
+        } else {
+            initKeyboardNavigation();
         }
         
         // Email copy functionality

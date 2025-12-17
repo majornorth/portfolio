@@ -497,12 +497,16 @@
             // Add figma-fullscreen class for Dropbox Replay deck
             if (deckId === 'dropbox-replay') {
                 deckMain.classList.add('figma-fullscreen');
-                // Hide navigation controls for Dropbox Replay
-                deckControls.style.display = 'none';
+                // Show navigation controls for Dropbox Replay
+                deckControls.style.display = 'flex';
+                // Add next case study button
+                addNextCaseStudyButton();
             } else {
                 deckMain.classList.remove('figma-fullscreen');
                 // Show navigation controls for other decks
                 deckControls.style.display = 'flex';
+                // Remove next case study button if it exists
+                removeNextCaseStudyButton();
                 // Clean up any iframe that might be in deck-main when switching away from Dropbox Replay
                 const existingIframe = deckMain.querySelector('iframe');
                 if (existingIframe) {
@@ -534,6 +538,43 @@
             
             // Update URL
             updateURL();
+        }
+
+        // Add next case study button for Dropbox Replay deck
+        function addNextCaseStudyButton() {
+            const deckMain = document.getElementById('deck-main');
+            // Remove existing button if it exists
+            removeNextCaseStudyButton();
+            
+            // Check if there's a next deck
+            const currentDeckIndex = decks.findIndex(d => d.id === currentDeckId);
+            if (currentDeckIndex >= decks.length - 1) {
+                return; // No next deck available
+            }
+            
+            const button = document.createElement('button');
+            button.id = 'next-case-study-btn';
+            button.className = 'next-case-study-btn';
+            button.textContent = 'Next case study ->';
+            button.setAttribute('aria-label', 'Navigate to next case study');
+            
+            button.addEventListener('click', () => {
+                const nextDeck = decks[currentDeckIndex + 1];
+                if (nextDeck) {
+                    selectDeck(nextDeck.id);
+                    goToSlide(0);
+                }
+            });
+            
+            deckMain.appendChild(button);
+        }
+
+        // Remove next case study button
+        function removeNextCaseStudyButton() {
+            const button = document.getElementById('next-case-study-btn');
+            if (button) {
+                button.remove();
+            }
         }
 
         // Render current slide
@@ -922,8 +963,17 @@
                 totalSlidesSpan.textContent = deck.slides.length;
                 
                 // Update button states
-                prevBtn.disabled = currentSlideIndex === 0;
-                nextBtn.disabled = currentSlideIndex === deck.slides.length - 1;
+                const currentDeckIndex = decks.findIndex(d => d.id === currentDeckId);
+                const isFirstSlide = currentSlideIndex === 0;
+                const isLastSlide = currentSlideIndex === deck.slides.length - 1;
+                const hasPrevDeck = currentDeckIndex > 0;
+                const hasNextDeck = currentDeckIndex < decks.length - 1;
+                
+                // Disable prev button only if on first slide AND no previous deck
+                prevBtn.disabled = isFirstSlide && !hasPrevDeck;
+                
+                // Disable next button only if on last slide AND no next deck
+                nextBtn.disabled = isLastSlide && !hasNextDeck;
             }
         }
 
@@ -951,6 +1001,14 @@
             
             if (currentSlideIndex > 0) {
                 goToSlide(currentSlideIndex - 1);
+            } else {
+                // On first slide - navigate to previous deck's last slide
+                const currentDeckIndex = decks.findIndex(d => d.id === currentDeckId);
+                if (currentDeckIndex > 0) {
+                    const prevDeck = decks[currentDeckIndex - 1];
+                    selectDeck(prevDeck.id);
+                    goToSlide(prevDeck.slides.length - 1);
+                }
             }
         }
 
@@ -963,6 +1021,14 @@
             
             if (currentSlideIndex < deck.slides.length - 1) {
                 goToSlide(currentSlideIndex + 1);
+            } else {
+                // On last slide - navigate to next deck's first slide
+                const currentDeckIndex = decks.findIndex(d => d.id === currentDeckId);
+                if (currentDeckIndex < decks.length - 1) {
+                    const nextDeck = decks[currentDeckIndex + 1];
+                    selectDeck(nextDeck.id);
+                    goToSlide(0);
+                }
             }
         }
 
