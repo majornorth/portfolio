@@ -183,6 +183,28 @@
                         `
                     },
                     {
+                        title: 'Platform design',
+                        content: `
+                            <div class="slide-content user-flow-slide platform-design-slide">
+                                <div class="user-flow-image-container">
+                                    <img src="images/deck/nerdy-platform/1-nerdy-platform-design.png" alt="Platform Design Step 1" class="user-flow-image active" data-step="1">
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: 'Discovery insight',
+                        content: `
+                            <div class="slide-content nerdy-slide">
+                                <iframe
+                                    style="width:100%;height:100%;border:0;"
+                                    allowfullscreen
+                                    src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/K0YaaAOtqvCgeLE9Vulmtn/Jason-McCoy?page-id=49723%3A18804&node-id=56141-29129&p=f&p=fviewport=25259%2C6836%2C0.25&t=qK23kmNYg5ClZrSs-1&scaling=min-zoom&scaling=scale-down&content-scaling=responsive&starting-point-node-id=55692%3A26697&hide-ui=1"
+                                ></iframe>
+                            </div>
+                        `
+                    },
+                    {
                         title: 'Session prep prototype',
                         content: `
                             <div class="slide-content nerdy-slide">
@@ -649,12 +671,13 @@
             // Set up progressive image reveal for user flow slide
             const userFlowSlide = slideContainer.querySelector('.user-flow-slide');
             if (userFlowSlide) {
-                // Skip if this is a provider-contacts-slide, interaction-model-slide, simple-request-flow-slide, or copilot-alpha-slide (they have their own handlers)
+                // Skip if this is a provider-contacts-slide, interaction-model-slide, simple-request-flow-slide, copilot-alpha-slide, or platform-design-slide (they have their own handlers)
                 const isProviderContactsSlide = userFlowSlide.classList.contains('provider-contacts-slide');
                 const isInteractionModelSlide = userFlowSlide.classList.contains('interaction-model-slide');
                 const isSimpleRequestFlowSlide = userFlowSlide.classList.contains('simple-request-flow-slide');
                 const isCopilotAlphaSlide = userFlowSlide.classList.contains('copilot-alpha-slide');
-                if (isProviderContactsSlide || isInteractionModelSlide || isSimpleRequestFlowSlide || isCopilotAlphaSlide) {
+                const isPlatformDesignSlide = userFlowSlide.classList.contains('platform-design-slide');
+                if (isProviderContactsSlide || isInteractionModelSlide || isSimpleRequestFlowSlide || isCopilotAlphaSlide || isPlatformDesignSlide) {
                     // Don't set up user-flow handler for these slides
                 } else {
                     const imageContainer = userFlowSlide.querySelector('.user-flow-image-container');
@@ -910,6 +933,40 @@
                     if (currentImageIndex < maxImages) {
                         currentImageIndex++;
                         const imagePath = `images/deck/nerdy-ai/${currentImageIndex}-og-nerdy-copilot-expanded.png`;
+                        
+                        if (currentImage) {
+                            currentImage.src = imagePath;
+                            currentImage.dataset.step = currentImageIndex.toString();
+                        }
+                    }
+                    // When currentImageIndex reaches maxImages (2), no more images will load
+                });
+            }
+            
+            // Set up progressive image reveal for platform design slide
+            const platformDesignSlide = slideContainer.querySelector('.platform-design-slide');
+            if (platformDesignSlide) {
+                const imageContainer = platformDesignSlide.querySelector('.user-flow-image-container');
+                const currentImage = imageContainer.querySelector('.user-flow-image');
+                
+                const maxImages = 2; // 1-nerdy-platform-design.png through 2-nerdy-platform-design.png
+                let currentImageIndex = 1; // Start at 1 (1-nerdy-platform-design.png)
+                
+                // Reset to first image when slide loads
+                if (currentImage) {
+                    currentImage.src = 'images/deck/nerdy-platform/1-nerdy-platform-design.png';
+                    currentImage.dataset.step = '1';
+                    currentImage.classList.add('active');
+                }
+                
+                // Click handler
+                platformDesignSlide.addEventListener('click', function(e) {
+                    // Stop propagation to prevent other handlers from running
+                    e.stopPropagation();
+                    
+                    if (currentImageIndex < maxImages) {
+                        currentImageIndex++;
+                        const imagePath = `images/deck/nerdy-platform/${currentImageIndex}-nerdy-platform-design.png`;
                         
                         if (currentImage) {
                             currentImage.src = imagePath;
