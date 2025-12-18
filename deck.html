@@ -977,22 +977,29 @@
                 });
             }
             
-            // Set up click handler for Who is Jason slide (welcome.png -> stale.png)
+            // Set up click handler for Who is Jason slide (welcome.png -> stale.png -> fam.png)
             const welcomeImage = slideContainer.querySelector('.welcome-image');
             if (welcomeImage) {
                 // Reset to welcome.png when slide loads
                 welcomeImage.src = 'images/welcome.png';
                 welcomeImage.dataset.step = '1';
                 
-                // Click handler
+                // Click handler - cycle through 3 steps
                 welcomeImage.addEventListener('click', function(e) {
                     e.stopPropagation();
                     
-                    // Check if currently showing welcome.png
-                    if (welcomeImage.src.includes('welcome.png')) {
+                    const currentStep = parseInt(welcomeImage.dataset.step) || 1;
+                    
+                    if (currentStep === 1) {
+                        // Step 1 -> Step 2: welcome.png -> stale.png
                         welcomeImage.src = 'images/deck/stale.png';
                         welcomeImage.dataset.step = '2';
+                    } else if (currentStep === 2) {
+                        // Step 2 -> Step 3: stale.png -> fam.png
+                        welcomeImage.src = 'images/deck/fam.png';
+                        welcomeImage.dataset.step = '3';
                     }
+                    // Step 3: no more steps, stays on fam.png
                 });
             }
             
