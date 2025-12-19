@@ -81,14 +81,14 @@ body.scrolled {
 .nav-link {
     color: #CFBDFF;
     text-decoration: none;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 16px;
+    font-family: 'PT Mono', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
     font-weight: 400;
     transition: opacity 0.3s;
 }
 
 .nav-link:hover {
-    opacity: 0.7;
+    color: #CEFC00;
 }
 
 /* Cursor Badge */
@@ -2456,8 +2456,8 @@ body.scrolled {
     border: none;
     color: #CFBDFF;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 14px;
+    /* font-weight: 500; */
     text-align: left;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
