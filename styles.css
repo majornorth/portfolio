@@ -23,6 +23,16 @@ body {
     background-color: #191919;
 }
 
+::selection {
+    background-color: #CEFC00;
+    color: #191919;
+}
+
+::-moz-selection {
+    background-color: #CEFC00;
+    color: #191919;
+}
+
 .container {
     max-width: 1440px;
     margin: 0 auto;
