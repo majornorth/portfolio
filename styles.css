@@ -201,7 +201,7 @@ body {
 
 /* Footer */
 .footer {
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 240px auto 0;
     padding-bottom: 240px;
     text-align: right;
@@ -215,7 +215,7 @@ body {
 }
 
 /* Responsive Design - Down to 1200px */
-@media (max-width: 1440px) and (min-width: 1201px) {
+@media (max-width: 1919px) and (min-width: 1201px) {
     .container {
         padding: 0 20px;
     }
@@ -224,6 +224,32 @@ body {
     .hero-right {
         width: calc(50% - 10px);
         max-width: calc(50% - 10px);
+    }
+}
+
+/* Breakpoint for screens 1920px and larger */
+@media (min-width: 1920px) {
+    .container {
+        max-width: 1920px;
+        padding: 0 20px;
+    }
+    
+    .hero-section {
+        justify-content: center;
+    }
+    
+    .mockup-wrapper {
+        max-width: 1600px;
+    }
+    
+    .mockup-image {
+        max-width: 1600px;
+    }
+    
+    .mockup-wrapper::after {
+        background-size: 100% 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
     }
 }
 
