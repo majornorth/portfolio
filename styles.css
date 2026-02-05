@@ -262,3 +262,38 @@ body {
     }
 }
 
+/* Mobile Breakpoint - 480px */
+@media (max-width: 480px) {
+    .hero-section {
+        flex-direction: column;
+        max-height: none;
+    }
+    
+    .position-hero {
+        padding-left: 0px;
+    }
+    
+    .hero-left {
+        padding-left: 20px;
+        height: 360px;
+    }
+    
+    .hero-right {
+        height: 141px;
+        justify-content: left;
+        padding: 40px 20px;
+    }
+    
+    .content-section {
+        gap: 80px;
+    }
+    
+    .footer {
+        margin-top: 80px;
+    }
+    
+    .footer p {
+        font-size: 14px;
+    }
+}
+
