@@ -133,6 +133,14 @@ body {
     color: #AAAAAA;
 }
 
+/* Responsive Height Adjustment */
+@media (max-height: 900px) {
+    .hero-left,
+    .hero-right {
+        height: 541px;
+    }
+}
+
 /* Content Section - Single Column */
 .content-section {
     display: flex;
