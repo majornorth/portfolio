@@ -65,17 +65,19 @@
 
         <!-- Single Column Content Section -->
         <section class="content-section">
-            <img src="twine-mock.png" alt="Twine Mobile App" class="mockup-image" data-zoom="twine-mockup@zoom.png">
-            <img src="dropbox-mockup.png" alt="Dropbox Teams Admin Console" class="mockup-image" data-zoom="dropbox-mockup@zoom.png">
-            <img src="replay-mockup.png" alt="Dropbox Replay" class="mockup-image" data-zoom="replay-mockup@zoom.png">
-            <img src="tuttle-mockup.png" alt="Tuttle Record Requests" class="mockup-image" data-zoom="tuttle-mockup@zoom.png">
+            <div class="mockup-wrapper">
+                <img src="twine-mock.png" alt="Twine Mobile App" class="mockup-image" data-overlay="twine-overlay.png">
+            </div>
+            <div class="mockup-wrapper">
+                <img src="dropbox-mockup.png" alt="Dropbox Teams Admin Console" class="mockup-image" data-overlay="dropbox-overlay.png">
+            </div>
+            <div class="mockup-wrapper">
+                <img src="replay-mockup.png" alt="Dropbox Replay" class="mockup-image" data-overlay="replay-overlay.png">
+            </div>
+            <div class="mockup-wrapper">
+                <img src="tuttle-mockup.png" alt="Tuttle Record Requests" class="mockup-image" data-overlay="tuttle-overlay.png">
+            </div>
         </section>
-
-        <!-- Lightbox Modal -->
-        <div id="lightbox-modal" class="lightbox-modal">
-            <span class="lightbox-close">&times;</span>
-            <img class="lightbox-content" id="lightbox-image" src="" alt="">
-        </div>
 
         <!-- Footer -->
         <footer class="footer">
@@ -83,46 +85,5 @@
         </footer>
     </div>
 
-    <script>
-        // Lightbox functionality
-        const mockupImages = document.querySelectorAll('.mockup-image');
-        const modal = document.getElementById('lightbox-modal');
-        const modalImg = document.getElementById('lightbox-image');
-        const closeBtn = document.querySelector('.lightbox-close');
-
-        // Open modal on image click
-        mockupImages.forEach(img => {
-            img.addEventListener('click', function() {
-                const zoomImage = this.getAttribute('data-zoom');
-                if (zoomImage) {
-                    modalImg.src = zoomImage;
-                    modal.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                }
-            });
-        });
-
-        // Close modal
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-
-        // Close modal when clicking outside the image
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modal.style.display === 'flex') {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-    </script>
 </body>
 </html>
