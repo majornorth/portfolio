@@ -225,6 +225,10 @@ body {
         width: calc(50% - 10px);
         max-width: calc(50% - 10px);
     }
+    
+    .footer {
+        max-width: 1200px;
+    }
 }
 
 /* Breakpoint for screens 1920px and larger */
@@ -250,6 +254,10 @@ body {
         background-size: 100% 100%;
         background-position: center center;
         background-repeat: no-repeat;
+    }
+    
+    .footer {
+        max-width: 1600px;
     }
 }
 
@@ -285,6 +293,10 @@ body {
     
     .content-section {
         padding: 40px 0;
+    }
+    
+    .footer {
+        max-width: 1200px;
     }
 }
 
