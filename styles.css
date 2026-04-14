@@ -312,14 +312,14 @@ body {
     }
     
     .hero-left {
-        padding-left: 20px;
+        padding-left: 0px;
         height: 360px;
     }
     
     .hero-right {
         height: 141px;
         justify-content: left;
-        padding: 40px 20px;
+        padding: 40px 20px 40px 0px;
     }
     
     .content-section {
@@ -328,6 +328,7 @@ body {
     
     .footer {
         margin-top: 80px;
+        text-align: left;
     }
     
     .footer p {
